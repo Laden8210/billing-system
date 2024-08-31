@@ -1,10 +1,14 @@
 <?php
 
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NavigationController;
 
 
-Route::get('', [NavigationController::class, 'index'])->name('dashboard');
+Route::post('/login', [LoginController::class, 'login'])->name('login-user');
+
+Route::get('', [NavigationController::class, 'index'])->name('login');
+Route::get('/dashboard', [NavigationController::class, 'dashboard'])->name('dashboard');
 Route::get('/user', [NavigationController::class, 'userAccount'])->name('user');
 Route::get('/service', [NavigationController::class, 'service'])->name('service');
 Route::get('/subscriber', [NavigationController::class, 'subscriber'])->name('subscriber');
