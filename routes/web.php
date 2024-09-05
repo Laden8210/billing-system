@@ -8,6 +8,11 @@ use App\Http\Controllers\NavigationController;
 Route::post('/login', [LoginController::class, 'login'])->name('login-user');
 
 Route::get('', [NavigationController::class, 'index'])->name('login');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+
+});
 Route::get('/dashboard', [NavigationController::class, 'dashboard'])->name('dashboard');
 Route::get('/user', [NavigationController::class, 'userAccount'])->name('user');
 Route::get('/service', [NavigationController::class, 'service'])->name('service');

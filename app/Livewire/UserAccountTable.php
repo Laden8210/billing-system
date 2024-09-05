@@ -4,8 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Employee;
 use Livewire\Component;
-use App\Models\User;
-use App\Models\Role;
+
 class UserAccountTable extends Component
 {
 
@@ -20,10 +19,16 @@ class UserAccountTable extends Component
 
     public $search ="";
 
+    public $status;
+
     public function render()
     {
         return view('livewire.user-account-table', [
-            'employees' => Employee::search($this->search)->get(),
+            'employees' => Employee::search($this->search)
+            ->when($this->status, function($query){
+                return $query->where('em_status', $this->status);
+            })
+            ->get(),
         ]);
     }
 
@@ -36,21 +41,38 @@ class UserAccountTable extends Component
             'password' => 'required',
             'confirm_password' => 'required|same:password',
             'role' => 'required',
+
         ]);
 
-        $role = Role::where('role_name', $this->role)->first();
-        $user = new Employee();
-        $user->contact_number = $this->contact_number;
-        $user->firstname = $this->firstname;
-        $user->lastname = $this->lastname;
-        $user->middlleinitial = $this->middlleinitial ?? '';
-        $user->sufix = $this->sufix ?? '';
-        $user->password = bcrypt($this->password);
-        $user->status = 'Active';
-        $user->role_id = $role->role_id;
-        $user->save();
 
+        $employee = new Employee();
+        $employee->em_contactnum = $this->contact_number;
+        $employee->em_fname = $this->firstname;
+        $employee->em_lname = $this->lastname;
+        $employee->em_minitial = $this->middlleinitial;
+        $employee->em_suffix = $this->sufix;
+        $employee->em_password = bcrypt($this->password);
+        $employee->em_role = $this->role;
+        $employee->em_status = 'Active';
+        $employee->save();
 
         session()->flash('message', 'User created successfully');
+    }
+
+    public function changeStatus($id){
+        $employee = Employee::find($id);
+        $employee->em_status = $employee->em_status == 'Active' ? 'Inactive' : 'Active';
+        $employee->save();
+    }
+
+    public function viewUser($id){
+        $employee = Employee::find($id);
+        $this->contact_number = $employee->em_contactnum;
+        $this->firstname = $employee->em_fname;
+        $this->lastname = $employee->em_lname;
+        $this->middlleinitial = $employee->em_minitial;
+        $this->sufix = $employee->em_suffix;
+        $this->role = $employee->em_role;
+
     }
 }

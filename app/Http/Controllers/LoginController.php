@@ -15,7 +15,6 @@ class LoginController extends Controller
             'contact_number' => 'required',
             'password' => 'required',
         ]);
-        // dd($request->all());
         $credentials = $request->only('contact_number', 'password');
 
         if (Auth::attempt($credentials)) {

@@ -1,159 +1,175 @@
 <?php
 
-use App\Models\BillingStatement;
-use App\Models\Payment;
-use App\Models\Role;
-use App\Models\Subscriber;
-use App\Models\Employee;
-use App\Models\Remittance;
-use App\Models\SubscriptionArea;
-use App\Models\SubscriptionPlan;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
-        Schema::create('subscriber', function (Blueprint $table) {
+        // Create Subscribers Table
+        Schema::create('subscribers', function (Blueprint $table) {
             $table->id('subscriber_id');
-            $table->string('contact_number', 20);
-            $table->string('firstname', 64);
-            $table->string('lastname', 64);
-            $table->string('middlleinitial', 1);
-            $table->string('sufix', 10);
-            $table->string('password', 255);
-            $table->string('status', 11);
+            $table->string('sr_fname');
+            $table->string('sr_lname');
+            $table->string('sr_minitial')->nullable();
+            $table->string('sr_suffix')->nullable();
+            $table->string('sr_contactnum');
+            $table->string('sr_street');
+            $table->string('sr_city');
+            $table->string('sr_province');
+            $table->string('sr_password');
+            $table->string('sr_status');
+            $table->timestamps();
         });
 
-        Schema::create('role', function (Blueprint $table) {
-            $table->id('role_id');
-            $table->string('role_name',64);
+        // Create Subscription Areas Table
+        Schema::create('subscriptionareas', function (Blueprint $table) {
+            $table->id('subscriptionarea_id');
+            $table->string('snarea_name');
+            $table->timestamps();
         });
 
-        Schema::create('employee', function (Blueprint $table) {
+        // Create Subscription Plans Table
+        Schema::create('subscriptionplans', function (Blueprint $table) {
+            $table->id('subscriptionplan_id');
+            $table->string('snplan_bandwidth');
+            $table->decimal('snplan_fee', 8, 2);
+            $table->timestamps();
+        });
+
+        // Create Subscriptions Table
+        Schema::create('subscriptions', function (Blueprint $table) {
+            $table->id('subscription_id');
+            $table->unsignedBigInteger('subscriber_id');
+            $table->unsignedBigInteger('subscriptionarea_id');
+            $table->unsignedBigInteger('subscriptionplan_id');
+            $table->string('sn_num');
+            $table->date('sn_startdate');
+            $table->string('sn_status');
+            $table->timestamps();
+
+            $table->foreign('subscriber_id')->references('subscriber_id')->on('subscribers')->onDelete('cascade');
+            $table->foreign('subscriptionarea_id')->references('subscriptionarea_id')->on('subscriptionareas')->onDelete('cascade');
+            $table->foreign('subscriptionplan_id')->references('subscriptionplan_id')->on('subscriptionplans')->onDelete('cascade');
+        });
+
+        // Create Notifications Table
+        Schema::create('notifications', function (Blueprint $table) {
+            $table->id('notification_id');
+            $table->unsignedBigInteger('subscriber_id');
+            $table->string('nf_message');
+            $table->date('nf_date');
+            $table->string('nf_status');
+            $table->timestamps();
+
+            $table->foreign('subscriber_id')->references('subscriber_id')->on('subscribers')->onDelete('cascade');
+        });
+
+        // Create Billing Statements Table
+        Schema::create('billingstatements', function (Blueprint $table) {
+            $table->id('billstatement_id');
+            $table->unsignedBigInteger('subscription_id');
+            $table->decimal('bs_amount', 8, 2);
+            $table->date('bs_billingdate');
+            $table->date('bs_duedate');
+            $table->string('bs_status');
+            $table->timestamps();
+
+            $table->foreign('subscription_id')->references('subscription_id')->on('subscriptions')->onDelete('cascade');
+        });
+
+
+        // Create Employees Table
+        Schema::create('employees', function (Blueprint $table) {
             $table->id('employee_id');
-            $table->string('contact_number', 20);
-            $table->string('firstname', 64);
-            $table->string('lastname', 64);
-            $table->string('middlleinitial', 1);
-            $table->string('sufix', 10);
-            $table->string('password', 255);
-            $table->string('status', 11);
-            $table->foreignIdFor(Role::class);
+            $table->string('em_fname');
+            $table->string('em_lname');
+            $table->string('em_minitial')->nullable();
+            $table->string('em_suffix')->nullable();
+            $table->string('em_contactnum');
+            $table->string('em_password');
+            $table->string('em_role');
+            $table->string('em_status');
+            $table->timestamps();
         });
 
+        // Create Payments Table
+        Schema::create('payments', function (Blueprint $table) {
+            $table->id('payment_id');
+            $table->unsignedBigInteger('billstatement_id');
+            $table->unsignedBigInteger('employee_id');
+            $table->string('p_month');
+            $table->decimal('p_amount', 8, 2);
+            $table->date('p_date');
+            $table->timestamps();
 
-
-        Schema::create('notification', function (Blueprint $table) {
-            $table->id('Notification_id');
-            $table->string('message_Text', 255);
-            $table->date('date_created',64);
-            $table->string('status',20);
-
-            $table->foreignIdFor(Subscriber::class);
-
+            $table->foreign('billstatement_id')->references('billstatement_id')->on('billingstatements')->onDelete('cascade');
+            $table->foreign('employee_id')->references('employee_id')->on('employees')->onDelete('cascade');
         });
-        Schema::create('subscription_area', function (Blueprint $table) {
-            $table->id('subcription_area_id');
-            $table->string('area_name');
+
+        // Create Remittances Table
+        Schema::create('remittances', function (Blueprint $table) {
+            $table->id('remittance_id');
+            $table->unsignedBigInteger('payment_id');
+            $table->decimal('rm_amount', 8, 2);
+            $table->date('rm_date');
+            $table->timestamps();
+
+            $table->foreign('payment_id')->references('payment_id')->on('payments')->onDelete('cascade');
         });
-        Schema::create('subscription_plan', function (Blueprint $table) {
-            $table->id('subscription_plan_id');
-            $table->string('bandwith',255);
-            $table->string('subscription_fee',64);
+
+        // Create Remittance Proofs Table
+        Schema::create('remittanceproofs', function (Blueprint $table) {
+            $table->id('remittanceproof_id');
+            $table->unsignedBigInteger('remittance_id');
+            $table->string('rm_proof');
+            $table->timestamps();
+
+            $table->foreign('remittance_id')->references('remittance_id')->on('remittances')->onDelete('cascade');
         });
+
+        // Create Announcements Table
+        Schema::create('announcements', function (Blueprint $table) {
+            $table->id('announcement_id');
+            $table->unsignedBigInteger('employee_id');
+            $table->string('an_subject');
+            $table->text('an_message');
+            $table->date('an_date');
+            $table->timestamps();
+
+            $table->foreign('employee_id')->references('employee_id')->on('employees')->onDelete('cascade');
+        });
+
+        // Create Complaints Table
         Schema::create('complaints', function (Blueprint $table) {
             $table->id('complaint_id');
-            $table->string('complaint_message',255);
-            $table->date('date_created',64);
-            $table->string('reply',255);
-            $table->foreignIdFor(Subscriber::class);
-        });
+            $table->unsignedBigInteger('subscriber_id');
+            $table->unsignedBigInteger('employee_id');
+            $table->text('cp_message');
+            $table->date('cp_date');
+            $table->text('cp_reply')->nullable();
+            $table->timestamps();
 
-
-        Schema::create('announcement', function (Blueprint $table) {
-            $table->id('announcement_id');
-            $table->string('subject',64);
-            $table->string('announcement_message',255);
-            $table->date('date_created',64);
-        });
-        Schema::create('subscription', function (Blueprint $table) {
-            $table->id('subscription_id');
-            $table->string('contact_number', 20);
-            $table->string('firstname', 64);
-            $table->string('lastname', 64);
-            $table->string('middlleinitial', 1);
-            $table->string('sufix', 10);
-            $table->string('street', 255);
-            $table->string('city', 255);
-            $table->string('province', 255);
-            $table->date('startdate', 255);
-            $table->string('status', 11);
-            $table->foreignIdFor(SubscriptionPlan::class);
-            $table->foreignIdFor(SubscriptionArea::class);
-            $table->foreignId(Subscriber::class);
-        });
-        Schema::create('billing_statement', function (Blueprint $table) {
-            $table->id('billing_statement_id');
-            $table->string('amount_due', 64);
-            $table->date('billing_date', 11);
-            $table->date('due_date', 11);
-            $table->string('status', 11);
-            $table->foreignIdFor(Subscriber::class);
-        });
-        Schema::create('payment', function (Blueprint $table) {
-            $table->id('payment_id');
-            $table->string('month_paid', 64);
-            $table->date('amount_paid', 11);
-            $table->date('date_created', 11);
-            $table->string('status', 11);
-            $table->foreignId(BillingStatement::class);
-            $table->foreignIdFor(Employee::class);
-        });
-        Schema::create('temporary_reciept', function (Blueprint $table) {
-            $table->id('temporary_reciept_id');
-            $table->string('temp_receipt_number',64);
-            $table->string('amount_paid',255);
-            $table->date('payment_date',64);
-            $table->foreignId(Payment::class);
-        });
-        Schema::create('remittance', function (Blueprint $table) {
-            $table->id('remittance_id');
-            $table->decimal('remittance_amount',64);
-            $table->date('date_created',64);
-            $table->foreignId(Payment::class);
-        });
-        Schema::create('remittanceprof', function (Blueprint $table) {
-            $table->id('remittance_prof_id');
-            $table->longText('ImageFile')->charset('binary');
-            $table->foreignIdFor(Remittance::class);
+            $table->foreign('subscriber_id')->references('subscriber_id')->on('subscribers')->onDelete('cascade');
+            $table->foreign('employee_id')->references('employee_id')->on('employees')->onDelete('cascade');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('subscriber');
-        Schema::dropIfExists('notification');
-        Schema::dropIfExists('subscription_area');
-        Schema::dropIfExists('subscription_plan');
         Schema::dropIfExists('complaints');
-        Schema::dropIfExists('role');
-        Schema::dropIfExists('employee');
-        Schema::dropIfExists('announcement');
-        Schema::dropIfExists('subscription');
-        Schema::dropIfExists('billing_statement');
-        Schema::dropIfExists('payment');
-        Schema::dropIfExists('temporary_reciept');
-        Schema::dropIfExists('remittance');
-        Schema::dropIfExists('remittanceprof');
-
+        Schema::dropIfExists('announcements');
+        Schema::dropIfExists('employees');
+        Schema::dropIfExists('remittanceproofs');
+        Schema::dropIfExists('remittances');
+        Schema::dropIfExists('payments');
+        Schema::dropIfExists('billingstatements');
+        Schema::dropIfExists('notifications');
+        Schema::dropIfExists('subscriptions');
+        Schema::dropIfExists('subscriptionplans');
+        Schema::dropIfExists('subscriptionareas');
+        Schema::dropIfExists('subscribers');
     }
 };

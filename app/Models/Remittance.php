@@ -2,10 +2,21 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Remittance extends Model
 {
-    use HasFactory;
+    protected $table = 'remittances';
+    protected $primaryKey = 'remittance_id';
+    protected $fillable = ['payment_id', 'rm_amount', 'rm_date'];
+
+    public function payment()
+    {
+        return $this->belongsTo(Payment::class, 'payment_id');
+    }
+
+    public function remittanceProof()
+    {
+        return $this->hasOne(RemittanceProof::class, 'remittance_id');
+    }
 }

@@ -13,9 +13,11 @@
             </div>
 
             <div class="p-2 justify-items-end align-bottom">
-                <button class="bg-cyan-500 rounded py-2 px-3 text-white mt-4">Update</button>
+                <button class="bg-cyan-500 rounded py-2 px-3 text-white mt-4">Add</button>
             </div>
-
         </div>
     </form>
+
+
+
 </div>

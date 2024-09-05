@@ -2,16 +2,19 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class SubscriptionPlan extends Model
 {
-    use HasFactory;
-    public $timestamps = false;
-    protected $table = 'subscription_plan';
-    protected $primaryKey = 'subscription_plan_id';
-    protected $fillable = ['bandwith', 'subscription_fee'];
+    protected $table = 'subscriptionplans';
+    protected $primaryKey = 'subscriptionplan_id';
+    protected $fillable = ['snplan_bandwidth', 'snplan_fee'];
+
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class, 'subscriptionplan_id');
+    }
+
 
     public function scopeSearch($query, $value)
     {

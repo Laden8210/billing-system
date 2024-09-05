@@ -2,16 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class SubscriptionArea extends Model
 {
-    use HasFactory;
-    public $timestamps = false;
-    protected $table = 'subscription_area';
-    protected $primaryKey = 'subscription_area_id';
-    protected $fillable = ['area_name'];
+    protected $table = 'subscriptionareas';
+    protected $primaryKey = 'subscriptionarea_id';
+    protected $fillable = ['snarea_name'];
+
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class, 'area_id');
+    }
 
 
     public function scopeSearch($query, $value)
@@ -19,5 +21,7 @@ class SubscriptionArea extends Model
         return $query->where('area_name', 'like', '%' . $value . '%');
     }
 
-
 }
+
+
+

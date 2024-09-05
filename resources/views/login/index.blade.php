@@ -13,11 +13,11 @@
 
     <div class="flex h-screen justify-center items-center">
 
-        <div class="shadow-lg rounded-lg p-2 w-1/3">
+        <div class="shadow-lg rounded-lg p-2 w-1/4">
             <form action="{{ route('login-user') }}" method="POST">
                 @csrf
-                <h1 class="text-2xl font-bold text-center">Welcome</h1>
-                <p class="text-slate-700 text-center">Enter your details to sign in to your action</p>
+                <h1 class="text-2xl font-bold text-center mb-5">Welcome</h1>
+                <p class="text-slate-700 text-center mb-5">Enter your details to sign in to your action</p>
                 <div class="grid grid-flow-row gap-5 p-2">
                     <div>
                         <label for="">Contact Number</label>
