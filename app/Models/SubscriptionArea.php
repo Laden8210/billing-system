@@ -18,7 +18,7 @@ class SubscriptionArea extends Model
 
     public function scopeSearch($query, $value)
     {
-        return $query->where('area_name', 'like', '%' . $value . '%');
+        return $query->where('snarea_name', 'like', '%' . $value . '%');
     }
 
 }

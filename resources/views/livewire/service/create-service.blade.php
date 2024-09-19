@@ -9,12 +9,6 @@
 
         </div>
 
-        <div class="w-3/4">
-            <label class="font-bold">Type</label>
-
-            <input wire:model="type" type="text" class="p-2 w-full outline-none border border-slate-300" placeholder="Search Service">
-
-        </div>
 
         <div class="w-full flex justify-between ">
 

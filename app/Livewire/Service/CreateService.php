@@ -26,8 +26,8 @@ class CreateService extends Component
         ]);
 
         SubscriptionPlan::create([
-            'bandwith' => $this->bandwidth,
-            'subscription_fee' => $this->price,
+            'snplan_bandwidth' => $this->bandwidth,
+            'snplan_fee' => $this->price,
         ]);
 
         session()->flash('message', 'Service created successfully.');

@@ -6,11 +6,11 @@
 
 
         <x-menu-item title="Dashboard" icon="fas fa-home" url="{{ route('dashboard') }}" />
-        <x-menu-item title="User Account" active="true" icon="fa-solid fa-user-pen" url="{{ route('user') }}" />
+        <x-menu-item title="Employee" active="true" icon="fa-solid fa-user-pen" url="{{ route('user') }}" />
 
 
 
-        <x-menu-item title="Subscriber Information" icon="fa-solid fa-user-pen" url="{{ route('subscriber') }}" />
+        <x-menu-item title="Subscriber" icon="fa-solid fa-user-pen" url="{{ route('subscriber') }}" />
         <x-menu-item title="Services" icon="fa-solid fa-truck-fast" url="{{ route('service') }}" />
         <x-menu-item title="Billing" icon="fa-solid fa-file-invoice-dollar" url="{{ route('billing') }}" />
         <x-menu-item title="Payment" icon="fa-solid fa-money-bill" url="{{ route('payment') }}" />

@@ -14,6 +14,18 @@ class Subscriber extends Model
         'sr_password', 'sr_status'
     ];
 
+    public function scopeSearch($query, $value)
+    {
+        return $query->where('sr_fname', 'like', '%' . $value . '%')
+            ->orWhere('sr_lname', 'like', '%' . $value . '%')
+            ->orWhere('sr_minitial', 'like', '%' . $value . '%')
+            ->orWhere('sr_suffix', 'like', '%' . $value . '%')
+            ->orWhere('sr_contactnum', 'like', '%' . $value . '%')
+            ->orWhere('sr_street', 'like', '%' . $value . '%')
+            ->orWhere('sr_city', 'like', '%' . $value . '%')
+            ->orWhere('sr_province', 'like', '%' . $value . '%');
+    }
+
     public function subscriptions()
     {
         return $this->hasMany(Subscription::class, 'subscriber_id');

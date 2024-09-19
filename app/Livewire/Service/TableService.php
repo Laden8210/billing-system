@@ -25,8 +25,8 @@ class TableService extends Component
     public function selectService($id)
     {
         $this->selectedService = SubscriptionPlan::find($id);
-        $this->sbandwidth = $this->selectedService->bandwidth;
-        $this->price = $this->selectedService->subscription_fee;
+        $this->sbandwidth = $this->selectedService->snplan_bandwidth;
+        $this->price = $this->selectedService->snplan_fee;
     }
 
     public function deleteService()
@@ -45,8 +45,8 @@ class TableService extends Component
             'price' => 'required',
         ]);
         $this->selectedService->update([
-            'bandwidth' => $this->sbandwidth,
-            'subscription_fee' => $this->price,
+            'snplan_bandwidth' => $this->sbandwidth,
+            'snplan_fee' => $this->price,
         ]);
     }
 

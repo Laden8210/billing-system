@@ -27,6 +27,10 @@ class NavigationController extends Controller
         return view('subscriber.index');
     }
 
+    public function subscriberById($id){
+        return view('subscriber.view', compact('id'));
+    }
+
     public function billing(){
         return view('billing.index');
     }

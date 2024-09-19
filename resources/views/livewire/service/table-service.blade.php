@@ -6,7 +6,7 @@
         wire:model.live.debounce.300ms = "search">
 
 
-    <div class="w-full flex p-2 justify-center" wire:poll.1s>
+    <div class="w-full flex p-2 justify-center">
 
         <table class="w-full table-auto border-collapse border border-slate-400">
             <thead>
@@ -22,21 +22,21 @@
             <tbody>
                 @foreach ($services as $service)
                     <tr class="text-center">
-                        <td class="border border-slate-300">{{ $service->subscription_plan_id }}</td>
-                        <td class="border border-slate-300">{{ $service->bandwith }}</td>
+                        <td class="border border-slate-300">{{ $service->subscriptionplan_id }}</td>
+                        <td class="border border-slate-300">{{ $service->snplan_bandwidth }}</td>
 
-                        <td class="border border-slate-300">{{ $service->subscription_fee }}</td>
+                        <td class="border border-slate-300">{{ $service->snplan_fee }}</td>
 
                         <td class="border border-slate-300 px-2">
                             <button class=" bg-cyan-600 p-2 rounded text-slate-50 font-bold text-xs my-2"
                              x-on:click="$dispatch('open-modal', {name: 'update-service'})"
-                                wire:click="selectService({{ $service->subscription_plan_id }})">
+                                wire:click="selectService({{ $service->subscriptionplan_id }})">
                                 Update
                             </button>
 
                             <button class=" bg-red-600 p-2 rounded text-slate-50 font-bold text-xs my-2" x-data
                                 x-on:click="$dispatch('open-modal', {name: 'delete-service'})"
-                                wire:click="selectService({{ $service->subscription_plan_id }})">
+                                wire:click="selectService({{ $service->subscriptionplan_id }})">
                                 <i class="fa fa-delete"></i>
                                 Delete
                             </button>
@@ -54,7 +54,7 @@
             @slot('body')
                 <form wire:submit.prevent="deleteService">
                     <div class="text-xl font-bold p-2">
-                        <p>Do you want to delete this service ({{ $selectedService->bandwith }})?</p>
+                        <p>Do you want to delete this service ({{ $selectedService->snplan_bandwidth }})?</p>
                     </div>
                     <div class="flex justify-end gap-2">
                         <button class="bg-red-600 p-2 rounded text-slate-50 font-bold text-xs my-2"
@@ -85,13 +85,6 @@
 
                         </div>
 
-                        <div class="">
-                            <label class="font-bold">Type</label>
-
-                            <input wire:model="type" type="text" class="p-2 w-full outline-none border border-slate-300"
-                                placeholder="Type">
-
-                        </div>
 
                         <div class="">
                             <label class="font-bold">Service Fee</label>
@@ -108,7 +101,7 @@
                             Cancel
                         </button>
                         <button class="bg-cyan-600 p-2 rounded text-slate-50 font-bold text-xs my-2" type="submit"
-                            x-on:click="$dispatch('close-modal')">
+                            >
                             Update
                         </button>
                     </div>

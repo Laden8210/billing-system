@@ -9,8 +9,8 @@ class Subscription extends Model
     protected $table = 'subscriptions';
     protected $primaryKey = 'subscription_id';
     protected $fillable = [
-        'subscriber_id', 'area_id', 'subscriptionplan_id',
-        'sn_num', 'sn_startdate', 'sn_status'
+        'subscriber_id', 'area_id', 'subscriptionplan_id', 'subscriptionarea_id',
+        'sn_num', 'sn_startdate', 'sn_status', 'snplan_bandwidth'
     ];
 
     public function subscriber()
@@ -20,7 +20,7 @@ class Subscription extends Model
 
     public function area()
     {
-        return $this->belongsTo(SubscriptionArea::class, 'area_id');
+        return $this->belongsTo(SubscriptionArea::class, 'subscriptionarea_id');
     }
 
     public function plan()

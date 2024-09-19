@@ -18,9 +18,9 @@ class SubscriptionPlan extends Model
 
     public function scopeSearch($query, $value)
     {
-        return $query->where('bandwith', 'like', '%' . $value . '%')
+        return $query->where('snplan_bandwidth', 'like', '%' . $value . '%')
 
-            ->orWhere('subscription_fee', 'like', '%' . $value . '%');
+            ->orWhere('snplan_fee', 'like', '%' . $value . '%');
 
     }
 }
