@@ -14,15 +14,7 @@
                             class="border border-slate-500 p-2 outline-none w-full" placeholder="Enter Subject">
                     </div>
 
-                    <div class="w-1/2">
-                        <label for="">Area</label>
-                        <select name="" wire:model="area" id=""
-                            class="border border-slate-500 outline-none w-full p-2 mx-2">
-                            @foreach ($subscriptionAreas as $area)
-                                <option value="{{ $area->subscriptionarea_id }}">{{ $area->snarea_name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+
 
                 </div>
 

@@ -8,7 +8,7 @@ class BillingStatement extends Model
 {
     protected $table = 'billingstatements';
     protected $primaryKey = 'billstatement_id';
-    protected $fillable = ['subscription_id', 'bs_amount', 'bs_billingdate', 'bs_duedate', 'bs_status'];
+    protected $fillable = ['subscription_id', 'bs_billingdate', 'bs_duedate', 'bs_status'];
 
     public function subscription()
     {
@@ -22,8 +22,8 @@ class BillingStatement extends Model
 
     public function scopeSearch($query, $value)
     {
-        return $query->where('bs_amount', 'like', '%' . $value . '%')
-            ->orWhere('bs_billingdate', 'like', '%' . $value . '%')
+        return $query
+            ->where('bs_billingdate', 'like', '%' . $value . '%')
             ->orWhere('bs_duedate', 'like', '%' . $value . '%')
             ->orWhere('bs_status', 'like', '%' . $value . '%')
             ->orWhereHas('subscription', function ($query) use ($value) {

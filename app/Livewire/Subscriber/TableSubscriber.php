@@ -53,7 +53,7 @@ class TableSubscriber extends Component
             'sr_province' => $this->province,
             'sr_status' => 'Active',
             'sr_datecreated' => now(),
-            'sr_password' => bcrypt('password')
+            'sr_password' => 'password'
         ]);
 
         $this->reset();

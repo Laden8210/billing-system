@@ -54,7 +54,6 @@ class GenerateBillingStatement extends Command
                 // Create new billing statement if not exists
                 $billing = new BillingStatement();
                 $billing->subscription_id = $sub->subscription_id;
-                $billing->bs_amount = $sub->plan->snplan_fee;
                 $billing->bs_status = 'unpaid';
                 $billing->bs_duedate = Carbon::now()->addMonth()->addDays(5)->format('Y-m-d');
                 $billing->bs_billingdate = Carbon::now()->addMonth()->format('Y-m-d');

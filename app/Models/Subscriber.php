@@ -14,6 +14,10 @@ class Subscriber extends Model
         'sr_password', 'sr_status'
     ];
 
+    protected $hidden = [
+        'sr_password'
+    ];
+
     public function scopeSearch($query, $value)
     {
         return $query->where('sr_fname', 'like', '%' . $value . '%')

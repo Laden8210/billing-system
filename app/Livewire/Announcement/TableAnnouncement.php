@@ -8,6 +8,7 @@ class TableAnnouncement extends Component
 {
 
     public $search = '';
+    public $announcement;
     public function render()
     {
         return view('livewire.announcement.table-announcement',
@@ -16,4 +17,9 @@ class TableAnnouncement extends Component
             ]
     );
     }
+
+    public function viewAnnouncment($id)
+    {
+        $this->announcement = Announcement::find($id);
+     }
 }
