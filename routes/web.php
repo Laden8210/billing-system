@@ -20,7 +20,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/report', [NavigationController::class, 'report'])->name('report');
     Route::get('/announcement', [NavigationController::class, 'announcement'])->name('announcement');
     Route::get('/complaints', [NavigationController::class, 'complaints'])->name('complaints');
-    Route::get('/user', [NavigationController::class, 'userAccount'])->name('user');
 
     Route::get('/subscriber/{id}', [NavigationController::class, 'subscriberById'])->name('subscriberById');
 });
+Route::get('/user', [NavigationController::class, 'userAccount'])->name('user');
