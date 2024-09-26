@@ -5,6 +5,7 @@ namespace App\Livewire\Subscriber;
 use Livewire\Component;
 
 use App\Models\Subscriber;
+use Illuminate\Support\Facades\Http;
 
 class TableSubscriber extends Component
 {
@@ -17,18 +18,20 @@ class TableSubscriber extends Component
     public $street;
     public $city;
     public $province;
-
+    public $status;
 
     public $search = '';
     public function render()
     {
         return view('livewire.subscriber.table-subscriber',
             [
-                'subscribers' => Subscriber::search($this->search)->paginate(10)
+                'subscribers' => Subscriber::search($this->search)
+                ->when($this->status, function($query){
+                    return $query->where('sr_status', $this->status);
+                })->get()
             ]
         );
     }
-
     public function save()
     {
         $this->validate([
@@ -42,6 +45,9 @@ class TableSubscriber extends Component
             'province' => 'required',
         ]);
 
+
+        $password = $this->last_name . substr($this->contact_number, -4);
+
         Subscriber::create([
             'sr_fname' => $this->first_name,
             'sr_lname' => $this->last_name,
@@ -53,7 +59,12 @@ class TableSubscriber extends Component
             'sr_province' => $this->province,
             'sr_status' => 'Active',
             'sr_datecreated' => now(),
-            'sr_password' => 'password'
+            'sr_password' => $password,
+        ]);
+
+        $response = Http::post('https://nasa-ph.com/api/send-sms', [
+            'phone_number' => $this->contact_number,
+            'message' => "Hello $this->first_name $this->last_name, your account has been created. Your password is $password. Please change your password after logging in. Thank you.",
         ]);
 
         $this->reset();

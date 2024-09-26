@@ -1,7 +1,7 @@
 <div class="p-2">
 
 
-    <h2 class="font-bold text-xl my-2">Subcriber Account</h2>
+
 
     <hr class="h-1 p-1">
 

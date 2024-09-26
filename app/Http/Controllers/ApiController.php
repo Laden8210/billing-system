@@ -35,16 +35,15 @@ class ApiController extends Controller
 
     public function subscriptions(Request $request)
     {
-        // Validate the subscriber_id is provided
+
         if (!$request->subscriber_id) {
             return response()->json([
                 'error' => 'Invalid subscriber id'
-            ], 400); // Send a 400 Bad Request response
+            ], 400);
         }
 
-        // Fetch the subscription with related area and plan details
         $subscriptions = Subscription::where('subscriber_id', $request->subscriber_id)
-            ->with(['area', 'plan']) // Eager load the area and plan relationships
+            ->with(['area', 'plan'])
             ->get()
             ->map(function ($subscription) {
                 return [
@@ -71,11 +70,11 @@ class ApiController extends Controller
 
     public function sendComplaint(Request $request)
     {
-        // Validate the subscriber_id is provided
+
         if (!$request->subscriber_id) {
             return response()->json([
                 'error' => 'Invalid subscriber id'
-            ], 400); // Send a 400 Bad Request response
+            ], 400);
         }
 
         // Validate the complaint message is provided
@@ -100,8 +99,16 @@ class ApiController extends Controller
         ]);
     }
 
+    public function retrieveComplaints(Request $request){
+
+        $complaint = Complaint::where('subscriber_id', $request->subscriber_id)->get();
+        return response()->json($complaint);
+    }
+
     public function notification(Request $request){
         return response()->json(Announcement::all());
     }
+
+
 
 }

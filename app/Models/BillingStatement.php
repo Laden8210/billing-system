@@ -9,7 +9,7 @@ class BillingStatement extends Model
     protected $table = 'billingstatements';
     protected $primaryKey = 'billstatement_id';
     protected $fillable = ['subscription_id', 'bs_billingdate', 'bs_duedate', 'bs_status'];
-
+    public $timestamp = false;
     public function subscription()
     {
         return $this->belongsTo(Subscription::class, 'subscription_id');

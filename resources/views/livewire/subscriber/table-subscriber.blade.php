@@ -6,15 +6,18 @@
         <div class="flex justify-normal items-center w-1/2 gap-10">
             <div class="w-full">
                 <label for="">Search</label><br>
-                <input type="text" class="p-2 outline-none border border-slate-300 w-full" placeholder="(703) 488-6917">
+                <input type="text" class="p-2 outline-none border border-slate-300 w-full" placeholder="Search Subscriber"
+                wire:model.live.debounce.300ms = "search"
+                >
             </div>
-            <div>
+            <div class="w-full">
 
                 <label for="">Account State</label><br>
-                <select name="" id="" class="border border-slate-300 outline-none p-2">
-                    <option value="">Subscriber</option>
-                    <option value="">Admin</option>
-                    <option value="">Super Admin</option>
+                <select name="" id="" class="border border-slate-300 outline-none p-2 w-full"
+                wire:model.live="status">
+                    <option value="">All</option>
+                    <option value="Active">Activte</option>
+                    <option value="Inactive">Inactive</option>
                 </select>
             </div>
 

@@ -18,47 +18,68 @@
              </thead>
              <tbody>
 
-                 @for ($i = 0; $i < 10; $i++)
-                     <tr class="text-center">
+                @foreach ($complaints as $complain)
+                    <tr class="text-center">
+                        <td class="border border-slate-300">
+                            {{ $complain->complaint_id }}
+                        </td>
+                        <td class="border border-slate-300">
+                            {{$complain->subscriber->sr_fname}} {{$complain->subscriber->sr_lname}}
+                        </td>
+                        <td  class="border border-slate-300">
+                            {{$complain->cp_message}}
+                        </td>
+                        <td  class="border border-slate-300">
+                            {{$complain->created_at}}
+                        </td>
 
-                         <td class="border border-slate-300">0000{{ $i + 1 }}</td>
+                        <td class="border border-slate-300 ">
+                            <button class="hover:bg-cyan-500 px-2 py-1 rounded-full hover:text-white" x-data
+                                x-on:click="$dispatch('open-modal', {name:'reply-modal'})"
+                                wire:click="selectComplaint({{$complain->complaint_id}})"><i
+                                    class="fas fa-reply"></i></button>
+                        </td>
 
+                    </tr>
+                @endforeach
 
-                         <td class="border border-slate-300">Jasper Dela Cruz</td>
-
-                         <td class="border border-slate-300">Slow Internet</td>
-                         <td class="border border-slate-300">10/10/2001</td>
-                         <td class="border border-slate-300 ">
-                             <button class="hover:bg-cyan-500 px-2 py-1 rounded-full hover:text-white" x-data
-                                 x-on:click="$dispatch('open-modal', {name:'reply-modal'})"><i
-                                     class="fas fa-reply"></i></button>
-                         </td>
-                     </tr>
-                 @endfor
              </tbody>
          </table>
 
      </div>
 
+     @if ($selectedcomplaints)
 
      <x-modal-form name="reply-modal" title="Reply Complaints">
          @slot('body')
+
+            <form wire:submit.prevent="replyComplaints">
+                @if (session()->has('message'))
+                <div class="w-full py-2 px-2 bg-green-200 rounded">
+                    <span class="text-green-900">{{ session('message') }}</span>
+                </div>
+            @endif
              <div class="grid grid-cols-2">
                  <div class="col-span-2 flex items-center justify-start text-lg mb-2">
                      <label for="" class="mr-2 font-bold">From:</label>
-                     <span>Jasper Dela Cruz</span>
+                     <span>{{$selectedcomplaints->subscriber->sr_fname .' '. $selectedcomplaints->subscriber->sr_lnam}}</span>
                  </div>
                  <div class="col-span-2">
-                     <textarea name="" id="" class="border border-slate-300 rounded w-full p-2 outline-none"></textarea>
+                     <textarea name="" id="" class="border border-slate-300 rounded w-full p-2 outline-none"
+                     wire:model="reply"
+                     ></textarea>
 
                      <div class="col-span-2 flex justify-end ">
-                         <button class="bg-cyan-500 px-2 py-1 text-white">Reply</button>
+                         <button type="submit" class="bg-cyan-500 px-2 py-1 text-white">Reply</button>
                      </div>
                  </div>
 
 
              </div>
+            </form>
          @endslot
      </x-modal-form>
+
+     @endif
 
  </div>

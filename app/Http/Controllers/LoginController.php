@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\Employee;
+use Illuminate\Support\Facades\Hash;
 class LoginController extends Controller
 {
 
@@ -15,22 +16,33 @@ class LoginController extends Controller
             'contact_number' => 'required',
             'password' => 'required',
         ]);
-        $credentials = $request->only('contact_number', 'password');
 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
+        $employee = Employee::where('em_contactnum', $request->contact_number)->first();
 
-            $user = Auth::user();
-            if ($user->Position === 'Manager' || $user->Position === 'System Administrator') {
-                return redirect()->intended('admin');
-            } elseif ($user->Position === 'Receptionist') {
-                return redirect()->intended('receptionist/booking');
-            }
 
+        if (!$employee || !Hash::check($request->password, $employee->em_password)) {
+            return back()->with('error', 'Invalid contact number or password');
         }
+
+        if($employee->em_status == 'Inactive'){
+            return back()->with('error', 'Your account is inactive');
+        }
+
+
+
+        Auth::login($employee);
+
+        return redirect()->route('dashboard');
 
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ])->withInput($request->only('email'));
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+
+        return redirect()->route('login');
     }
 }

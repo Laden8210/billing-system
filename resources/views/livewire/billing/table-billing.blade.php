@@ -16,8 +16,11 @@
             <div class=" w-1/2 mx-2 ">
                 <label for="">Area</label>
                 <select class="p-2 outline-none border border-slate-300 w-full">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
+                    <option value="">All</option>
+                    @foreach ($areas as $area)
+                        <option value="{{$area->snarea_id}}">{{$area->snarea_name}}</option>
+                    @endforeach
+
                 </select>
 
             </div>

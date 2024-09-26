@@ -17,7 +17,7 @@
         <x-menu-item title="Reports" icon="fa-solid fa-table-list" url="{{ route('report') }}" />
         <x-menu-item title="Announcement" icon="fa-solid fa-bullhorn" url="{{ route('announcement') }}" />
         <x-menu-item title="Complaints" icon="fa-solid fa-comments" url="{{ route('complaints') }}" />
-        <x-menu-item title="Logout" icon="fa-solid fa-right-from-bracket" url="" />
+        <x-menu-item title="Logout" icon="fa-solid fa-right-from-bracket" url="{{route('logout')}}" />
     </ul>
 
     <p class="text-center self-end bottom-2 absolute left-1/4 text-xs">Date: {{ \Carbon\Carbon::now()->toDateString() }}

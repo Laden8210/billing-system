@@ -16,5 +16,6 @@ Route::post('/subscriptions', [ApiController::class, 'subscriptions']);
 
 
 Route::post('/sendComplaint', [ApiController::class, 'sendComplaint']);
+Route::post('/retrieveComplaints', [ApiController::class, 'retrieveComplaints']);
 
 Route::post('/notification', [ApiController::class, 'notification']);

@@ -16,12 +16,32 @@ class ViewSubscriber extends Component
     public $plan;
     public $subscription_number;
 
+
+    public $first_name;
+    public $last_name;
+    public $middle_name;
+    public $suffix;
+    public $contact_number;
+    public $street;
+    public $city;
+    public $province;
+
+
+
     public $subscriptions;
     public $selectedSubscription;
     public function mount($id)
     {
         $this->subscriber = Subscriber::find($id);
         $this->subscriptions = Subscription::where('subscriber_id', $id)->get();
+        $this->first_name = $this->subscriber->sr_fname;
+        $this->last_name = $this->subscriber->sr_lname;
+        $this->middle_name = $this->subscriber->sr_minitial;
+        $this->suffix = $this->subscriber->sr_suffix;
+        $this->contact_number = $this->subscriber->sr_contactnum;
+        $this->street = $this->subscriber->sr_street;
+        $this->city = $this->subscriber->sr_city;
+        $this->province = $this->subscriber->sr_province;
     }
 
     public function render()
@@ -90,5 +110,31 @@ class ViewSubscriber extends Component
     public function activate($id){
         Subscription::find($id)->update(['sn_status' => 'active']);
         session()->flash('message-status', 'Subscription activated successfully');
+    }
+
+    public function updateUser(){
+
+        $this->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'middle_name' => 'required',
+            'suffix' => 'required',
+            'contact_number' => 'required',
+            'street' => 'required',
+            'city' => 'required',
+            'province' => 'required',
+        ]);
+        $this->subscriber->update([
+            'sr_fname' => $this->first_name,
+            'sr_lname' => $this->last_name,
+            'sr_minitial' => $this->middle_name,
+            'sr_suffix' => $this->suffix,
+            'sr_contactnum' => $this->contact_number,
+            'sr_street' => $this->street,
+            'sr_city' => $this->city,
+            'sr_province' => $this->province,
+        ]);
+
+        session()->flash('message', 'Subscriber updated successfully');
     }
 }
