@@ -67,6 +67,10 @@ class TableSubscriber extends Component
             'message' => "Hello $this->first_name $this->last_name, your account has been created. Your password is $password. Please change your password after logging in. Thank you.",
         ]);
 
+
+
+        session()->flash('message', 'Subscriber added successfully');
+
         $this->reset();
     }
 
