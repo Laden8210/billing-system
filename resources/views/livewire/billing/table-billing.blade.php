@@ -1,6 +1,6 @@
 <div class="p-2">
 
-    <h1 class="font-bold my-2">Area Coverage</h1>
+    <h1 class="font-bold my-2">Billing</h1>
 
     <div class="flex justify-between">
 
@@ -29,10 +29,9 @@
         </div>
 
         <div class="p-2" >
-            <div class="bg-cyan-400 rounded-full px-2 py-1 text-slate-50 flex justify-normal">
-                <i class="far fa-calendar mt-1 mx-2"></i>
-                <p>Currently viewing: Jul 5, 2024</p>
-            </div>
+          <button class="bg-cyan-600 rounded px-2 py-2 text-white font-bold"
+            wire:click="generate"
+          >Generate Billing Statement</button>
         </div>
     </div>
 
@@ -150,4 +149,12 @@
         </x-modal-form>
 
     </div>
+
+
+    @if (session()->has('message'))
+        <div class="w-full py-2 px-2 bg-green-200 rounded">
+            <span class="text-green-900">{{ session('message') }}</span>
+        </div>
+
+    @endif
 </div>

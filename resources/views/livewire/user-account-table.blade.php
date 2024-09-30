@@ -18,8 +18,8 @@
                 <select name="" id="" class="border border-slate-400 p-2 w-full mx-2 "
                     wire:model.live="status">
                     <option value="">All</option>
-                    <option value="0">Active</option>
-                    <option value="1">Inactive</option>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
                 </select>
             </div>
         </div>
@@ -239,7 +239,7 @@
                         <td class="border border-slate-300">{{ $employee->em_contactnum }}</td>
                         <td class="border border-slate-300">{{ $employee->em_fname . ' ' . $employee->em_lname }}</td>
 
-                        <td class="border border-slate-300">{{ $employee->role_id === 1 ? 'Admin' : 'Collector' }}
+                        <td class="border border-slate-300">{{ $employee->em_role }}
                         </td>
                         <td class="border border-slate-300">{{ $employee->em_status }}</td>
                         <td class="border border-slate-300">

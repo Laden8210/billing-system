@@ -1,12 +1,18 @@
 <div class="p-2">
 
     <h1 class="font-bold my-2">Announcement</h1>
-    <div class="grid grid-cols-3">
+    <div class="grid grid-cols-5 items-baseline gap-2">
         <div class="">
             <label for="">Search Annnouncement</label>
             <input type="text" class="border border-slate-500 p-2 outline-none w-full" placeholder="Enter Announcement"
                 wire:model.live.300ms="search">
 
+        </div>
+
+        <div class="">
+            <label for="">Select Date</label>
+            <input type="date" class="border border-slate-500 p-2 outline-none w-full" placeholder="Select Date"
+            wire:model.live.300ms="date">
         </div>
     </div>
     <div class="w-full flex px-2 py-3 justify-center" wire:poll.debounce.1000ms>
@@ -39,7 +45,8 @@
                         </td>
 
                         <td class="border border-slate-300 py-3">
-                            <button class="px-2 py-1 bg-red-600 rounded hover:bg-red-700 text-white font-semibold ">Delete</button>
+                            <button class="px-2 py-1 bg-red-600 rounded hover:bg-red-700 text-white font-semibold "
+                            wire:click="delete({{$announcement->announcement_id }})">Delete</button>
                         </td>
 
 
@@ -54,6 +61,17 @@
         {{ $announcements->links() }}
     </div>
 
+
+
+    @if (session()->has('message'))
+        <div class="bg-green-500 text-white p-2 my-2 text-center">
+            {{ session('message') }}
+        </div>
+
+
+    @endif
+
+    @if ($announcement)
     <x-modal-form name="view-announcement" title="Announcement Detais">
         @slot('body')
         <div class="shadow-lg py-2 px-2 rounded">
@@ -61,4 +79,6 @@
         </div>
         @endslot
     </x-modal-form>
+    @endif
+
 </div>

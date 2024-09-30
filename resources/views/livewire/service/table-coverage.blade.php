@@ -22,14 +22,13 @@
             <tbody>
                 @foreach ($coverages as $coverage)
                     <tr class="text-center">
-                        <td class="border border-slate-300">{{ $coverage->subcription_area_id }}</td>
-                        <td class="border border-slate-300">{{ $coverage->area_name }}</td>
+                        <td class="border border-slate-300">{{ $coverage->subscriptionarea_id }}</td>
+                        <td class="border border-slate-300">{{ $coverage->snarea_name }}</td>
 
                         <td class="border border-slate-300 px-2">
                             <button class=" bg-cyan-600 p-2 rounded text-slate-50 font-bold my-2"
-                            x-on:click="$dispatch('open-modal', {name: 'update-coverage'})"
-                            wire:click="selectCoverage({{$coverage->subcription_area_id }})"
-                            >
+                                x-on:click="$dispatch('open-modal', {name: 'update-coverage'})"
+                                wire:click="selectCoverage({{ $coverage->subscriptionarea_id }})">
                                 <i class="fa fa-add"></i>
                                 Update
                             </button>
@@ -49,21 +48,38 @@
 
     <x-modal-form name="update-coverage" title="Update Coverage">
         @slot('body')
-        <form wire:submit.prevent="store">
+            <form wire:submit.prevent="saveUpdatedCoverage">
 
-            <div class="flex justify-start my-2">
+                @if ($errors->any())
+                    <div class="bg-red-500 text-white p-2">
+                        @foreach ($errors->all() as $error)
+                            <p>{{ $error }}</p>
+                        @endforeach
+                    </div>
 
-                <div class="">
-                    <label for="">Area Name</label>
-                    <input wire:model="updateCoverage" type="text" class="border border-slate-500 p-2 outline-none w-full"
-                        placeholder="Enter Area Name">
+                @endif
+
+                @if (session()->has('message'))
+                    <div class="bg-green-500 text-white p-2">
+                        {{ session('message') }}
+                    </div>
+
+                @endif
+                <div class="flex justify-start my-2">
+
+                    <div class="w-full">
+                        <label for="">Area Name</label>
+                        <input wire:model="area" type="text"
+                            class="border border-slate-500 p-2 outline-none w-full" placeholder="Enter Area Name">
+                    </div>
+
+
+
+                    <div class="p-2 justify-items-end align-bottom">
+                        <button type="submit" class="bg-cyan-500 rounded py-2 px-3 text-white mt-4">Update</button>
+                    </div>
                 </div>
-
-                <div class="p-2 justify-items-end align-bottom">
-                    <button class="bg-cyan-500 rounded py-2 px-3 text-white mt-4">Add</button>
-                </div>
-            </div>
-        </form>
+            </form>
         @endslot
     </x-modal-form>
 </div>

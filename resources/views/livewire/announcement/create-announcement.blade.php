@@ -6,16 +6,13 @@
         <h2 class="font-bold text-xl">POST ANNOUNCEMENT</h2>
         <form wire:submit.prevent="store">
             <div class="flex justify-between my-2">
-                <div class="flex justify-normal mx-2">
+                <div class="flex justify-normal">
 
-                    <div class="w-1/2">
+                    <div class="w-full">
                         <label for="">Subject</label>
                         <input type="text" wire:model="an_subject"
                             class="border border-slate-500 p-2 outline-none w-full" placeholder="Enter Subject">
                     </div>
-
-
-
                 </div>
 
             </div>

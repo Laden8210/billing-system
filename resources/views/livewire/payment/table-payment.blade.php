@@ -11,44 +11,22 @@
     <div class="flex justify-between">
 
         <div class="grid grid-cols-4 w-1/2 items-end">
-            <div class=" mx-2">
+            <div class="col-span-2">
+                <label for="">Search</label>
 
-                <select name="" id="" class="p-2 outline-none border border-slate-300 w-full">
-                    <option value="">Select</option>
-                    @foreach ($area as $a)
-                        <option value="{{$a->subscriptionarea_id}}">{{$a->snarea_name}}</option>
-                    @endforeach
-
-
-                </select>
+                <input type="text" class="p-2 outline-none border border-slate-300 w-full"
+                wire:model.live="search"
+                placeholder="Search">
 
             </div>
-
-            <div class="p-2 col-span-2">
-                <div class="bg-cyan-400 rounded-full px-2 py-1 text-slate-50 flex justify-normal">
-                    <i class="far fa-calendar mt-1 mx-2"></i>
-                    <p>Currently viewing: Jul 5, 2024</p>
-                </div>
-            </div>
-
-            <div class="mx-2">
-
-                <select name="" id="" class="p-2 outline-none border border-slate-300 w-full">
-                    <option value="active">Active Account</option>
-                    <option value="active">Inactive Account</option>
-
-                </select>
-            </div>
-
         </div>
-
 
 
 
     </div>
 
 
-    <div class="w-full flex p-2 justify-center">
+    <div class="w-full flex my-2 justify-center">
 
         <table class="w-full table-auto border-collapse border border-slate-400">
             <thead>

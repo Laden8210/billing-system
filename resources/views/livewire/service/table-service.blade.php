@@ -75,7 +75,21 @@
         <x-modal-form name="update-service" title="Update Service">
             @slot('body')
                 <form wire:submit.prevent="updateService">
+                    @if ($errors->any())
+                    <div class="bg-red-500 text-white p-2">
+                        @foreach ($errors->all() as $error)
+                            <p>{{ $error }}</p>
+                        @endforeach
+                    </div>
 
+                @endif
+
+                @if (session()->has('message'))
+                    <div class="bg-green-500 text-white p-2">
+                        {{ session('message') }}
+                    </div>
+
+                @endif
                     <div>
                         <div class=" ">
                             <label class="font-bold">Bandwidth (Mbps)</label>

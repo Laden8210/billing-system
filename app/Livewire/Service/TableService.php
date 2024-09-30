@@ -48,6 +48,8 @@ class TableService extends Component
             'snplan_bandwidth' => $this->sbandwidth,
             'snplan_fee' => $this->price,
         ]);
+
+        session()->flash('message', 'Service Updated Successfully.');
     }
 
 }
