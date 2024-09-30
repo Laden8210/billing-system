@@ -17,6 +17,8 @@ class UserAccountTable extends Component
     public $confirm_password;
     public $role;
 
+    public $user_id;
+
     public $search ="";
 
     public $status;
@@ -67,6 +69,7 @@ class UserAccountTable extends Component
 
     public function viewUser($id){
         $employee = Employee::find($id);
+        $this->user_id = $id;
         $this->contact_number = $employee->em_contactnum;
         $this->firstname = $employee->em_fname;
         $this->lastname = $employee->em_lname;
@@ -74,5 +77,20 @@ class UserAccountTable extends Component
         $this->sufix = $employee->em_suffix;
         $this->role = $employee->em_role;
 
+    }
+
+    public function updateUser(){
+
+
+        $employee = Employee::find($this->user_id);
+        $employee->em_contactnum = $this->contact_number;
+        $employee->em_fname = $this->firstname;
+        $employee->em_lname = $this->lastname;
+        $employee->em_minitial = $this->middlleinitial;
+        $employee->em_suffix = $this->sufix;
+        $employee->em_role = $this->role;
+        $employee->save();
+
+        session()->flash('message', 'User updated successfully');
     }
 }

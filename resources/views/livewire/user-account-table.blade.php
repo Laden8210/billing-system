@@ -296,7 +296,7 @@
     <x-modal-form name="view-user-modal" title='View User'>
 
         @slot('body')
-            <form wire:submit.prevent="createUser">
+            <form wire:submit.prevent="updateUser">
                 <div class="grid grid-cols-2 gap-x-2 gap-y-5">
                     <div class="col-span-2">
                         @if (session()->has('message'))
