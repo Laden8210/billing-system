@@ -21,7 +21,7 @@ class CreateCoverage extends Component
         ]);
 
         $coverage = new SubscriptionArea();
-        $coverage->area_name = $this->coverage;
+        $coverage->snarea_name = $this->coverage;
         $coverage->save();
 
         session()->flash('message', 'Coverage successfully created.');
