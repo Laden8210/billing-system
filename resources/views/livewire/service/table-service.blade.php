@@ -6,7 +6,8 @@
         wire:model.live.debounce.300ms = "search">
 
 
-    <div class="w-full flex p-2 justify-center">
+    <div class="w-full flex p-2 justify-center"
+    wire:poll.debounce.1000ms>
 
         <table class="w-full table-auto border-collapse border border-slate-400">
             <thead>

@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Announcement;
+use App\Models\BillingStatement;
 use Illuminate\Http\Request;
 use App\Models\Subscriber;
 use App\Models\Subscription;
 use App\Models\Complaint;
+
+use App\Models\SubscriptionArea;
 
 class ApiController extends Controller
 {
@@ -101,12 +104,22 @@ class ApiController extends Controller
 
     public function retrieveComplaints(Request $request){
 
-        $complaint = Complaint::where('subscriber_id', $request->subscriber_id)->get();
+        $complaint = Complaint::with('employee')
+        ->where('subscriber_id', $request->subscriber_id)->get();
         return response()->json($complaint);
     }
 
     public function notification(Request $request){
         return response()->json(Announcement::all());
+    }
+
+    public function getArea(){
+        return response()->json(SubscriptionArea::all());
+    }
+
+    public function collections(){
+        $billing = BillingStatement::with('subscription.subscriber')->get();
+        return response()->json($billing);
     }
 
 

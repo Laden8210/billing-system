@@ -58,6 +58,17 @@ class UserAccountTable extends Component
         $employee->em_status = 'Active';
         $employee->save();
 
+
+        $this->contact_number = '';
+        $this->firstname = '';
+        $this->lastname = '';
+        $this->middlleinitial = '';
+        $this->sufix = '';
+        $this->password = '';
+        $this->confirm_password = '';
+        $this->role = '';
+
+
         session()->flash('message', 'User created successfully');
     }
 

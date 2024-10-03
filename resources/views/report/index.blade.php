@@ -35,22 +35,10 @@
 
 <div class="grid grid-rows-3 grid-flow-col gap-5 p-2">
 
-    <button class="bg-green-500 hover:bg-green-600 text-center p-10 text-xl text-white">User Account List</button>
-    <button class="bg-green-500 hover:bg-green-600 text-center p-10 text-xl text-white">Service List</button>
+    <a href="{{ route('subscriberReport') }}"  target="_blank" class="bg-green-500 hover:bg-green-600 text-center p-10 text-xl text-white">Subscriber Report</a>
 
-    <button class="bg-green-500 hover:bg-green-600 text-center p-10 text-xl text-white">Disconnection List</button>
-
-    <button class="bg-green-500 hover:bg-green-600 text-center p-10 text-xl text-white">Archived Account List</button>
-
-    <button class="bg-green-500 hover:bg-green-600 text-center p-10 text-xl text-white">Billing Statement</button>
-
-    <button class="bg-green-500 hover:bg-green-600 text-center p-10 text-xl text-white">Remittance Report</button>
-
-    <button class="bg-green-500 hover:bg-green-600 text-center p-10 text-xl text-white">Subscriber Information</button>
-
-    <button class="bg-green-500 hover:bg-green-600 text-center p-10 text-xl text-white">Receivable Report</button>
-
-    <button class="bg-green-500 hover:bg-green-600 text-center p-10 text-xl text-white">Payment History</button>
+    <a class="bg-green-500 hover:bg-green-600 text-center p-10 text-xl text-white">Remittance Report</a>
+    <a href="{{ route('paymentReport') }}"  target="_blank" class="bg-green-500 hover:bg-green-600 text-center p-10 text-xl text-white">Payment History</a>
 
 </div>
 

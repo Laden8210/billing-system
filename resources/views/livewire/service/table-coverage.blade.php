@@ -6,7 +6,8 @@
         placeholder="Search Coverage">
 
 
-    <div class="w-full flex p-2 justify-center">
+    <div class="w-full flex p-2 justify-center"
+    wire:poll.debounce.1000ms>
 
         <table class="w-full table-auto border-collapse border border-slate-400">
             <thead>
@@ -33,10 +34,14 @@
                                 Update
                             </button>
 
-                            <button class=" bg-red-600 p-2 rounded text-slate-50 font-bold my-2">
+                            <button class=" bg-red-600 p-2 rounded text-slate-50 font-bold my-2"
+                            x-data
+                            x-on:click="$dispatch('open-modal', {name: 'delete-service'})"
+                            wire:click="selectCoverage({{ $coverage->subscriptionarea_id }})">
                                 <i class="fa fa-delete"></i>
                                 Delete
                             </button>
+
 
                         </td>
                     </tr>
@@ -45,6 +50,29 @@
         </table>
 
     </div>
+
+
+    @if ($selectedCoverage)
+        <x-modal-form name="delete-service" title="Delete Service">
+            @slot('body')
+                <form wire:submit.prevent="deleteCoverage">
+                    <div class="text-xl font-bold p-2">
+                        <p>Do you want to delete this area ({{ $selectedCoverage->snarea_name }})?</p>
+                    </div>
+                    <div class="flex justify-end gap-2">
+                        <button class="bg-red-600 p-2 rounded text-slate-50 font-bold text-xs my-2"
+                            x-on:click="$dispatch('close-modal')">
+                            Cancel
+                        </button>
+                        <button class="bg-cyan-600 p-2 rounded text-slate-50 font-bold text-xs my-2" type="submit"
+                            x-on:click="$dispatch('close-modal')">
+                            Delete
+                        </button>
+                    </div>
+                </form>
+            @endslot
+        </x-modal-form>
+    @endif
 
     <x-modal-form name="update-coverage" title="Update Coverage">
         @slot('body')

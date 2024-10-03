@@ -2,7 +2,7 @@
 
      <h1 class="font-bold my-2">Complaints</h1>
 
-     <div class="w-full flex p-2 justify-center">
+     <div class="w-full flex p-2 justify-center" wire:poll.debounce.1000ms>
 
          <table class="w-full table-auto border-collapse border border-slate-400">
              <thead>
@@ -14,6 +14,7 @@
                      <th class="border border-slate-300 px-2 py-4">DESCRIPTION</th>
                      <th class="border border-slate-300 px-2 py-4">DATE</th>
                      <th class="border border-slate-300 px-2 py-4">REPLY</th>
+                     <th class="border border-slate-300 px-2 py-4">ACTION</th>
                  </tr>
              </thead>
              <tbody>
@@ -33,11 +34,18 @@
                             {{$complain->created_at}}
                         </td>
 
+                        <td class="border border-slate-300">
+                            {{$complain->cp_reply}}
+
+                        </td>
+
                         <td class="border border-slate-300 ">
+
                             <button class="hover:bg-cyan-500 px-2 py-1 rounded-full hover:text-white" x-data
                                 x-on:click="$dispatch('open-modal', {name:'reply-modal'})"
                                 wire:click="selectComplaint({{$complain->complaint_id}})"><i
                                     class="fas fa-reply"></i></button>
+
                         </td>
 
                     </tr>

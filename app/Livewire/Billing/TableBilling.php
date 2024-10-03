@@ -16,21 +16,22 @@ class TableBilling extends Component
     public $search;
     public $selectedBilling;
 
+
     public $area;
     public function render()
     {
-
-        return view(
-            'livewire.billing.table-billing',
-            [
-                'billings' => BillingStatement::search($this->search)
-                    ->when($this->area, function ($query) {
-                        return $query->where('subscriptionarea_id', $this->area);
-                    })->get(),
-                'areas' => SubscriptionArea::all(),
-            ]
-        );
+        return view('livewire.billing.table-billing', [
+            'billings' => BillingStatement::search($this->search)
+                ->when($this->area, function ($query) {
+                    return $query->whereHas('subscription.area', function ($q) {
+                        $q->where('snarea_name', $this->area);
+                    });
+                })->get(),
+            'areas' => SubscriptionArea::all(),
+        ]);
     }
+
+
 
     public function selectBilling($id)
     {

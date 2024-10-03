@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Payment;
+use App\Models\Subscriber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class NavigationController extends Controller
 {
@@ -55,6 +58,24 @@ class NavigationController extends Controller
 
     public function complaints(){
         return view('complaints.index');
+    }
+    public function generateSubscribersReport()
+    {
+
+
+        // dd($reservations);
+
+        $subscribers = Subscriber::all();
+        $pdf = Pdf::loadView('report.subscriberreport', compact('subscribers'));
+        return $pdf->stream('invoice.pdf');
+    }
+    public function generatePaymentReport()
+    {
+
+        $payments = Payment::all();
+
+        $pdf = Pdf::loadView('report.paymentreport', compact('payments'));
+        return $pdf->stream('invoice.pdf');
     }
 }
 

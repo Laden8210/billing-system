@@ -8,7 +8,7 @@
         <h3 class="text-base mt-10 mb-2">Subsciber Id: {{ $subscriber->subscriber_id }}</h3>
 
         <div class="flex justify-between">
-            <div class="grid grid-cols-5 items-center gap-5 w-11/12">
+            <div class="grid grid-cols-5 items-center gap-5 w-11/12" wire:poll>
                 <div>
                     <p class="text-base font-bold">First Name: <span
                             class="font-normal">{{ $subscriber->sr_fname }}</span></p>
@@ -68,7 +68,7 @@
             <button class="rounded p-2 bg-blue-900 hover:bg-blue-700 text-white"
             x-data x-on:click="$dispatch('open-modal', {name:'create-subscription-modal'})" >Add</button>
         </div>
-        <div wire:poll.1s>
+        <div wire:poll>
             <table class="w-full table-auto border-collapse border border-slate-400">
                 <thead>
                     <tr>
@@ -314,7 +314,7 @@
 
                     <div class="grid grid-cols-2 gap-2 col-span-2">
                         <button
-                            class="rounded px-2 py-1 bg-blue-800 hover:bg-blue-600 text-white font-semibold">Add</button>
+                            class="rounded px-2 py-1 bg-blue-800 hover:bg-blue-600 text-white font-semibold">Update</button>
                         <button type="button" x-on:click="$dispatch('close-modal', {name:'create-user-modal'})"
                             class="rounded px-2 py-1  hover:bg-red-400 hover:text-white font-semibold transition-all delay-75">Cancel</button>
                     </div>

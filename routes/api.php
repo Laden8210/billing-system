@@ -19,3 +19,8 @@ Route::post('/sendComplaint', [ApiController::class, 'sendComplaint']);
 Route::post('/retrieveComplaints', [ApiController::class, 'retrieveComplaints']);
 
 Route::post('/notification', [ApiController::class, 'notification']);
+
+
+Route::post('area', [ApiController::class, 'getArea']);
+
+Route::post('collections', [ApiController::class, 'collections']);

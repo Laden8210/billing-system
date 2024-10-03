@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NavigationController;
 
@@ -24,3 +25,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/subscriber/{id}', [NavigationController::class, 'subscriberById'])->name('subscriberById');
 });
 Route::get('/user', [NavigationController::class, 'userAccount'])->name('user');
+
+
+Route::get('/subscriberReport', [NavigationController::class, 'generateSubscribersReport'])->name('subscriberReport');
+Route::get('paymentReport', [NavigationController::class, 'generatePaymentReport'])->name('paymentReport');

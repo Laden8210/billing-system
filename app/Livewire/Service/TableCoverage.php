@@ -42,4 +42,23 @@ class TableCoverage extends Component
 
         session()->flash('message', 'Coverage Updated Successfully.');
     }
+    public function deleteCoverage()
+    {
+        if ($this->selectedCoverage) {
+            $id = $this->selectedCoverage->subscriptionarea_id;
+
+            // Delete the record
+            SubscriptionArea::destroy($id);
+
+            // Reset selected coverage after deletion
+            $this->selectedCoverage = null;
+            $this->area = null;
+
+
+
+            // Optionally display a success message
+            session()->flash('message', 'Coverage Deleted Successfully.');
+        }
+    }
+
 }

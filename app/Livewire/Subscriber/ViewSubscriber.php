@@ -75,6 +75,9 @@ class ViewSubscriber extends Component
         ]);
 
         session()->flash('message', 'Subscription added successfully');
+
+        return redirect()->route('subscriberById', ['id' => $this->subscriber->subscriber_id]);
+
     }
 
     public function selectSubscription($id){
