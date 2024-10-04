@@ -8,8 +8,12 @@ use Illuminate\Http\Request;
 use App\Models\Subscriber;
 use App\Models\Subscription;
 use App\Models\Complaint;
+use App\Models\Employee;
+use App\Models\SubscriptionPlan;
 
 use App\Models\SubscriptionArea;
+use App\Models\Payment;
+use Illuminate\Support\Facades\Hash;
 
 class ApiController extends Controller
 {
@@ -34,6 +38,35 @@ class ApiController extends Controller
         }
 
         return response()->json($subscriber);
+    }
+
+    public function loginEmployee(Request $request){
+
+        if(!$request->em_contactnum || !$request->em_contactnum){
+            return response()->json([
+                'error' => 'Invalid employee id or password'
+            ]);
+        }
+
+
+        $employee = Employee::where('em_contactnum', $request->em_contactnum)->first();
+
+
+        if(!$employee){
+            return response()->json([
+                'error' => 'Invalid employee id'
+            ]);
+        }
+
+
+        if(Hash::check($request->password, $employee->em_password)){
+            return response()->json($employee);
+        }
+
+        return response()->json([
+            'error' => 'Invalid password'
+        ]);
+
     }
 
     public function subscriptions(Request $request)
@@ -117,10 +150,130 @@ class ApiController extends Controller
         return response()->json(SubscriptionArea::all());
     }
 
-    public function collections(){
-        $billing = BillingStatement::with('subscription.subscriber')->get();
+    public function collections() {
+        // Retrieve BillingStatement records with related models
+        $billing = BillingStatement::with([
+            'subscription.subscriber',
+            'subscription.area',
+            'subscription.plan'
+        ])->get();
+
+        // Return the billing data as a JSON response
         return response()->json($billing);
     }
+
+    public function getOneCollection(Request $request){
+
+        if(!$request->billstatement_id){
+            return response()->json([
+                'error' => 'Invalid bill statement id'
+            ], 400);
+        }
+        $billing = BillingStatement::with([
+            'subscription.subscriber',
+            'subscription.area',
+            'subscription.plan'
+        ])->where('billstatement_id', $request->billstatement_id)->first();
+
+        return response()->json($billing);
+    }
+
+    public function getPlan(Request $request) {
+        // Check if subscription_id is provided
+        if (!$request->subscription_id) {
+            return response()->json([
+                'error' => 'Invalid subscription plan id'
+            ], 400);
+        }
+
+        // Find the subscription by id
+        $subscription = Subscription::find($request->subscription_id);
+
+        // Check if subscription exists
+        if (!$subscription) {
+            return response()->json([
+                'error' => 'Subscription not found'
+            ], 404);
+        }
+
+        // Get the plan associated with the subscription
+        $plan = $subscription->plan;
+
+        // Check if plan exists
+        if (!$plan) {
+            return response()->json([
+                'error' => 'Plan not found for the given subscription'
+            ], 404);
+        }
+
+        // Return the plan as a JSON response
+        return response()->json($plan);
+    }
+
+
+    public function recordPayment(Request $request){
+
+        if(!$request->billstatement_id || !$request->amount_paid || !$request->months_advanced){
+            return response()->json([
+                'error' => 'Invalid payment details'
+            ], 400);
+        }
+
+        $billing = BillingStatement::find($request->billstatement_id);
+
+        if(!$billing){
+            return response()->json([
+                'error' => 'Billing statement not found'
+            ], 200);
+        }
+
+        $planFee = $billing->subscription->plan->snplan_fee;
+
+        if($billing->bs_status == 'paid'){
+            return response()->json([
+                'error' => 'Billing statement is already paid'
+            ], 200);
+        }
+
+        $expectedTotal = $request->months_advanced * $planFee;
+
+        if($request->amount_paid < $expectedTotal){
+            return response()->json([
+                'error' => 'The provided amount is insufficient to cover the total cost for the selected months.'
+            ], 200);
+        }
+
+        $payment = new Payment();
+        $payment->billstatement_id = $billing->billstatement_id;
+        $payment->p_amount = $planFee;
+        $payment->p_month = $billing->bs_billingdate;
+        $payment->employee_id = 1;
+        $payment->p_date = now();
+        $payment->save();
+
+        $billing->bs_status = 'paid';
+
+        $billing->save();
+
+        if($request->months_advanced > 1){
+            for($i = 1; $i < $request->months_advanced; $i++){
+                $newBilling = new BillingStatement();
+                $newBilling->subscription_id = $billing->subscription->subscription_id;
+                $newBilling->bs_amount = $planFee;
+                $newBilling->bs_status = 'paid';
+                $newBilling->bs_billingdate = now();
+                $newBilling->bs_duedate = now();
+                $newBilling->save();
+            }
+        }
+
+        return response()->json([
+            'message' => 'Payment recorded successfully'
+        ]);
+
+
+    }
+
 
 
 

@@ -10,6 +10,7 @@ Route::get('/user', function (Request $request) {
 
 
 Route::post('/login', [ApiController::class, 'login']);
+Route::post('/loginEmployee', [ApiController::class, 'loginEmployee']);
 
 
 Route::post('/subscriptions', [ApiController::class, 'subscriptions']);
@@ -24,3 +25,7 @@ Route::post('/notification', [ApiController::class, 'notification']);
 Route::post('area', [ApiController::class, 'getArea']);
 
 Route::post('collections', [ApiController::class, 'collections']);
+Route::post('getOneCollection', [ApiController::class, 'getOneCollection']);
+Route::post('getPlan', [ApiController::class, 'getPlan']);
+
+Route::post('recordPayment', [ApiController::class, 'recordPayment']);
