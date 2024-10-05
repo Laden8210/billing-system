@@ -3,7 +3,7 @@
 use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\ImageUploadController;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
@@ -29,3 +29,11 @@ Route::post('getOneCollection', [ApiController::class, 'getOneCollection']);
 Route::post('getPlan', [ApiController::class, 'getPlan']);
 
 Route::post('recordPayment', [ApiController::class, 'recordPayment']);
+
+
+Route::post('upload', [ImageUploadController::class, 'uploadImage']);
+
+Route::post('requestOtp', [ApiController::class, 'requestOtp']);
+
+
+Route::post('changePassword', [ApiController::class, 'changePassword']);

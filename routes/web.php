@@ -8,7 +8,11 @@ use App\Http\Controllers\NavigationController;
 
 Route::post('/login', [LoginController::class, 'login'])->name('login-user');
 
-Route::get('', [NavigationController::class, 'index'])->name('login');
+Route::get('login', [NavigationController::class, 'index'])->name('login');
+
+Route::get('', [NavigationController::class, 'welcome'])->name('welcome');
+
+Route::post('/loginEmployee', [LoginController::class, 'loginEmployee'])->name('login-employee');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
@@ -29,3 +33,5 @@ Route::get('/user', [NavigationController::class, 'userAccount'])->name('user');
 
 Route::get('/subscriberReport', [NavigationController::class, 'generateSubscribersReport'])->name('subscriberReport');
 Route::get('paymentReport', [NavigationController::class, 'generatePaymentReport'])->name('paymentReport');
+Route::get('remittanceReport', [NavigationController::class, 'remittanceReport'])->name('remittanceReport');
+Route::get('/download/app', [NavigationController::class, 'downloadApp'])->name('download.app');

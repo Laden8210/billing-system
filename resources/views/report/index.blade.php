@@ -37,7 +37,7 @@
 
     <a href="{{ route('subscriberReport') }}"  target="_blank" class="bg-green-500 hover:bg-green-600 text-center p-10 text-xl text-white">Subscriber Report</a>
 
-    <a class="bg-green-500 hover:bg-green-600 text-center p-10 text-xl text-white">Remittance Report</a>
+    <a href="{{route('remittanceReport')}}" class="bg-green-500 hover:bg-green-600 text-center p-10 text-xl text-white">Remittance Report</a>
     <a href="{{ route('paymentReport') }}"  target="_blank" class="bg-green-500 hover:bg-green-600 text-center p-10 text-xl text-white">Payment History</a>
 
 </div>

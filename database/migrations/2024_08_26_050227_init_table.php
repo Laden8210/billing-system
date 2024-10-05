@@ -112,12 +112,10 @@ return new class extends Migration
         // Create Remittances Table
         Schema::create('remittances', function (Blueprint $table) {
             $table->id('remittance_id');
-            $table->unsignedBigInteger('payment_id');
             $table->decimal('rm_amount', 8, 2);
             $table->date('rm_date');
             $table->timestamps();
 
-            $table->foreign('payment_id')->references('payment_id')->on('payments')->onDelete('cascade');
         });
 
         // Create Remittance Proofs Table

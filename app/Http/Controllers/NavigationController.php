@@ -7,6 +7,7 @@ use App\Models\Subscriber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\Remittance;
 
 class NavigationController extends Controller
 {
@@ -18,6 +19,12 @@ class NavigationController extends Controller
 
         return view('login.index');
     }
+
+
+    public function welcome(){
+        return view('welcome');
+    }
+
 
     public function dashboard(){
         return view('dashboard.index');
@@ -77,5 +84,32 @@ class NavigationController extends Controller
         $pdf = Pdf::loadView('report.paymentreport', compact('payments'));
         return $pdf->stream('invoice.pdf');
     }
+
+    public function remittanceReport()
+    {
+        $remittances = Remittance::all();
+        $pdf = Pdf::loadView('report.remittancereport', compact('remittances'));
+        return $pdf->stream('invoice.pdf');
+
+
+    }
+
+    public function downloadApp()
+    {
+        // Correctly path the file to ensure it exists
+        $file = public_path('download\app.apk'); // Make sure the path is correct
+
+        $headers = [
+            'Content-Type: application/vnd.android.package-archive',
+        ];
+
+        // Check if file exists before trying to download
+        if (!file_exists($file)) {
+            return response()->json(['error' => 'File not found'], 404);
+        }
+
+        return response()->download($file, 'app.apk', $headers);
+    }
+
 }
 

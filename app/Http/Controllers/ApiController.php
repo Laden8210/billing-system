@@ -14,6 +14,7 @@ use App\Models\SubscriptionPlan;
 use App\Models\SubscriptionArea;
 use App\Models\Payment;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 
 class ApiController extends Controller
 {
@@ -272,6 +273,51 @@ class ApiController extends Controller
         ]);
 
 
+    }
+
+    public function requestOtp(Request $request)
+    {
+
+
+        $validatedData = $request->validate([
+            'contactnumber' => 'required|string|max:12',
+        ]);
+
+        $subscriber = Subscriber::where('sr_contactnum', $validatedData['contactnumber'])->first();
+
+        if (!$subscriber) {
+            return response()->json(['message' => 'Subscriber not found'], 404);
+        }
+
+        $otp = rand(1000, 9999);
+
+
+        $response = Http::post('https://nasa-ph.com/api/send-sms', [
+            'phone_number' => $subscriber->ContactNumber,
+            'message' => "Your OTP code is: $otp. Please use this code to reset your password.",
+        ]);
+
+
+        return response()->json(['otp' => $otp, 'subscriberId' => $subscriber->subscriber_id], 200);
+    }
+
+    public function changePassword(Request $request){
+
+        $validatedData = $request->validate([
+            'subscriberId' => 'required|integer',
+            'password' => 'required|string|min:6',
+        ]);
+
+        $subscriber = Subscriber::find($validatedData['subscriberId']);
+
+        if(!$subscriber){
+            return response()->json(['message' => 'Subscriber not found'], 404);
+        }
+
+        $subscriber->sr_password = $validatedData['password'];
+        $subscriber->save();
+
+        return response()->json(['message' => 'Password changed successfully'], 200);
     }
 
 

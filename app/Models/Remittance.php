@@ -8,7 +8,7 @@ class Remittance extends Model
 {
     protected $table = 'remittances';
     protected $primaryKey = 'remittance_id';
-    protected $fillable = ['payment_id', 'rm_amount', 'rm_date'];
+    protected $fillable = [ 'rm_amount', 'rm_date', 'rm_image'];
 
     public function payment()
     {

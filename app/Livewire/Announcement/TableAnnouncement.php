@@ -17,9 +17,11 @@ class TableAnnouncement extends Component
                 ->when($this->date, function($query) {
                     $query->where('an_date', 'like', '%' . $this->date . '%');
                 })
-                ->paginate(10)
+                ->orderBy('an_date', 'desc') // Move this before paginate
+                ->paginate(10) // Then paginate the ordered results
         ]);
     }
+
 
 
     public function viewAnnouncment($id)
