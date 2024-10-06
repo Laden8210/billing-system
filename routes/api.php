@@ -37,3 +37,8 @@ Route::post('requestOtp', [ApiController::class, 'requestOtp']);
 
 
 Route::post('changePassword', [ApiController::class, 'changePassword']);
+
+Route::post('getRemittance', [ApiController::class, 'getRemittance']);
+Route::post('changeEmployeePassword', [ApiController::class, 'changeEmployeePassword']);
+Route::post('changeSubscriberPassword', [ApiController::class, 'changeSubscriberPassword']);
+Route::post('countCollectables', [ApiController::class, 'countCollectables']);

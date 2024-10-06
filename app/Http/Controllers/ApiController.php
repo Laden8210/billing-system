@@ -13,6 +13,7 @@ use App\Models\SubscriptionPlan;
 
 use App\Models\SubscriptionArea;
 use App\Models\Payment;
+use App\Models\Remittance;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 
@@ -319,7 +320,86 @@ class ApiController extends Controller
 
         return response()->json(['message' => 'Password changed successfully'], 200);
     }
+    public function getRemittance(Request $request)
+    {
+        // Fetch all remittance records
+        $remittances = Remittance::all();
 
+        // Loop through each remittance and modify the rm_image field to include the full URL
+        foreach ($remittances as $remittance) {
+            // Adjust the image path to reflect the correct storage path
+            $remittance->rm_image = asset('storage/' . $remittance->rm_image);
+        }
+
+        // Return the data as JSON response
+        return response()->json($remittances);
+    }
+
+    public function changeEmployeePassword(Request $request)
+    {
+        $validatedData = $request->validate([
+            'employee_id' => 'required|integer',
+            'new_password' => 'required|string|min:6',
+            'old_password' => 'required',
+        ]);
+
+
+
+        $employee = Employee::find($validatedData['employee_id']);
+
+        if (!$employee) {
+            return response()->json(['message' => 'Employee not found'], 404);
+        }
+
+        if (!Hash::check($validatedData['old_password'], $employee->em_password)) {
+            return response()->json(['message' => 'Invalid old password'], 400);
+        }
+
+        $employee->em_password = bcrypt($validatedData['new_password']);
+        $employee->save();
+
+        return response()->json(['message' => 'Password changed successfully'], 200);
+    }
+
+
+    public function changeSubscriberPassword(Request $request)
+    {
+        $validatedData = $request->validate([
+            'subscriber_id' => 'required|integer',
+            'new_password' => 'required|string|min:6',
+            'old_password' => 'required',
+        ]);
+
+
+        $subscriber = Subscriber::find($validatedData['subscriber_id']);
+
+
+        if (!$subscriber) {
+            return response()->json(['message' => 'Subscriber not found'], 404);
+        }
+
+        if ($validatedData['old_password'] != $subscriber->sr_password) {
+            return response()->json(['message' => 'Invalid old password'], 400);
+        }
+
+
+        if(!$subscriber){
+            return response()->json(['message' => 'Subscriber not found'], 404);
+        }
+
+        $subscriber->sr_password = $validatedData['new_password'];
+        $subscriber->save();
+
+
+        return response()->json(['message' => 'Password changed successfully'], 200);
+    }
+
+    public function countCollectables(Request $request)
+    {
+        $collectables = BillingStatement::where('bs_status', 'unpaid')->count();
+
+        return response()->json(['collectables' => $collectables]);
+    }
 
 
 

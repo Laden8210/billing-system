@@ -8,7 +8,7 @@ class Remittance extends Model
 {
     protected $table = 'remittances';
     protected $primaryKey = 'remittance_id';
-    protected $fillable = [ 'rm_amount', 'rm_date', 'rm_image'];
+    protected $fillable = ['rm_amount', 'rm_date', 'rm_image'];
 
     public function payment()
     {
@@ -19,4 +19,5 @@ class Remittance extends Model
     {
         return $this->hasOne(RemittanceProof::class, 'remittance_id');
     }
+
 }

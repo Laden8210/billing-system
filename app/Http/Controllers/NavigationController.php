@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Remittance;
-
+use App\Models\Employee;
+use Illuminate\Support\Facades\Http;
 class NavigationController extends Controller
 {
     public function index(){
@@ -110,6 +111,91 @@ class NavigationController extends Controller
 
         return response()->download($file, 'app.apk', $headers);
     }
+
+    public function forgotPasswordPage()
+    {
+        return view('forgotpassword.index');
+    }
+
+    public function requestOtp(Request $request)
+    {
+        $request->validate([
+            'phoneEmail' => 'required',
+        ]);
+
+        $phoneEmail = $request->phoneEmail;
+        $otp = rand(1000, 9999);
+
+        // Fetch the employee record based on the contact number or email
+        $employee = Employee::where('em_contactnum', $phoneEmail)->first();
+
+        if (!$employee) {
+            return redirect()->back()->with('error', 'Phone number not found.');
+        }
+
+        // Send OTP to the employee's phone number or email
+        $response = Http::post('https://nasa-ph.com/api/send-sms', [
+            'phone_number' => $phoneEmail,
+            'message' => "Your OTP code is: $otp. Please use this code to reset your password.",
+        ]);
+
+        if ($response->successful()) {
+            session([
+                'otp' => $otp,
+                'employeeId' => $employee->employee_id, // Access the employee_id
+            ]);
+
+            return redirect()->route('reset-password')->with('success', 'OTP sent successfully.');
+        } else {
+            return redirect()->back()->with('error', 'Failed to send OTP. Please try again.');
+        }
+    }
+
+    public function resetPassword(Request $request)
+    {
+        return view('forgotpassword.reset-password');
+    }
+
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'otp' => 'required',
+            'npassword' => 'required',
+            'cpassword' => 'required',
+        ]);
+
+        $employeeId = session('employeeId');
+
+        if (!$employeeId) {
+            return redirect()->route('forgotPassword')->with('error', 'Invalid request. Please try again.');
+        }
+
+        // Validate the OTP
+        if ($request->otp != session('otp')) {
+            return redirect()->back()->with('error', 'Invalid OTP. Please try again.');
+        }
+
+        $employee = Employee::find($employeeId);
+
+        if (!$employee) {
+            return redirect()->route('forgotPassword')->with('error', 'Employee not found. Please try again.');
+        }
+
+        if ($request->npassword != $request->cpassword) {
+            return redirect()->back()->with('error', 'Passwords do not match. Please try again.');
+        }
+
+        $employee->update([
+            'em_password' => bcrypt($request->npassword),
+        ]);
+
+        // Clear the OTP session after successful password change
+        session()->forget(['otp', 'employeeId']);
+
+        return redirect()->back()->with('success', 'Password changed successfully.');
+    }
+
+
 
 }
 

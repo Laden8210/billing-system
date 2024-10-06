@@ -35,3 +35,9 @@ Route::get('/subscriberReport', [NavigationController::class, 'generateSubscribe
 Route::get('paymentReport', [NavigationController::class, 'generatePaymentReport'])->name('paymentReport');
 Route::get('remittanceReport', [NavigationController::class, 'remittanceReport'])->name('remittanceReport');
 Route::get('/download/app', [NavigationController::class, 'downloadApp'])->name('download.app');
+
+
+Route::get('forgotPassword', [NavigationController::class, 'forgotPasswordPage'])->name('forgotPassword');
+Route::post('send-otp', [NavigationController::class, 'requestOtp'])->name('send-otp');
+Route::get('reset-password', [NavigationController::class, 'resetPassword'])->name('reset-password');
+Route::post('reset-password', [NavigationController::class, 'changePassword'])->name('reset-password');
