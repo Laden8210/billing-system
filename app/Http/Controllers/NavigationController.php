@@ -115,7 +115,7 @@ class NavigationController extends Controller
 
     public function billingreport()
     {
-        $billingStatements = BillingStatement::with(['subscription.subscriber', 'subscription.area'])
+        $billingStatements = BillingStatement::with(['subscription.subscriber', 'subscription.area','payments'])
         ->get();
 
         dd($billingStatements);
