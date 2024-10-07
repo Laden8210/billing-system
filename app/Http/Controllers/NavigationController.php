@@ -118,7 +118,7 @@ class NavigationController extends Controller
         $billingStatements = BillingStatement::with(['subscription.subscriber', 'subscription.area','payments'])
         ->get();
 
-        dd($billingStatements);
+
         $pdf = Pdf::loadView('report.billingreport', compact('billingStatements'));
         return $pdf->stream('billingreport.pdf');
 
