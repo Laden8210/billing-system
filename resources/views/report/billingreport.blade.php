@@ -92,18 +92,23 @@
             </thead>
             <tbody>
                 @foreach($billingStatements as $billing)
-                    <tr>
-                        <td>{{ $billing->bs_billingdate}}</td>
-                        <td>{{ $billing->subscription->subscriber->sr_fname }} {{ $billing->subscription->subscriber->sr_minitial }} {{ $billing->subscription->subscriber->sr_lname }}</td>
-                        <td>{{ $billing->subscription->sn_num }}</td>
-                        <td>{{ $billing->subscription->area->snarea_name }}</td>
-                        <td>{{ $billing->subscription->plan->snplan_bandwidth }} MBps</td>
-                        <td>{{ $billing->bs_status }}</td>
-                        <td>{{ $billing->payments->p_amount }}</td> 
-                        
-                    </tr>
-                
+                <tr>
+                    <td>{{ $billing->bs_billingdate }}</td>
+                    <td>{{ $billing->subscription->subscriber->sr_fname }} {{ $billing->subscription->subscriber->sr_minitial }} {{ $billing->subscription->subscriber->sr_lname }}</td>
+                    <td>{{ $billing->subscription->sn_num }}</td>
+                    <td>{{ $billing->subscription->area->snarea_name }}</td>
+                    <td>{{ $billing->subscription->plan->snplan_bandwidth }} MBps</td>
+                    <td>{{ $billing->bs_status }}</td>
+                    
+                    @php
+                        // Calculate total payment amount for the billing statement
+                        $totalPaymentAmount = $billing->payments->sum('p_amount');
+                    @endphp
+                    
+                    <td>{{ number_format($totalPaymentAmount, 2) }}</td> <!-- Format the amount to 2 decimal places -->
+                </tr>
                 @endforeach
+                
             </tbody>
         </table>
 
