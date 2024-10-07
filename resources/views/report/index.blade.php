@@ -39,7 +39,6 @@
     <a href="{{route('remittanceReport')}}" class="bg-green-500 hover:bg-green-600 text-center p-10 text-xl text-white">Remittance Report</a>
     <a href="{{ route('paymentReport') }}"  target="_blank" class="bg-green-500 hover:bg-green-600 text-center p-10 text-xl text-white">Payment History</a>
     <a href="{{ route('subscriberReport') }}"  target="_blank" class="bg-green-500 hover:bg-green-600 text-center p-10 text-xl text-white">Subscriber Report</a>
-    <a href="{{ route('complaintsreport') }}"  target="_blank" class="bg-green-500 hover:bg-green-600 text-center p-10 text-xl text-white">Complaints Report</a>
     <a href="{{ route('billingreport') }}"  target="_blank" class="bg-green-500 hover:bg-green-600 text-center p-10 text-xl text-white">Billing Report</a>
     <a href="{{ route('announcementreport') }}"  target="_blank" class="bg-green-500 hover:bg-green-600 text-center p-10 text-xl text-white">Announcement Report</a>
 
