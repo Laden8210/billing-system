@@ -102,9 +102,7 @@
                         <td>{{ $billing->payment->p_amount }}</td> 
                         
                     </tr>
-                    @php
-                    $totalAmount += $amount; // Add to total amount
-                @endphp
+                
                 @endforeach
             </tbody>
         </table>
