@@ -101,30 +101,33 @@
                 </tr>
             </thead>
             <tbody>
-                <?php
-                // Dummy employee data array
-                $employees = [
-                    ['em_fname' => 'John', 'em_lname' => 'Doe', 'rm_date' => '10/02/2024', 'rm_amount' => '5000', 'rm_image' => 'proof1.jpg'],
-                    ['em_fname' => 'Jane', 'em_lname' => 'Smith', 'rm_date' => '10/03/2024', 'rm_amount' => '4500', 'rm_image' => 'proof2.jpg'],
-                    ['em_fname' => 'Alex', 'em_lname' => 'Johnson', 'rm_date' => '10/04/2024', 'rm_amount' => '3000', 'rm_image' => 'proof3.jpg'],
-                    ['em_fname' => 'Sarah', 'em_lname' => 'Brown', 'rm_date' => '10/05/2024', 'rm_amount' => '5500', 'rm_image' => 'proof4.jpg'],
-                ];
-
-                foreach ($employees as $employee) {
-                    echo "<tr>
-                        <td>{$employee['em_fname']} {$employee['em_lname']}</td>
-                        <td>{$employee['rm_date']}</td>
-                        <td>{$employee['rm_amount']}</td>
-                        <td><img src='storage/{$employee['rm_image']}' class='proof-image' alt='Proof Image' /></td>
-                    </tr>";
-                }
-                ?>
+                @foreach ($remittances as $index => $remittance)
+                @php
+                    // Dummy employee names
+                    $dummyEmployees = [
+                        ['em_fname' => 'John', 'em_lname' => 'Doe'],
+                        ['em_fname' => 'Jane', 'em_lname' => 'Smith'],
+                        ['em_fname' => 'Emily', 'em_lname' => 'Johnson'],
+                        ['em_fname' => 'Michael', 'em_lname' => 'Brown'],
+                    ];
+                    
+                    // Get the current employee's dummy name based on the index
+                    $employee = $dummyEmployees[$index % count($dummyEmployees)];
+                @endphp
+                    <tr>
+                        <td>{{ $employee['em_fname'] }} {{ $employee['em_lname'] }}</td>
+                        <td>{{ $remittance->rm_date }}</td>
+                        <td>{{ $remittance->rm_amount }}</td>
+                        <td>
+                            <img src="{{ asset('storage/' . $remittance->rm_image) }}" class="proof-image" alt="Proof Image" />
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
-
         <div class="prepared-by">
             <p><strong>Prepared By:</strong> Alex Ko</p>
-            <p><strong>Date:</strong> <?php echo date('m-d-Y'); ?></p>
+            <p><strong>Date:</strong> {{ now()->format('m-d-Y') }}</p>
         </div>
     </div>
 </body>
