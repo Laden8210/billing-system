@@ -99,7 +99,7 @@
                         <td>{{ $billing->subscription->area->snarea_name }}</td>
                         <td>{{ $billing->subscription->plan->snplan_bandwidth }} MBps</td>
                         <td>{{ $billing->bs_status }}</td>
-                        <td>{{ $amount = $billing->payments->sum('p_amount') }}</td> <!-- Get amount from payments -->
+                        <td>{{ $billing->payment->p_amount }}</td> 
                         
                     </tr>
                     @php
