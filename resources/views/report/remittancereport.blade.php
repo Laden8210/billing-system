@@ -107,7 +107,7 @@
         <tbody>
             @foreach ($remittances as $remittance)
                 <tr>
-                    <td>{{ $remittance->employee->em_fname }} {{ $remittance->employee->em_lname }}</td>
+                    <td>{{ $remittance->Employee->em_fname }} {{ $remittance->employee->em_lname }}</td>
                     <td>{{ $remittance->rm_date }}</td>
                     <td>{{ $remittance->rm_amount }}</td>
                     <td>
