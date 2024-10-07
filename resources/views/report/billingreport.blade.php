@@ -90,7 +90,7 @@
             <tbody>
                 @foreach($billingStatements as $billing)
                     <tr>
-                        <td>{{ $billing->bs_billingdate 'm/d/y'}}</td>
+                        <td>{{ $billing->bs_billingdate}}</td>
                         <td>{{ $billing->subscription->subscriber->sr_fname }} {{ $billing->subscription->subscriber->sr_minitial }} {{ $billing->subscription->subscriber->sr_lname }}</td>
                         <td>{{ $billing->subscription->sn_num }}</td>
                         <td>{{ $billing->subscription->area->snarea_name }}</td>
