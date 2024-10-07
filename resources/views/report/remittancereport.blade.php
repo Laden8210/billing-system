@@ -77,11 +77,8 @@
         /* Styles for images in the table */
         .proof-image {
             width: 100px;
-            /* Adjust width as necessary */
             height: auto;
-            /* Maintain aspect ratio */
             border-radius: 5px;
-            /* Optional styling */
         }
     </style>
 </head>
@@ -94,40 +91,41 @@
             <p><strong>Area:</strong> Tupi</p>
         </div>
 
-<table>
-        <thead>
-            <tr>
-                <th>Employee</th>
-                <th>Date</th>
-                <th>Amount</th>
-                <th>Proof</th>
-                
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($remittances as $remittance)
-            @php
-            // Get the corresponding payment for the remittance
-            $payment = $remittance->payment;
-            $employee = $payment->employee;
-        @endphp
+        <table>
+            <thead>
                 <tr>
-                    <td>{{ $employee->em_fname }} {{ $employee->em_lname }}</td>
-                    <td>{{ $remittance->rm_date }}</td>
-                    <td>{{ $remittance->rm_amount }}</td>
-                    <td>
-                        <img src="{{ asset('storage/' . $remittance->rm_image) }}" class="proof-image" 
-                        alt="Proof Image" />
-
-                    </td>
+                    <th>Employee</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Proof</th>
                 </tr>
-            @endforeach
-        </tbody>
+            </thead>
+            <tbody>
+                <?php
+                // Dummy employee data array
+                $employees = [
+                    ['em_fname' => 'John', 'em_lname' => 'Doe', 'rm_date' => '10/02/2024', 'rm_amount' => '5000', 'rm_image' => 'proof1.jpg'],
+                    ['em_fname' => 'Jane', 'em_lname' => 'Smith', 'rm_date' => '10/03/2024', 'rm_amount' => '4500', 'rm_image' => 'proof2.jpg'],
+                    ['em_fname' => 'Alex', 'em_lname' => 'Johnson', 'rm_date' => '10/04/2024', 'rm_amount' => '3000', 'rm_image' => 'proof3.jpg'],
+                    ['em_fname' => 'Sarah', 'em_lname' => 'Brown', 'rm_date' => '10/05/2024', 'rm_amount' => '5500', 'rm_image' => 'proof4.jpg'],
+                ];
+
+                foreach ($employees as $employee) {
+                    echo "<tr>
+                        <td>{$employee['em_fname']} {$employee['em_lname']}</td>
+                        <td>{$employee['rm_date']}</td>
+                        <td>{$employee['rm_amount']}</td>
+                        <td><img src='storage/{$employee['rm_image']}' class='proof-image' alt='Proof Image' /></td>
+                    </tr>";
+                }
+                ?>
+            </tbody>
         </table>
+
         <div class="prepared-by">
+            <p><strong>Prepared By:</strong> Alex Ko</p>
+            <p><strong>Date:</strong> <?php echo date('m-d-Y'); ?></p>
         </div>
-        <p><strong>Prepared By:</strong> Alex Ko</p>
-        <p><strong>Date:</strong> {{ now()->format('m-d-Y') }}</p>
     </div>
 </body>
 
