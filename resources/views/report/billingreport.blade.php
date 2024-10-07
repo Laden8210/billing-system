@@ -99,7 +99,7 @@
                         <td>{{ $billing->subscription->area->snarea_name }}</td>
                         <td>{{ $billing->subscription->plan->snplan_bandwidth }} MBps</td>
                         <td>{{ $billing->bs_status }}</td>
-                        <td>{{ $billing->payments->p_amount }}</td> 
+                        <td>{{ $billing->payments->first()->p_amount }}</td> 
                         
                     </tr>
                 
