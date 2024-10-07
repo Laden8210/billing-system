@@ -91,7 +91,7 @@
                     <tr>
                         <td>{{ $announcements->an_date }}</td>
                         <td>{{ $announcements->an_subject }} </td>
-                        <td>{{ $announcements->announcement_id}}</td>
+                        <td>{{ $announcements->an_message}}</td>
                        
                     </tr>
                 @endforeach
