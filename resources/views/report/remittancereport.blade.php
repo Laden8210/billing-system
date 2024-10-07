@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Subscribers Report</title>
+    <title>Remittance Report</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -87,8 +87,14 @@
     <div class="report-container">
         <h1>JCLC Remittance Report</h1>
         <div class="report-header">
-            <p><strong>From:</strong> 10/02/2004 - 10/07/2024</p>
-            <p><strong>Area:</strong> Tupi</p>
+            <header>
+                <h1>JCLC Internet Servece</h1>
+                <p><strong>From:</strong> 10/02/2004 - 10/07/2024</p>
+                <p><strong>Area:</strong> {{$areaName}}</p>
+                <hr>
+            </header>
+
+            <h3>Remittance Report</h3>
         </div>
 
         <table>
@@ -110,7 +116,7 @@
                         ['em_fname' => 'Emily', 'em_lname' => 'Johnson'],
                         ['em_fname' => 'Michael', 'em_lname' => 'Brown'],
                     ];
-                    
+
                     // Get the current employee's dummy name based on the index
                     $employee = $dummyEmployees[$index % count($dummyEmployees)];
                 @endphp

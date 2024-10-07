@@ -71,18 +71,21 @@
 <body>
     <div class="container">
         <header>
-            <h1>JCLC announcement Report</h1>
-           <p><strong>From:</strong> 10/02/2004 - 10/07/2024</p>
+            <h1>JCLC Internet Servece</h1>
+            <p><strong>From:</strong> 10/02/2004 - 10/07/2024</p>
+            <p><strong>Area:</strong> {{$areaName}}</p>
             <hr>
         </header>
 
+        <h3>Announcement Report</h3>
+
         <table>
             <thead>
-                <tr> 
+                <tr>
                     <th>Date</th>
                     <th>Announcement Type</th>
                     <th>Announcement</th>
-                    
+
                 </tr>
             </thead>
             <tbody>
@@ -91,19 +94,19 @@
                         <td>{{ $announcements->an_date }}</td>
                         <td>{{ $announcements->an_subject }} </td>
                         <td>{{ $announcements->an_message}}</td>
-                       
+
                     </tr>
                 @endforeach
             </tbody>
         </table>
 
-        
+
 
         <p><strong>Prepared By:</strong> Alex Ko</p>
          <p><strong>Printed Date:</strong> {{ now()->format('Y-m-d') }}</p>
 
         <footer>
-            
+
         </footer>
     </div>
 </body>

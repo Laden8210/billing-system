@@ -14,11 +14,14 @@ use App\Models\BillingStatement;
 use App\Models\Announcement;
 
 use Illuminate\Support\Facades\Http;
+use App\Models\SubscriptionArea;
+
 class NavigationController extends Controller
 {
-    public function index(){
+    public function index()
+    {
 
-        if(Auth::check()){
+        if (Auth::check()) {
             return redirect()->route('dashboard');
         }
 
@@ -26,56 +29,132 @@ class NavigationController extends Controller
     }
 
 
-    public function welcome(){
+    public function welcome()
+    {
         return view('welcome');
     }
 
 
-    public function dashboard(){
+    public function dashboard()
+    {
         return view('dashboard.index');
     }
 
 
-    public function userAccount(){
+    public function userAccount()
+    {
         return view('user.index');
     }
 
-    public function service(){
+    public function service()
+    {
         return view('service.index');
     }
 
-    public function subscriber(){
+    public function subscriber()
+    {
         return view('subscriber.index');
     }
 
-    public function subscriberById($id){
+    public function subscriberById($id)
+    {
         return view('subscriber.view', compact('id'));
     }
 
-    public function billing(){
+    public function billing()
+    {
         return view('billing.index');
     }
 
-    public function payment(){
+    public function payment()
+    {
         return view('payment.index');
     }
 
-    public function report(){
+    public function report()
+    {
         return view('report.index');
     }
 
-    public function announcement(){
+    public function announcement()
+    {
         return view('announcement.index');
     }
 
-    public function complaints(){
+    public function complaints()
+    {
         return view('complaints.index');
     }
-    public function generateSubscribersReport()
+
+
+    public function generateReport(Request $request)
     {
 
+        $reportType = $request->reportType;
+        $start = $request->start;
+        $end = $request->end;
+        $area = $request->area;
 
-        // dd($reservations);
+
+
+        if ($reportType == 'Subscriber Report') {
+
+            $subscribers = Subscriber::whereHas('subscriptions', function ($query) use ($start, $end, $area) {
+
+                $query->whereBetween('created_at', [$start, $end]);
+
+
+                if ($area) {
+                    $query->whereHas('area', function ($areaQuery) use ($area) {
+                        $areaQuery->where('subscriptionarea_id', $area);
+                    });
+                }
+            })->get();
+
+            $areaName = SubscriptionArea::find($area)->snarea_name;
+
+            $pdf = Pdf::loadView('report.subscriberreport', compact('subscribers', 'start', 'end', 'areaName'));
+            return $pdf->stream('subscriber_report.pdf');
+        } elseif ($reportType == 'Payment Report') {
+
+            $payments = Payment::where('created_at', '>=', $start)
+                ->where('created_at', '<=', $end)
+                ->get();
+
+            $pdf = Pdf::loadView('report.paymentreport', compact('payments', 'start', 'end'));
+            return $pdf->stream('invoice.pdf');
+        } elseif ($reportType == 'Remittance Report') {
+
+            $remittances = Remittance::whereBetween('created_at', [$start, $end])->get();
+
+            $areaName = SubscriptionArea::find($area)->snarea_name;
+
+            $pdf = Pdf::loadView('report.remittancereport', compact('remittances', 'start', 'end', 'areaName'));
+            return $pdf->stream('remittance_report.pdf');
+        } elseif ($reportType == 'Billing Report') {
+            $billingStatements = BillingStatement::with(['subscription.subscriber', 'subscription.area', 'payments'])
+                ->whereHas('payments', function ($query) use ($start, $end) {
+                    // Filter by the payment creation date
+                    $query->whereBetween('created_at', [$start, $end]);
+                })
+                ->whereHas('subscription.area', function ($query) use ($area) {
+                    // Filter by area (assuming the relation exists in 'subscription.area')
+                    $query->where('subscriptionarea_id', $area);
+                })
+                ->get();
+
+            $areaName = SubscriptionArea::find($area)->snarea_name;
+            $pdf = Pdf::loadView('report.billingreport', compact('billingStatements', 'start', 'end', 'areaName'));
+            return $pdf->stream('billingreport.pdf');
+        } elseif ($reportType == 'Announcement Report') {
+            $announcement = Announcement::whereBetween('created_at', [$start, $end])->get();
+            $pdf = Pdf::loadView('report.announcementreport', compact('announcement', 'start', 'end'));
+            return $pdf->download('announcement.pdf');
+        }
+    }
+
+    public function generateSubscribersReport()
+    {
 
         $subscribers = Subscriber::all();
         $pdf = Pdf::loadView('report.subscriberreport', compact('subscribers'));
@@ -95,33 +174,28 @@ class NavigationController extends Controller
         $remittances = Remittance::all();
         $pdf = Pdf::loadView('report.remittancereport', compact('remittances'));
         return $pdf->stream('invoice.pdf');
-
-
     }
     public function complaintsreport()
     {
         $complaints = Complaint::with('subscriber')->get();
         $pdf = Pdf::loadView('report.complaintsreport', compact('complaints'));
         return $pdf->stream('complaints.pdf');
-
     }
     public function announcementreport()
     {
         $announcement = Announcement::all();
         $pdf = Pdf::loadView('report.announcementreport', compact('announcement'));
         return $pdf->download('announcement.pdf');
-
     }
 
     public function billingreport()
     {
-        $billingStatements = BillingStatement::with(['subscription.subscriber', 'subscription.area','payments'])
-        ->get();
+        $billingStatements = BillingStatement::with(['subscription.subscriber', 'subscription.area', 'payments'])
+            ->get();
 
 
         $pdf = Pdf::loadView('report.billingreport', compact('billingStatements'));
         return $pdf->stream('billingreport.pdf');
-
     }
 
     public function downloadApp()
@@ -223,8 +297,4 @@ class NavigationController extends Controller
 
         return redirect()->back()->with('success', 'Password changed successfully.');
     }
-
-
-
 }
-

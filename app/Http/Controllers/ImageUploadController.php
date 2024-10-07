@@ -12,6 +12,8 @@ class ImageUploadController extends Controller
         $request->validate([
             'amount' => 'required|numeric',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'employee_id' => 'required|numeric',
+            'area_id' => 'required|numeric',
         ]);
 
         if ($request->file('image')) {
@@ -23,6 +25,8 @@ class ImageUploadController extends Controller
                 'rm_amount' => $request->amount,
                 'rm_date' => now(),
                 'rm_image' => $path,
+                'employee_id' => $request->employee_id,
+                'subscriptionarea_id' => $request->area_id,
             ]);
             return response()->json(['url' => asset('storage/' . $path)], 200);
         }

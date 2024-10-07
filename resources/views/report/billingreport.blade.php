@@ -71,16 +71,17 @@
 <body>
     <div class="container">
         <header>
-            <h1>JCLC Billing Report</h1>
-            <p><strong>Date:</strong> 11/07/2024 - 11/12/2024</p>
-
-            
+            <h1>JCLC Internet Servece</h1>
+            <p><strong>From:</strong> 10/02/2004 - 10/07/2024</p>
+            <p><strong>Area:</strong> {{$areaName}}</p>
             <hr>
         </header>
 
+        <h3>Billing Report</h3>
+
         <table>
             <thead>
-                <tr> 
+                <tr>
                     <th>Date</th>
                     <th>Subscriber Name</th>
                     <th>Subscription Number</th>
@@ -99,25 +100,25 @@
                     <td>{{ $billing->subscription->area->snarea_name }}</td>
                     <td>{{ $billing->subscription->plan->snplan_bandwidth }} MBps</td>
                     <td>{{ $billing->bs_status }}</td>
-                    
+
                     @php
                         // Calculate total payment amount for the billing statement
                         $totalPaymentAmount = $billing->payments->sum('p_amount');
                     @endphp
-                    
+
                     <td>{{ number_format($totalPaymentAmount, 2) }}</td> <!-- Format the amount to 2 decimal places -->
                 </tr>
                 @endforeach
-                
+
             </tbody>
         </table>
 
-        
+
 
         <p><strong>Prepared By:</strong> Alex Ko</p>
         <p><strong>Printed Date:</strong> {{ now()->format('Y-m-d') }}</p>
 
-        
+
     </div>
 </body>
 </html>

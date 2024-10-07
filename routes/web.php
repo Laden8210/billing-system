@@ -44,3 +44,6 @@ Route::get('forgotPassword', [NavigationController::class, 'forgotPasswordPage']
 Route::post('send-otp', [NavigationController::class, 'requestOtp'])->name('send-otp');
 Route::get('reset-password', [NavigationController::class, 'resetPassword'])->name('reset-password');
 Route::post('reset-password', [NavigationController::class, 'changePassword'])->name('reset-password');
+
+
+Route::post('generate-report', [NavigationController::class, 'generateReport'])->name('generate-report');

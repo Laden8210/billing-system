@@ -80,11 +80,17 @@
     <div class="report-container">
         <h1>JCLC Subscribers Report</h1>
         <div class="report-header">
-            
 
-            <p><strong>From:</strong> 10/02/2004 - 10/07/2024</p>
-            <p><strong>Area:</strong> Tupi</p>
-           
+
+            <header>
+                <h1>JCLC Internet Servece</h1>
+                <p><strong>From:</strong> 10/02/2004 - 10/07/2024</p>
+                <p><strong>Area:</strong> {{$areaName}}</p>
+                <hr>
+            </header>
+
+            <h3>Subscriber Report</h3>
+
         </div>
 
         <table>

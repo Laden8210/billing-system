@@ -20,6 +20,16 @@ class BillingStatement extends Model
         return $this->hasMany(Payment::class, 'billstatement_id');
     }
 
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class, 'employee_id');
+    }
+
+    public function area()
+    {
+        return $this->belongsTo(SubscriptionArea::class, 'subscriptionarea_id');
+    }
+
     public function scopeSearch($query, $value)
     {
         return $query

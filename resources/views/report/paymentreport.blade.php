@@ -71,16 +71,19 @@
 <body>
     <div class="container">
         <header>
-            <h1>JCLC Collection Report</h1>
+            <h1>JCLC Internet Servece</h1>
             <p><strong>From:</strong> 10/02/2004 - 10/07/2024</p>
-            <p><strong>Area:</strong> All</p>
+
             <hr>
         </header>
+
+        <h3>Collection Report</h3>
 
         <table>
             <thead>
                 <tr>
                     <th>Subscriber Name</th>
+                    <th>Employee Name</th>
                     <th>Subscription Number</th>
                     <th>Subscription Plan</th>
                     <th>Subscription Fee</th>
@@ -94,6 +97,7 @@
                 @foreach ($payments as $payment)
                     <tr>
                         <td>{{$payment->billingStatement->subscription->subscriber->sr_fname ." ".$payment->billingStatement->subscription->subscriber->sr_lname }}</td>
+                        <td>{{$payment->employee->em_fname . " " . $payment->employee->em_lname  }}</td>
                         <td>{{$payment->billingStatement->subscription->sn_num}}</td>
                         <td>
                             {{$payment->billingStatement->subscription->plan->snplan_bandwidth}}
@@ -103,7 +107,7 @@
                             {{$payment->p_amount}}
                         </td>
 
-                        
+
                         <td>
                             {{$payment->p_date}}
                         </td>
