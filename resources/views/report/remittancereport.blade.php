@@ -106,8 +106,13 @@
         </thead>
         <tbody>
             @foreach ($remittances as $remittance)
+            @php
+            // Get the corresponding payment for the remittance
+            $payment = $remittance->payment;
+            $employee = $payment->employee;
+        @endphp
                 <tr>
-                    <td>Jasper Dela Cruz</td>
+                    <td>{{ $employee->em_fname }} {{ $employee->em_lname }}</td>
                     <td>{{ $remittance->rm_date }}</td>
                     <td>{{ $remittance->rm_amount }}</td>
                     <td>

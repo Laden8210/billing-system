@@ -72,8 +72,7 @@
     <div class="container">
         <header>
             <h1>JCLC Collection Report</h1>
-            <p><strong>Date:</strong> January 2022</p>
-            <p><strong>Collector:</strong> Harry Dip</p>
+            <p><strong>From:</strong> 10/02/2004 - 10/07/2024</p>
             <p><strong>Area:</strong> All</p>
             <hr>
         </header>
