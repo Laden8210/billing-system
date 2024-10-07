@@ -72,8 +72,7 @@
     <div class="container">
         <header>
             <h1>JCLC announcement Report</h1>
-            <p><strong>Date:</strong> January 2022</p>
-            <p><strong>Collector:</strong> Harry Dip</p>
+           <p><strong>From:</strong> 10/02/2004 - 10/07/2024</p>
             <hr>
         </header>
 
@@ -101,9 +100,10 @@
         
 
         <p><strong>Prepared By:</strong> Alex Ko</p>
+         <p><strong>Printed Date:</strong> {{ now()->format('Y-m-d') }}</p>
 
         <footer>
-            <p>&copy; 2022 JCLC. All rights reserved.</p>
+            
         </footer>
     </div>
 </body>

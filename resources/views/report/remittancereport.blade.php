@@ -88,25 +88,26 @@
 
 <body>
     <div class="report-container">
-        <h1>JCLC Subscribers Report</h1>
+        <h1>JCLC Remittance Report</h1>
         <div class="report-header">
-            <p><strong>Date:</strong> {{ now()->format('Y-m-d') }}</p>
-            <p><strong>Report Generated On:</strong> {{ now() }}</p>
+            <p><strong>From:</strong> 10/02/2004 - 10/07/2024</p>
             <p><strong>Area:</strong> Tupi</p>
-            <p><strong>Status:</strong> Active</p>
         </div>
 
 <table>
         <thead>
             <tr>
+                <th>Employee</th>
                 <th>Date</th>
                 <th>Amount</th>
                 <th>Proof</th>
+                
             </tr>
         </thead>
         <tbody>
             @foreach ($remittances as $remittance)
                 <tr>
+                    <td>{{ $remittance->rm_date }}</td>
                     <td>{{ $remittance->rm_date }}</td>
                     <td>{{ $remittance->rm_amount }}</td>
                     <td>
@@ -120,6 +121,8 @@
         </table>
         <div class="prepared-by">
         </div>
+        <p><strong>Prepared By:</strong> Alex Ko</p>
+        <p><strong>Date:</strong> {{ now()->format('Y-m-d') }}</p>
     </div>
 </body>
 

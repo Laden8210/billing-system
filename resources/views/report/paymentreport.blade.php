@@ -55,7 +55,7 @@
         }
 
         .total-amount {
-            font-size: 1.2em;
+            font-size: .9em;
             font-weight: bold;
             margin-top: 20px;
             text-align: right;
@@ -71,9 +71,10 @@
 <body>
     <div class="container">
         <header>
-            <h1>JCLC Payment Report</h1>
+            <h1>JCLC Collection Report</h1>
             <p><strong>Date:</strong> January 2022</p>
             <p><strong>Collector:</strong> Harry Dip</p>
+            <p><strong>Area:</strong> All</p>
             <hr>
         </header>
 
@@ -84,10 +85,10 @@
                     <th>Subscription Number</th>
                     <th>Subscription Plan</th>
                     <th>Subscription Fee</th>
-                    <th>Amount Paid</th>
                     <th>Payment Date</th>
                     <th>Area</th>
                     <th>Billing Statement ID</th>
+                    <th>Amount Paid</th>
                 </tr>
             </thead>
             <tbody>
@@ -103,10 +104,7 @@
                             {{$payment->p_amount}}
                         </td>
 
-                        <td>
-                            {{$payment->p_amount}}
-                        </td>
-
+                        
                         <td>
                             {{$payment->p_date}}
                         </td>
@@ -119,6 +117,10 @@
                         <td>
                             {{$payment->billstatement_id ?? 0}}
                         </td>
+                        <td>
+                            {{$payment->p_amount}}
+                        </td>
+
 
                     </tr>
 
@@ -130,9 +132,7 @@
 
         <p><strong>Prepared By:</strong> Alex Ko</p>
 
-        <footer>
-            <p>&copy; 2022 JCLC. All rights reserved.</p>
-        </footer>
+
     </div>
 </body>
 </html>

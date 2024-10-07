@@ -72,8 +72,9 @@
     <div class="container">
         <header>
             <h1>JCLC Billing Report</h1>
-            <p><strong>Date:</strong> January 2022</p>
-            <p><strong>Collector:</strong> Harry Dip</p>
+            <p><strong>Date:</strong> 11/07/2024 - 11/12/2024</p>
+
+            
             <hr>
         </header>
 
@@ -84,7 +85,9 @@
                     <th>Subscriber Name</th>
                     <th>Subscription Number</th>
                     <th>Area</th>
+                    <th>Subscription Plan</th>
                     <th>Status</th>
+                    <th>Amount</th>
                 </tr>
             </thead>
             <tbody>
@@ -94,7 +97,10 @@
                         <td>{{ $billing->subscription->subscriber->sr_fname }} {{ $billing->subscription->subscriber->sr_minitial }} {{ $billing->subscription->subscriber->sr_lname }}</td>
                         <td>{{ $billing->subscription->sn_num }}</td>
                         <td>{{ $billing->subscription->area->snarea_name }}</td>
+                        <td>{{ $billing->subscription->area->snarea_name }}</td>
                         <td>{{ $billing->bs_status }}</td>
+                        <td>{{ $billing->subscription->area->snarea_name }}</td>
+                        
                     </tr>
                 @endforeach
             </tbody>
@@ -103,10 +109,9 @@
         
 
         <p><strong>Prepared By:</strong> Alex Ko</p>
+        <p><strong>Printed Date:</strong> {{ now()->format('Y-m-d') }}</p>
 
-        <footer>
-            <p>&copy; 2022 JCLC. All rights reserved.</p>
-        </footer>
+        
     </div>
 </body>
 </html>

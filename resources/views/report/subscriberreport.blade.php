@@ -80,11 +80,11 @@
     <div class="report-container">
         <h1>JCLC Subscribers Report</h1>
         <div class="report-header">
-            <p><strong>Date:</strong> {{ now()->format('Y-m-d') }}</p>
+            
 
-            <p><strong>Report Generated On:</strong> {{now()}}</p>
+            <p><strong>From:</strong> 10/02/2004 - 10/07/2024</p>
             <p><strong>Area:</strong> Tupi</p>
-            <p><strong>Status:</strong> Active</p>
+           
         </div>
 
         <table>
@@ -92,7 +92,7 @@
                 <tr>
                     <th>SUBSCRIBERID</th>
                     <th>Subscriber Name</th>
-                    <th>CONTACT</th>
+                    <th>Contact Number</th>
                     <th>Address</th>
                     <th>Number of Subscription</th>
                     <th>STATUS</th>
@@ -135,6 +135,8 @@
         </div>
 
         <div class="prepared-by">
+            <p><strong>Prepared By:</strong> Alex Ko</p>
+            <p><strong>Date:</strong> {{ now()->format('Y-m-d') }}</p>
 
         </div>
     </div>
