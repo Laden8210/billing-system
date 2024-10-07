@@ -97,7 +97,7 @@
                         <td>{{ $billing->subscription->subscriber->sr_fname }} {{ $billing->subscription->subscriber->sr_minitial }} {{ $billing->subscription->subscriber->sr_lname }}</td>
                         <td>{{ $billing->subscription->sn_num }}</td>
                         <td>{{ $billing->subscription->area->snarea_name }}</td>
-                        <td>{{ $billing->subscription->area->snarea_name }}</td>
+                        <td>{{ $billing->subscription->plan->snplan_bandwidth }} GBps</td>
                         <td>{{ $billing->bs_status }}</td>
                         <td>{{ $billing->subscription->area->snarea_name }}</td>
                         
