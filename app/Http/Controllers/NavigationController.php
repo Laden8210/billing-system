@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Remittance;
 use App\Models\Employee;
+use App\Models\Complaint;
+use App\Models\BillingStatement;
+use App\Models\Announcement;
+
 use Illuminate\Support\Facades\Http;
 class NavigationController extends Controller
 {
@@ -92,6 +96,30 @@ class NavigationController extends Controller
         $pdf = Pdf::loadView('report.remittancereport', compact('remittances'));
         return $pdf->stream('invoice.pdf');
 
+
+    }
+    public function complaintsreport()
+    {
+        $complaints = Complaint::with('subscriber')->get();
+        $pdf = Pdf::loadView('report.complaintsreport', compact('complaints'));
+        return $pdf->stream('complaints.pdf');
+
+    }
+    public function announcementreport()
+    {
+        $announcement = Announcement::all();
+        $pdf = Pdf::loadView('report.announcementreport', compact('announcement'));
+        return $pdf->download('announcement.pdf');
+
+    }
+
+    public function billingreport()
+    {
+        $billingStatements = BillingStatement::with(['subscription.subscriber', 'subscription.area'])
+        ->get();
+
+        $pdf = Pdf::loadView('report.billingreport', compact('billingStatements'));
+        return $pdf->stream('billingreport.pdf');
 
     }
 

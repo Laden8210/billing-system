@@ -12,7 +12,7 @@
             background-color: #f4f4f4;
         }
 
-        .container {z
+        .container {
             max-width: 800px;
             margin: auto;
             background: white;
@@ -71,7 +71,7 @@
 <body>
     <div class="container">
         <header>
-            <h1>JCLC Payment Report</h1>
+            <h1>JCLC Complaints Report</h1>
             <p><strong>Date:</strong> January 2022</p>
             <p><strong>Collector:</strong> Harry Dip</p>
             <hr>
@@ -80,53 +80,30 @@
         <table>
             <thead>
                 <tr>
+                    <th>Date</th>
                     <th>Subscriber Name</th>
-                    <th>Subscription Number</th>
-                    <th>Subscription Plan</th>
-                    <th>Subscription Fee</th>
-                    <th>Amount Paid</th>
-                    <th>Payment Date</th>
-                    <th>Area</th>
-                    <th>Billing Statement ID</th>
+                    <th>Complaints</th>
+                    <th>Reply</th>
+                    
                 </tr>
             </thead>
             <tbody>
-                @foreach ($payments as $payment)
+                @foreach ($complaints as $complaint)
                     <tr>
-                        <td>{{$payment->billingStatement->subscription->subscriber->sr_fname ." ".$payment->billingStatement->subscription->subscriber->sr_lname }}</td>
-                        <td>{{$payment->billingStatement->subscription->sn_num}}</td>
+                        <td>{{ $complaint->cp_date}}</td>
+                        <td>{{ $complaint->subscriber->sr_fname . " " . $complaint->subscriber->sr_minitial . " " .  $complaint->subscriber->sr_lname }}</td>
+                        <td>{{ $complaint->cp_message}}</td>
+                       
                         <td>
-                            {{$payment->billingStatement->subscription->plan->snplan_bandwidth}}
+                            {{ $complaint->cp_reply ? $complaint->cp_reply : " " }}
                         </td>
-
-                        <td>
-                            {{$payment->p_amount}}
-                        </td>
-
-                        <td>
-                            {{$payment->p_amount}}
-                        </td>
-
-                        <td>
-                            {{$payment->p_date}}
-                        </td>
-
-
-                        <td>
-                            {{$payment->billingStatement->subscription->area->snarea_name}}
-                        </td>
-
-                        <td>
-                            {{$payment->billstatement_id ?? 0}}
-                        </td>
-
                     </tr>
 
                 @endforeach
             </tbody>
         </table>
 
-        <p class="total-amount"><strong>Total Amount Collected:</strong> P {{ $payments->sum('p_amount') }}</p>
+        
 
         <p><strong>Prepared By:</strong> Alex Ko</p>
 

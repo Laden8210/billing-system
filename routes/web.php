@@ -34,6 +34,9 @@ Route::get('/user', [NavigationController::class, 'userAccount'])->name('user');
 Route::get('/subscriberReport', [NavigationController::class, 'generateSubscribersReport'])->name('subscriberReport');
 Route::get('paymentReport', [NavigationController::class, 'generatePaymentReport'])->name('paymentReport');
 Route::get('remittanceReport', [NavigationController::class, 'remittanceReport'])->name('remittanceReport');
+Route::get('complaintsreport', [NavigationController::class, 'complaintsReport'])->name('complaintsreport');
+Route::get('billingreport', [NavigationController::class, 'billingreport'])->name('billingreport');
+Route::get('announcementreport', [NavigationController::class, 'announcementreport'])->name('announcementreport');
 Route::get('/download/app', [NavigationController::class, 'downloadApp'])->name('download.app');
 
 

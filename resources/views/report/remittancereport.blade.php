@@ -110,17 +110,15 @@
                     <td>{{ $remittance->rm_date }}</td>
                     <td>{{ $remittance->rm_amount }}</td>
                     <td>
-                        <img src="{{ public_path('storage/' . $remittance->rm_image) }}" class="proof-image"
-                            alt="Proof Image" />
+                        <img src="{{ asset('storage/' . $remittance->rm_image) }}" class="proof-image" 
+                        alt="Proof Image" />
+
                     </td>
                 </tr>
             @endforeach
         </tbody>
         </table>
-
-
         <div class="prepared-by">
-            <!-- Additional content can be added here -->
         </div>
     </div>
 </body>
