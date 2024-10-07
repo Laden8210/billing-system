@@ -107,7 +107,7 @@
         <tbody>
             @foreach ($remittances as $remittance)
                 <tr>
-                    <td>{{ $remittance->rm_date }}</td>
+                    <td>{{ $remittance->em_fname }}</td>
                     <td>{{ $remittance->rm_date }}</td>
                     <td>{{ $remittance->rm_amount }}</td>
                     <td>
@@ -122,7 +122,7 @@
         <div class="prepared-by">
         </div>
         <p><strong>Prepared By:</strong> Alex Ko</p>
-        <p><strong>Date:</strong> {{ now()->format('Y-m-d') }}</p>
+        <p><strong>Date:</strong> {{ now()->format('m-d-Y') }}</p>
     </div>
 </body>
 
