@@ -73,7 +73,7 @@
         <header>
             <h1>JCLC Internet Servece</h1>
             <p><strong>From:</strong> 10/02/2004 - 10/07/2024</p>
-            <p><strong>Area:</strong> {{$areaName}}</p>
+
             <hr>
         </header>
 
