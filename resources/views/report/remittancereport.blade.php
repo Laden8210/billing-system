@@ -112,7 +112,7 @@
 
         <h3>Remittance Report</h3>
         <p><strong>From:</strong> {{ \Carbon\Carbon::parse($start)->format('F j, Y') }} - {{ \Carbon\Carbon::parse($end)->format('F j, Y') }}</p>
-        <p><strong>Area:</strong> {{$areaName}}</p>
+        
 
         <table>
             <thead>
