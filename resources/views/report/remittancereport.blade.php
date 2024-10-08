@@ -85,7 +85,6 @@
 
 <body>
     <div class="report-container">
-        <h1>JCLC Remittance Report</h1>
         <div class="report-header">
             <header>
                 <h1>JCLC Internet Servece</h1>
