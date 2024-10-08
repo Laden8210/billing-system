@@ -53,10 +53,10 @@
         }
 
         th, td {
-            padding: 5px; /* Reduced padding */
+            padding: 5px;
             text-align: left;
             border: 1px solid #dddddd;
-            font-size: 10px; /* Smaller font size for the table */
+            font-size: 10px;
         }
 
         th {
@@ -86,16 +86,16 @@
 
         @media (max-width: 600px) {
             th, td {
-                font-size: 8px; /* Smaller font size on smaller screens */
-                padding: 4px; /* Less padding for smaller screens */
+                font-size: 8px;
+                padding: 4px;
             }
 
             h1, h3 {
-                font-size: 1.2em; /* Reduced heading sizes */
+                font-size: 1.2em;
             }
 
             .total-amount {
-                font-size: 0.9em; /* Reduced total amount font size */
+                font-size: 0.9em;
             }
         }
     </style>
