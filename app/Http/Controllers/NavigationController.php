@@ -200,11 +200,11 @@ class NavigationController extends Controller
 
     public function downloadApp()
     {
-        // Correctly path the file to ensure it exists
-        $file = public_path('download\app.apk'); // Make sure the path is correct
+
+        $file = public_path('download/app.apk'); // Ensure the path is correct
 
         $headers = [
-            'Content-Type: application/vnd.android.package-archive',
+            'Content-Type' => 'application/vnd.android.package-archive',
         ];
 
         // Check if file exists before trying to download
@@ -214,6 +214,7 @@ class NavigationController extends Controller
 
         return response()->download($file, 'app.apk', $headers);
     }
+
 
     public function forgotPasswordPage()
     {
