@@ -11,11 +11,13 @@ class TableComplaints extends Component
     public $selectedcomplaints;
 
     public $reply;
+
+    public $search = '';
     public function render()
     {
         return view('livewire.complaints.table-complaints',
         [
-            'complaints' => Complaint::all()
+            'complaints' => Complaint::search($this->search)->get()
         ]
     );
     }

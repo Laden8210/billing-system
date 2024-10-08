@@ -2,7 +2,13 @@
 
      <h1 class="font-bold my-2">Complaints</h1>
 
+     <div>
+        <input type="text" placeholder="Search" wire:model.live.debounce.300ms = "search"
+        class="border border-slate-400 p-2 active:outline-none w-1/2 mx-2 h-10 self-end">
+    </div>
+
      <div class="w-full flex p-2 justify-center" wire:poll.debounce.1000ms>
+
 
          <table class="w-full table-auto border-collapse border border-slate-400">
              <thead>
