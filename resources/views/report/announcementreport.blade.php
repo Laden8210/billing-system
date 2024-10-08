@@ -85,7 +85,8 @@
         </header>
 
         <h3>Collection Report</h3>
-        <p><strong>From:</strong> {{$start ." - ".  $end}}</p>
+        <p><strong>From:</strong> {{ \Carbon\Carbon::parse($start)->format('F j, Y') }} - {{ \Carbon\Carbon::parse($end)->format('F j, Y') }}</p>
+
 
         <table>
             <thead>
@@ -98,7 +99,7 @@
             <tbody>
                 @foreach($announcement as $announcements)
                     <tr>
-                        <td>{{ $announcements->an_date }}</td>
+                        <td>{{ \Carbon\Carbon::parse($announcements->an_date)->format('m/d/Y') }}</td>
                         <td>{{ $announcements->an_subject }}</td>
                         <td>{{ $announcements->an_message }}</td>
                     </tr>
@@ -108,7 +109,7 @@
         
 
         <p><strong>Prepared By:</strong> Alex Ko</p>
-        <p><strong>Printed Date:</strong> {{ now()->format('d-m-Y') }}</p>
+        <p><strong>Printed Date:</strong> {{ now()->format('m/d/Y') }}</p>
 
         <footer></footer>
     </div>

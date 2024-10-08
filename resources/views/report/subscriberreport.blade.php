@@ -94,7 +94,7 @@
             </header>
 
             <h3>Subscriber Report</h3>
-            <p><strong>From:</strong> {{$start ." - ".  $end}}</p>
+            <p><strong>From:</strong> {{ \Carbon\Carbon::parse($start)->format('F j, Y') }} - {{ \Carbon\Carbon::parse($end)->format('F j, Y') }}</p>
             <p><strong>Area:</strong> {{$areaName}}</p>
 
         </div>
@@ -148,7 +148,7 @@
 
         <div class="prepared-by">
             <p><strong>Prepared By:</strong> Alex Ko</p>
-            <p><strong>Date:</strong> {{ now()->format('Y-m-d') }}</p>
+            <p><strong>Date:</strong> {{ now()->format('m/d/Y') }}</p>
 
         </div>
     </div>

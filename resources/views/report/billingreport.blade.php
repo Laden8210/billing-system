@@ -83,7 +83,8 @@
         </header>
 
         <h3>Billing Report</h3>
-        <p><strong>From:</strong> {{$start ." - ".  $end}}</p>
+        <p><strong>From:</strong> {{ \Carbon\Carbon::parse($start)->format('F j, Y') }} - {{ \Carbon\Carbon::parse($end)->format('F j, Y') }}</p>
+
         <p><strong>Area:</strong> {{$areaName}}</p>
 
         <table>
@@ -104,7 +105,7 @@
                 @endphp
                 @foreach($billingStatements as $billing)
                 <tr>
-                    <td>{{ $billing->bs_billingdate }}</td>
+                    <td>{{ \Carbon\Carbon::parse($billing->bs_billingdate)->format('m/d/Y') }}</td>
                     <td>{{ $billing->subscription->subscriber->sr_fname }} {{ $billing->subscription->subscriber->sr_minitial }} {{ $billing->subscription->subscriber->sr_lname }}</td>
                     <td>{{ $billing->subscription->sn_num }}</td>
                     <td>{{ $billing->subscription->area->snarea_name }}</td>
@@ -128,7 +129,7 @@
 
 
         <p><strong>Prepared By:</strong> Alex Ko</p>
-        <p><strong>Printed Date:</strong> {{ now()->format('d-m-Y') }}</p>
+        <p><strong>Printed Date:</strong> {{ now()->format('m/d/Y') }}</p>
 
 
     </div>

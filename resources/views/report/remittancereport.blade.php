@@ -23,20 +23,24 @@
         
         header {
             text-align: center; /* Centering the header */
+            margin-bottom: 5px; /* Slight reduction */
         }
 
         h1 {
             font-size: 24px;
-            margin-bottom: 10px; /* Adjusted to give space between the headers */
+            margin-bottom: 2px; /* Further reduced to bring closer */
         }
 
-        .report-header {
-            text-align: left;
-            margin-bottom: 30px;
+        .location-name {
+            font-size: 0.8em; /* Slightly larger font for better visibility */
+            font-weight: normal;
+            color: #333;
+            margin-top: 0; /* No extra margin at the top */
         }
 
-        h2 {
-            margin-top: 0;
+        h3 {
+            margin-top: 10px;
+            font-size: 20px;
         }
 
         table {
@@ -84,6 +88,12 @@
             border-radius: 5px;
         }
         
+        .total-amount {
+            font-size: 12px;
+            text-align: right; /* Align the total amount to the right */
+            margin-top: 10px;
+        }
+
         .location-name {
             font-size: 0.7em; 
             font-weight: normal;
@@ -101,13 +111,13 @@
         </header>
 
         <h3>Remittance Report</h3>
-        <p><strong>From:</strong> {{$start ." - ".  $end}}</p>
+        <p><strong>From:</strong> {{ \Carbon\Carbon::parse($start)->format('F j, Y') }} - {{ \Carbon\Carbon::parse($end)->format('F j, Y') }}</p>
         <p><strong>Area:</strong> {{$areaName}}</p>
 
         <table>
             <thead>
                 <tr>
-                    <th>Employee</th>
+                    <th>Collector</th>
                     <th>Date</th>
                     <th>Proof</th>
                     <th>Amount</th>
@@ -126,22 +136,22 @@
                 @endphp
                     <tr>
                         <td>{{ $employee['em_fname'] }} {{ $employee['em_lname'] }}</td>
-                        <td>{{ $remittance->rm_date }}</td>
+                        <td>{{ \Carbon\Carbon::parse($remittance->rm_date)->format('m/d/Y') }}</td>
+
                         <td>
                             <img src="{{ asset('storage/' . $remittance->rm_image) }}" class="proof-image" alt="Proof Image" />
                         </td>
-                        <td>{{ $remittance->rm_amount }}</td>
-                        
+                        <td><span style="font-family: DejaVu Sans;">&#x20B1;</span>{{ $remittance->rm_amount }}</td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
-        <p class="total-amount"><strong>Total Amount Collected:</strong> <span style="font-family: DejaVu Sans;">&#x20B1;</span> {{ $remittances->sum('rm_amount') }}</p>
-
+        
+        <p class="total-amount"><strong>Total Amount Collected:</strong> <span style="font-family: DejaVu Sans;">&#x20B1;</span>{{ $remittances->sum('rm_amount') }}</p>
 
         <div class="prepared-by">
             <p><strong>Prepared by:</strong> Alex Ko</p>
-            <p><strong>Printed date:</strong> {{ now()->format('m-d-Y') }}</p>
+            <p><strong>Printed date:</strong> {{ now()->format('m/d/Y') }}</p>
         </div>
     </div>
 </body>
