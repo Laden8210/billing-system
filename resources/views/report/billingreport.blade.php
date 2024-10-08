@@ -55,10 +55,9 @@
         }
 
         .total-amount {
-            font-size: 0.8em;
-            font-weight: bold;
-            margin-top: 20px;
-            text-align: right;
+            font-size: 12px;
+            text-align: right; /* Align the total amount to the right */
+            margin-top: 10px;
         }
 
         footer {

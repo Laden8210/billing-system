@@ -143,7 +143,7 @@
                         <td>{{ $payment->billingStatement->subscription->sn_num }}</td>
                         <td>{{ $payment->billingStatement->subscription->plan->snplan_bandwidth }}</td>
                         <td><span style="font-family: DejaVu Sans;">&#x20B1;</span>{{ number_format($payment->p_amount, 2) }}</td> <!-- Formatted amount -->
-                        <td>{{ \Carbon\Carbon::parse($payment->p_date)->format('m-d-Y') }}</td>
+                        <td>{{ \Carbon\Carbon::parse($payment->p_date)->format('m/d/Y') }}</td>
                         <td>{{ $payment->billingStatement->subscription->area->snarea_name }}</td>
                         <td>{{ $payment->billstatement_id ?? 0 }}</td>
                         <td><span style="font-family: DejaVu Sans;">&#x20B1;</span>{{ number_format($payment->p_amount, 2) }}</td> <!-- Formatted amount -->
