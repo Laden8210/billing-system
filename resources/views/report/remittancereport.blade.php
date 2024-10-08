@@ -136,7 +136,7 @@
                 @endforeach
             </tbody>
         </table>
-        <p class="total-amount"><strong>Total Amount Collected:</strong> P {{ $payments->sum('rm_amount') }}</p>
+        <p class="total-amount"><strong>Total Amount Collected:</strong> <span style="font-family: DejaVu Sans;">&#x20B1;</span></strong> P {{ $payments->sum('rm_amount') }}</p>
 
         <div class="prepared-by">
             <p><strong>Prepared by:</strong> Alex Ko</p>

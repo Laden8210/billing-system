@@ -148,7 +148,7 @@
             </tbody>
         </table>
 
-        <p class="total-amount"><strong>Total Amount Collected:</strong> P {{ $payments->sum('p_amount') }}</p>
+        <p class="total-amount"><strong>Total Amount Collected:</strong> <span style="font-family: DejaVu Sans;">&#x20B1;</span></strong> P {{ $payments->sum('p_amount') }}</p>
 
         <p><strong>Prepared by:</strong> Alex Ko</p>
         <p><strong>Print date:</strong> {{ now()->format('m-d-Y') }}</p>
