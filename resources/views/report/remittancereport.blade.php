@@ -13,18 +13,21 @@
             background-color: #f5f5f5;
         }
 
-        .report-container {
+        .container {
             background-color: #fff;
             padding: 20px;
             max-width: 900px;
             margin: 0 auto;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
+        
+        header {
+            text-align: center; /* Centering the header */
+        }
 
         h1 {
             font-size: 24px;
-            text-align: left;
-            margin-bottom: 20px;
+            margin-bottom: 10px; /* Adjusted to give space between the headers */
         }
 
         .report-header {
@@ -80,21 +83,26 @@
             height: auto;
             border-radius: 5px;
         }
+        
+        .location-name {
+            font-size: 0.7em; 
+            font-weight: normal;
+            color: #333;
+        }
     </style>
 </head>
 
 <body>
-    <div class="report-container">
-        <div class="report-header">
-            <header>
-                <h1>JCLC Internet Servece</h1>
-                <p><strong>From:</strong> {{$start ." - ".  $end}}</p>
-                <p><strong>Area:</strong> {{$areaName}}</p>
-                <hr>
-            </header>
+    <div class="container">
+        <header>
+            <h1>JCLC Internet Service</h1>
+            <h1><span class="location-name">Urban 2, Koronadal City</span></h1>
+            <hr>
+        </header>
 
-            <h3>Remittance Report</h3>
-        </div>
+        <h3>Remittance Report</h3>
+        <p><strong>From:</strong> {{$start ." - ".  $end}}</p>
+        <p><strong>Area:</strong> {{$areaName}}</p>
 
         <table>
             <thead>
@@ -111,7 +119,6 @@
                     // Dummy employee names
                     $dummyEmployees = [
                         ['em_fname' => 'Jasper', 'em_lname' => 'Delacruz'],
-
                     ];
 
                     // Get the current employee's dummy name based on the index
@@ -128,9 +135,10 @@
                 @endforeach
             </tbody>
         </table>
+
         <div class="prepared-by">
-            <p><strong>Prepared By:</strong> Alex Ko</p>
-            <p><strong>Date:</strong> {{ now()->format('m-d-Y') }}</p>
+            <p><strong>Prepared by:</strong> Alex Ko</p>
+            <p><strong>Printed date:</strong> {{ now()->format('m-d-Y') }}</p>
         </div>
     </div>
 </body>

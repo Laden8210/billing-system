@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JCLC Payment Report</title>
+    <title>JCLC Announcement Report</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
             background-color: #f4f4f4;
+            font-size: 1em; /* Regular text size */
         }
 
         .container {
@@ -22,11 +23,12 @@
         }
 
         header {
-            text-align: left;
+            text-align: center;
         }
 
         h1 {
             margin-bottom: 10px;
+            font-size: 1.5em; /* Adjusted to a regular heading size */
         }
 
         p {
@@ -47,7 +49,7 @@
             padding: 12px;
             text-align: left;
             border: 1px solid #dddddd;
-            font-size: 10px;
+            font-size: 0.9em; /* Regular text size for table content */
         }
 
         th {
@@ -66,18 +68,24 @@
             margin-top: 20px;
             font-size: 0.9em;
         }
+
+        .location-name {
+            font-size: 0.7em; 
+            font-weight: normal;
+            color: #333;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>JCLC Internet Servece</h1>
-            <p><strong>From:</strong>{{$start ." - ".  $end}}</p>
-
+            <h1>JCLC Internet Service</h1>
+            <h1><span class="location-name">Urban 2, Koronadal City</span></h1>
             <hr>
         </header>
 
-        <h3>Announcement Report</h3>
+        <h3>Collection Report</h3>
+        <p><strong>From:</strong> {{$start ." - ".  $end}}</p>
 
         <table>
             <thead>
@@ -85,29 +93,24 @@
                     <th>Date</th>
                     <th>Announcement Type</th>
                     <th>Announcement</th>
-
                 </tr>
             </thead>
             <tbody>
                 @foreach($announcement as $announcements)
                     <tr>
                         <td>{{ $announcements->an_date }}</td>
-                        <td>{{ $announcements->an_subject }} </td>
-                        <td>{{ $announcements->an_message}}</td>
-
+                        <td>{{ $announcements->an_subject }}</td>
+                        <td>{{ $announcements->an_message }}</td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
-
-
+        
 
         <p><strong>Prepared By:</strong> Alex Ko</p>
-         <p><strong>Printed Date:</strong> {{ now()->format('Y-m-d') }}</p>
+        <p><strong>Printed Date:</strong> {{ now()->format('d-m-Y') }}</p>
 
-        <footer>
-
-        </footer>
+        <footer></footer>
     </div>
 </body>
 </html>

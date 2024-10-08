@@ -23,7 +23,7 @@
 
         h1 {
             font-size: 24px;
-            text-align: left;
+            text-align: center;
             margin-bottom: 20px;
         }
 
@@ -73,6 +73,11 @@
         .prepared-by p strong {
             font-weight: bold;
         }
+        .location-name {
+            font-size: 0.7em; 
+            font-weight: normal;
+            color: #333;
+        }
     </style>
 </head>
 
@@ -83,12 +88,14 @@
 
             <header>
                 <h1>JCLC Internet Servece</h1>
-                <p><strong>From:</strong> {{$start ." - ".  $end}}</p>
-                <p><strong>Area:</strong> {{$areaName}}</p>
+                <h1><span class="location-name">Urban 2, Koronadal City</span></h1>
+               
                 <hr>
             </header>
 
             <h3>Subscriber Report</h3>
+            <p><strong>From:</strong> {{$start ." - ".  $end}}</p>
+            <p><strong>Area:</strong> {{$areaName}}</p>
 
         </div>
 

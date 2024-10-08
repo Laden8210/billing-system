@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JCLC Payment Report</title>
+    <title>JCLC Billing Report</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -22,7 +22,7 @@
         }
 
         header {
-            text-align: left;
+            text-align: Center;
         }
 
         h1 {
@@ -55,7 +55,7 @@
         }
 
         .total-amount {
-            font-size: 1.2em;
+            font-size: 0.8em;
             font-weight: bold;
             margin-top: 20px;
             text-align: right;
@@ -66,18 +66,25 @@
             margin-top: 20px;
             font-size: 0.9em;
         }
+        .location-name {
+            font-size: 0.6em; 
+            font-weight: normal;
+            color: #333;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
             <h1>JCLC Internet Servece</h1>
-            <p><strong>From:</strong> {{$start ." - ".  $end}}</p>
-            <p><strong>Area:</strong> {{$areaName}}</p>
+            <h1><span class="location-name">Urban 2, Koronadal City</span></h1>
+            
             <hr>
         </header>
 
         <h3>Billing Report</h3>
+        <p><strong>From:</strong> {{$start ." - ".  $end}}</p>
+        <p><strong>Area:</strong> {{$areaName}}</p>
 
         <table>
             <thead>
@@ -92,6 +99,9 @@
                 </tr>
             </thead>
             <tbody>
+                @php
+                $sum =0;
+                @endphp
                 @foreach($billingStatements as $billing)
                 <tr>
                     <td>{{ $billing->bs_billingdate }}</td>
@@ -104,19 +114,21 @@
                     @php
                         // Calculate total payment amount for the billing statement
                         $totalPaymentAmount = $billing->payments->sum('p_amount');
+                        $sum = $totalPaymentAmount + $sum
                     @endphp
 
-                    <td>{{ number_format($totalPaymentAmount, 2) }}</td> <!-- Format the amount to 2 decimal places -->
+                    <td>         <span style="font-family: DejaVu Sans;">&#x20B1;</span>{{ number_format($totalPaymentAmount, 2) }}</td> <!-- Format the amount to 2 decimal places -->
                 </tr>
                 @endforeach
 
             </tbody>
         </table>
+        <p class="total-amount"><strong>Total Amount Collected:</strong> <span style="font-family: DejaVu Sans;">&#x20B1;</span> {{ number_format($sum , 2) }}</p>
 
 
 
         <p><strong>Prepared By:</strong> Alex Ko</p>
-        <p><strong>Printed Date:</strong> {{ now()->format('Y-m-d') }}</p>
+        <p><strong>Printed Date:</strong> {{ now()->format('d-m-Y') }}</p>
 
 
     </div>

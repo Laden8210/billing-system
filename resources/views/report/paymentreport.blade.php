@@ -22,7 +22,7 @@
         }
 
         header {
-            text-align: left;
+            text-align: center;
         }
 
         h1 {
@@ -98,23 +98,30 @@
                 font-size: 0.9em;
             }
         }
+
+        .location-name {
+            font-size: 0.7em;
+            font-weight: normal;
+            color: #333;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
             <h1>JCLC Internet Service</h1>
-            <p><strong>From:</strong> {{$start ." - ".  $end}}</p>
+            <h1><span class="location-name">Urban 2, Koronadal City</span></h1>
             <hr>
         </header>
 
         <h3>Collection Report</h3>
+        <p><strong>From:</strong> {{$start ." - ".  $end}}</p>
 
         <table>
             <thead>
                 <tr>
                     <th>Subscriber Name</th>
-                    <th>Employee Name</th>
+                    <th>Collector Name</th>
                     <th>Subscription Number</th>
                     <th>Subscription Plan</th>
                     <th>Subscription Fee</th>
@@ -143,8 +150,8 @@
 
         <p class="total-amount"><strong>Total Amount Collected:</strong> P {{ $payments->sum('p_amount') }}</p>
 
-        <p><strong>Prepared By:</strong> Alex Ko</p>
-        <p><strong>Date:</strong> {{ now()->format('m-d-Y') }}</p>
+        <p><strong>Prepared by:</strong> Alex Ko</p>
+        <p><strong>Print date:</strong> {{ now()->format('m-d-Y') }}</p>
     </div>
 </body>
 </html>
