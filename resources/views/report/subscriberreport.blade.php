@@ -78,7 +78,6 @@
 
 <body>
     <div class="report-container">
-        <h1>JCLC Subscribers Report</h1>
         <div class="report-header">
 
 
