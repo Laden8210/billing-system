@@ -1,40 +1,34 @@
-<div>
-    @if (session()->has('message'))
-        <div class="alert alert-success">{{ session('message') }}</div>
-    @endif
+<?php
 
-    @if (session()->has('error'))
-        <div class="alert alert-danger">{{ session('error') }}</div>
-    @endif
+namespace App\Livewire\Complaints;
 
-    <table>
-        <thead>
-            <tr>
-                <th>Subscriber Name</th>
-                <th>Complaints</th>
-                <th>Reply</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($complaints as $complaint)
-                <tr>
-                    <td>{{ $complaint->subscriber->name }}</td>
-                    <td>{{ $complaint->description }}</td>
-                    <td>{{ $complaint->cp_reply }}</td>
-                    <td>
-                        <button wire:click="selectComplaint({{ $complaint->id }})">Select</button>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+use Livewire\Component;
+use App\Models\Complaint;
 
-    @if ($selectedcomplaints)
-        <div>
-            <h3>Reply to Complaint</h3>
-            <textarea wire:model="reply"></textarea>
-            <button wire:click="replyComplaints">Submit Reply</button>
-        </div>
-    @endif
-</div>
+class TableComplaints extends Component
+{
+
+    public $selectedcomplaints;
+
+    public $reply;
+    public function render()
+    {
+        return view('livewire.complaints.table-complaints',
+        [
+            'complaints' => Complaint::all()
+        ]
+    );
+    }
+
+    public function selectComplaint($complaint_id)
+    {
+        $this->selectedcomplaints = Complaint::find($complaint_id);
+    }
+
+    public function replyComplaints()
+    {
+        $this->selectedcomplaints->cp_reply = $this->reply;
+        $this->selectedcomplaints->save();
+        session()->flash('message', 'Complaint replied successfully');
+    }
+}

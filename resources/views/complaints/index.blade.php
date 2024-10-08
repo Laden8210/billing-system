@@ -4,7 +4,6 @@
 
 @section('content')
 
-
 @livewire('complaints.table-complaints')
 
 @endsection
