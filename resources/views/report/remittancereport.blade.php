@@ -89,7 +89,7 @@
         <div class="report-header">
             <header>
                 <h1>JCLC Internet Servece</h1>
-                <p><strong>From:</strong> 10/02/2004 - 10/07/2024</p>
+                <p><strong>From:</strong> {{$start ."-".  $end}}</p>
                 <p><strong>Area:</strong> {{$areaName}}</p>
                 <hr>
             </header>
@@ -108,20 +108,9 @@
             </thead>
             <tbody>
                 @foreach ($remittances as $index => $remittance)
-                @php
-                    // Dummy employee names
-                    $dummyEmployees = [
-                        ['em_fname' => 'John', 'em_lname' => 'Doe'],
-                        ['em_fname' => 'Jane', 'em_lname' => 'Smith'],
-                        ['em_fname' => 'Emily', 'em_lname' => 'Johnson'],
-                        ['em_fname' => 'Michael', 'em_lname' => 'Brown'],
-                    ];
 
-                    // Get the current employee's dummy name based on the index
-                    $employee = $dummyEmployees[$index % count($dummyEmployees)];
-                @endphp
                     <tr>
-                        <td>{{ $employee['em_fname'] }} {{ $employee['em_lname'] }}</td>
+                        <td>{{ $remittance->employee->em_fname . " ". $remittance->employee->em_lname  }}</td>
                         <td>{{ $remittance->rm_date }}</td>
                         <td>{{ $remittance->rm_amount }}</td>
                         <td>
