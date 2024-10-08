@@ -108,9 +108,18 @@
             </thead>
             <tbody>
                 @foreach ($remittances as $index => $remittance)
+                @php
+                    // Dummy employee names
+                    $dummyEmployees = [
+                        ['em_fname' => 'Jasper', 'em_lname' => 'Delacruz'],
 
+                    ];
+
+                    // Get the current employee's dummy name based on the index
+                    $employee = $dummyEmployees[$index % count($dummyEmployees)];
+                @endphp
                     <tr>
-                        <td>{{ $remittance->employee->em_fname . " ". $remittance->employee->em_lname  }}</td>
+                        <td>{{ $employee['em_fname'] }} {{ $employee['em_lname'] }}</td>
                         <td>{{ $remittance->rm_date }}</td>
                         <td>{{ $remittance->rm_amount }}</td>
                         <td>
