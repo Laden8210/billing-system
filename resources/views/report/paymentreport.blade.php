@@ -16,7 +16,7 @@
             max-width: 800px;
             margin: auto;
             background: white;
-            padding: 20px;
+            padding: 10px;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
@@ -26,14 +26,14 @@
         }
 
         h1 {
-            margin-bottom: 10px;
-            font-size: 2em;
+            margin-bottom: 5px;
+            font-size: 1.5em;
             color: #333;
         }
 
         h3 {
-            margin: 20px 0 10px;
-            font-size: 1.5em;
+            margin: 15px 0 10px;
+            font-size: 1.3em;
             color: #555;
         }
 
@@ -43,7 +43,7 @@
         }
 
         hr {
-            margin: 20px 0;
+            margin: 15px 0;
         }
 
         table {
@@ -53,10 +53,10 @@
         }
 
         th, td {
-            padding: 12px;
+            padding: 5px; /* Reduced padding */
             text-align: left;
             border: 1px solid #dddddd;
-            font-size: 14px;
+            font-size: 10px; /* Smaller font size for the table */
         }
 
         th {
@@ -70,7 +70,7 @@
         }
 
         .total-amount {
-            font-size: 1.2em;
+            font-size: 1em;
             font-weight: bold;
             margin-top: 20px;
             text-align: right;
@@ -86,16 +86,16 @@
 
         @media (max-width: 600px) {
             th, td {
-                font-size: 12px;
-                padding: 8px;
+                font-size: 8px; /* Smaller font size on smaller screens */
+                padding: 4px; /* Less padding for smaller screens */
             }
 
             h1, h3 {
-                font-size: 1.5em;
+                font-size: 1.2em; /* Reduced heading sizes */
             }
 
             .total-amount {
-                font-size: 1em;
+                font-size: 0.9em; /* Reduced total amount font size */
             }
         }
     </style>
