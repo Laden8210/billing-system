@@ -72,7 +72,7 @@
     <div class="container">
         <header>
             <h1>JCLC Internet Servece</h1>
-            <p><strong>From:</strong>{{$start ."-".  $end}}</p>
+            <p><strong>From:</strong>{{$start ." - ".  $end}}</p>
 
             <hr>
         </header>
