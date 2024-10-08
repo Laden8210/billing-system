@@ -27,16 +27,19 @@
 
         h1 {
             margin-bottom: 10px;
-            font-size: 1.8em; /* Increased for better visibility */
+            font-size: 2em;
+            color: #333;
         }
 
         h3 {
             margin: 20px 0 10px;
-            font-size: 1.5em; /* Increased for better visibility */
+            font-size: 1.5em;
+            color: #555;
         }
 
         p {
             margin: 5px 0;
+            color: #666;
         }
 
         hr {
@@ -53,40 +56,46 @@
             padding: 12px;
             text-align: left;
             border: 1px solid #dddddd;
-            font-size: 12px; /* Increased for better readability */
+            font-size: 14px;
         }
 
         th {
             background-color: #f2f2f2;
-            font-weight: bold; /* Added bold font for headers */
+            font-weight: bold;
+            color: #333;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
         }
 
         .total-amount {
-            font-size: 1em; /* Slightly increased for visibility */
+            font-size: 1.2em;
             font-weight: bold;
             margin-top: 20px;
             text-align: right;
+            color: #333;
         }
 
         footer {
             text-align: center;
             margin-top: 20px;
             font-size: 0.9em;
+            color: #666;
         }
 
-        /* Responsive Design */
         @media (max-width: 600px) {
             th, td {
-                font-size: 10px; /* Smaller font size on smaller screens */
-                padding: 8px; /* Less padding for smaller screens */
+                font-size: 12px;
+                padding: 8px;
             }
 
             h1, h3 {
-                font-size: 1.2em; /* Reduced heading sizes */
+                font-size: 1.5em;
             }
 
             .total-amount {
-                font-size: 0.9em; /* Reduced total amount font size */
+                font-size: 1em;
             }
         }
     </style>
