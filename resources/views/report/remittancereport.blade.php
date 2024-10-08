@@ -109,8 +109,8 @@
                 <tr>
                     <th>Employee</th>
                     <th>Date</th>
-                    <th>Amount</th>
                     <th>Proof</th>
+                    <th>Amount</th>
                 </tr>
             </thead>
             <tbody>
@@ -127,14 +127,16 @@
                     <tr>
                         <td>{{ $employee['em_fname'] }} {{ $employee['em_lname'] }}</td>
                         <td>{{ $remittance->rm_date }}</td>
-                        <td>{{ $remittance->rm_amount }}</td>
                         <td>
                             <img src="{{ asset('storage/' . $remittance->rm_image) }}" class="proof-image" alt="Proof Image" />
                         </td>
+                        <td>{{ $remittance->rm_amount }}</td>
+                        
                     </tr>
                 @endforeach
             </tbody>
         </table>
+        <p class="total-amount"><strong>Total Amount Collected:</strong> P {{ $payments->sum('rm_amount') }}</p>
 
         <div class="prepared-by">
             <p><strong>Prepared by:</strong> Alex Ko</p>
