@@ -25,10 +25,7 @@
 
         </div>
 
-        <div class="p-2">
-            <button class="bg-cyan-600 rounded px-2 py-2 text-white font-bold" wire:click="generate">Generate Billing
-                Statement</button>
-        </div>
+
     </div>
 
 

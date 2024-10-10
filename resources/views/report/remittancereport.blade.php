@@ -93,12 +93,6 @@
             text-align: right; /* Align the total amount to the right */
             margin-top: 10px;
         }
-
-        .location-name {
-            font-size: 0.7em;
-            font-weight: normal;
-            color: #333;
-        }
     </style>
 </head>
 
@@ -113,7 +107,6 @@
         <h3>Remittance Report</h3>
         <p><strong>From:</strong> {{ \Carbon\Carbon::parse($start)->format('F j, Y') }}</p>
 
-
         <table>
             <thead>
                 <tr>
@@ -125,7 +118,6 @@
             </thead>
             <tbody>
                 @foreach ($remittances as $index => $remittance)
-
                     <tr>
                         <td>
                             {{ optional($remittance->employee)->em_fname ?? '' }} {{ optional($remittance->employee)->em_lname ?? '' }}
@@ -134,7 +126,7 @@
                         <td>{{ \Carbon\Carbon::parse($remittance->rm_date)->format('m/d/Y') }}</td>
 
                         <td>
-                            <img src="{{ asset('storage/' . $remittance->rm_image) }}" class="proof-image" alt="Proof Image" />
+                            <img src="{{ public_path($remittance->rm_image) }}" class="proof-image" alt="{{ $remittance->rm_image }}" />
                         </td>
                         <td><span style="font-family: DejaVu Sans;">&#x20B1;</span>{{ $remittance->rm_amount }}</td>
                     </tr>

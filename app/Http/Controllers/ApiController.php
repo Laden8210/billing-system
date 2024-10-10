@@ -302,6 +302,33 @@ class ApiController extends Controller
         return response()->json(['otp' => $otp, 'subscriberId' => $subscriber->subscriber_id], 200);
     }
 
+
+    public function requestOtpEmployee(Request $request)
+    {
+
+
+        $validatedData = $request->validate([
+            'contactnumber' => 'required|string|max:12',
+        ]);
+
+        $employee = Employee::where('em_contactnum', $validatedData['contactnumber'])->first();
+
+        if (!$employee) {
+            return response()->json(['error' => 'Employee not found'], 200);
+        }
+
+        $otp = rand(1000, 9999);
+
+
+        $response = Http::post('https://nasa-ph.com/api/send-sms', [
+            'phone_number' => $employee->em_contactnum,
+            'message' => "Your OTP code is: $otp. Please use this code to reset your password.",
+        ]);
+
+
+        return response()->json(['otp' => $otp, 'employeeId' => $employee->employee_id], 200);
+    }
+
     public function changePassword(Request $request){
 
         $validatedData = $request->validate([
@@ -320,14 +347,41 @@ class ApiController extends Controller
 
         return response()->json(['message' => 'Password changed successfully'], 200);
     }
+
+
+    public function changePasswordEmployee(Request $request){
+
+        $validatedData = $request->validate([
+            'employeeId' => 'required|integer',
+            'password' => 'required',
+
+        ]);
+
+
+        $employee = Employee::find($validatedData['employeeId']);
+
+        if(!$employee){
+            return response()->json(['error' => 'Employee not found'], 200);
+        }
+
+
+        if (strlen($request->password) < 6) {
+            return response()->json(['error' => 'Password must be at least 6 characters'], 200);
+        }
+
+        $employee->em_password = bcrypt($validatedData['password']);
+        $employee->save();
+
+        return response()->json(['error' => 'Password changed successfully'], 200);
+    }
+
     public function getRemittance(Request $request)
     {
         // Fetch all remittance records
         $remittances = Remittance::all();
 
-        // Loop through each remittance and modify the rm_image field to include the full URL
         foreach ($remittances as $remittance) {
-            // Adjust the image path to reflect the correct storage path
+
             $remittance->rm_image = asset('storage/' . $remittance->rm_image);
         }
 
@@ -348,11 +402,11 @@ class ApiController extends Controller
         $employee = Employee::find($validatedData['employee_id']);
 
         if (!$employee) {
-            return response()->json(['message' => 'Employee not found'], 404);
+            return response()->json(['error' => 'Employee not found'], 200);
         }
 
         if (!Hash::check($validatedData['old_password'], $employee->em_password)) {
-            return response()->json(['message' => 'Invalid old password'], 400);
+            return response()->json(['error' => 'Invalid old password'], 200);
         }
 
         $employee->em_password = bcrypt($validatedData['new_password']);

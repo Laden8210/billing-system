@@ -17,6 +17,8 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
+
+
         $employee = Employee::where('em_contactnum', $request->contact_number)->first();
 
 

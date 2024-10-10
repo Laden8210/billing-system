@@ -107,14 +107,15 @@
                 @endphp
                 @foreach($billingStatements as $billing)
                 <tr>
-                    <td>{{ \Carbon\Carbon::parse($billing->bs_billingdate)->format('m/d/Y') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($billing->bs_billingdate)->format('F j, Y') }}</td>
                     <td>{{ $billing->subscription->subscriber->sr_fname }} {{ $billing->subscription->subscriber->sr_minitial }} {{ $billing->subscription->subscriber->sr_lname }}</td>
                     <td>{{ $billing->subscription->sn_num }}</td>
                     <td>{{ $billing->subscription->area->snarea_name }}</td>
                     <td>{{ $billing->subscription->plan->snplan_bandwidth }} MBps</td>
 
                     <td>{{ \Carbon\Carbon::parse($billing->bs_duedate)->format('F j, Y') }}</td>
-                    <td>{{ \Carbon\Carbon::parse($billing->bs_disconnectiondate)->format('F j, Y') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($billing->bs_duedate)->addDays(5)->format('F j, Y') }}</td>
+
                     <td>{{ $billing->bs_status }}</td>
                     @php
                         // Calculate total payment amount for the billing statement

@@ -20,6 +20,7 @@ class TableBilling extends Component
     public $area;
     public function render()
     {
+        $this->generate();
         return view('livewire.billing.table-billing', [
             'billings' => BillingStatement::search($this->search)
                 ->when($this->area, function ($query) {
