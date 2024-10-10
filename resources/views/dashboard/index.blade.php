@@ -21,7 +21,7 @@
             <div class="shadow rounded p-5 ">
                 <h3 class="font-bold">Revenue</h3>
                 <div class="flex justify-between my-5 text-5xl">
-                    <h1 class="font-bold">Php. 750,000</h1>
+                    <h1 class="font-bold">Php. {{ $revenue }}</h1>
                     <i class="fa fa-edit"></i>
                 </div>
 
@@ -30,7 +30,7 @@
             <div class="shadow rounded p-5">
                 <h3 class="font-bold">Outstanding Bill</h3>
                 <div class="flex justify-between my-5 text-5xl">
-                    <h1 class=" font-bold">7</h1>
+                    <h1 class=" font-bold">{{ $outstandingBill }}</h1>
                     <i class="fa fa-edit"></i>
                 </div>
 
@@ -39,7 +39,7 @@
             <div class=" shadow rounded p-5">
                 <h3 class="font-bold">Subscriber</h3>
                 <div class="flex justify-between my-5 text-5xl">
-                    <h1 class=" font-bold">100</h1>
+                    <h1 class=" font-bold">{{ $subscriberCount }}</h1>
                     <i class="fa fa-edit"></i>
                 </div>
 

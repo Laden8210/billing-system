@@ -4,6 +4,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NavigationController;
+use App\Http\Controllers\DashboardController;
 
 
 Route::post('/login', [LoginController::class, 'login'])->name('login-user');
@@ -16,8 +17,7 @@ Route::post('/loginEmployee', [LoginController::class, 'loginEmployee'])->name('
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-    Route::get('/dashboard', [NavigationController::class, 'dashboard'])->name('dashboard');
-
+    Route::get('/dashboard', [DashboardController::class, 'displayDashboardData'])->name('dashboard');
     Route::get('/service', [NavigationController::class, 'service'])->name('service');
     Route::get('/subscriber', [NavigationController::class, 'subscriber'])->name('subscriber');
     Route::get('/billing', [NavigationController::class, 'billing'])->name('billing');

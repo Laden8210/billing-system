@@ -52,4 +52,5 @@ class Employee extends Authenticatable
     {
         return $this->hasMany(Payment::class, 'employee_id');
     }
+    
 }
