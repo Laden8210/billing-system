@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\SubscriptionArea;
+use App\Models\Employee;
 
 class ReportTable extends Component
 {
@@ -15,6 +16,7 @@ class ReportTable extends Component
     {
         return view('livewire.report-table',[
             'areas' => SubscriptionArea::all(),
+            'employees' => Employee::all(),
         ]);
     }
 

@@ -9,7 +9,7 @@ use App\Models\Payment;
 use App\Models\Subscription;
 use Carbon\Carbon;
 use App\Models\SubscriptionArea;
-
+use Illuminate\Support\Facades\Auth;
 class TablePayment extends Component
 {
     public $search;
@@ -48,6 +48,10 @@ class TablePayment extends Component
             return;
         }
 
+        $user = Auth::user();
+
+
+
 
         if ($this->selectedBilling) {
 
@@ -55,7 +59,7 @@ class TablePayment extends Component
             $payment->billstatement_id = $this->selectedBilling->billstatement_id;
             $payment->p_amount = $this->selectedBilling->subscription->plan->snplan_fee;
             $payment->p_month = $this->selectedBilling->bs_billingdate;
-            $payment->employee_id = 1;
+            $payment->employee_id = $user->employee_id;
             $payment->p_date = now();
             $payment->save();
 
@@ -79,7 +83,7 @@ class TablePayment extends Component
                 $payment->billstatement_id = $billing->billstatement_id;
                 $payment->p_amount = $billing->bs_amount;
                 $payment->p_month = $billing->bs_billingdate;
-                $payment->employee_id = 1;
+                $payment->employee_id =  $user->employee_id;
                 $payment->p_date = now();
                 $payment->save();
             }

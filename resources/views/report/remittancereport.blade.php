@@ -20,7 +20,7 @@
             margin: 0 auto;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-        
+
         header {
             text-align: center; /* Centering the header */
             margin-bottom: 5px; /* Slight reduction */
@@ -87,7 +87,7 @@
             height: auto;
             border-radius: 5px;
         }
-        
+
         .total-amount {
             font-size: 12px;
             text-align: right; /* Align the total amount to the right */
@@ -95,7 +95,7 @@
         }
 
         .location-name {
-            font-size: 0.7em; 
+            font-size: 0.7em;
             font-weight: normal;
             color: #333;
         }
@@ -111,8 +111,8 @@
         </header>
 
         <h3>Remittance Report</h3>
-        <p><strong>From:</strong> {{ \Carbon\Carbon::parse($start)->format('F j, Y') }} - {{ \Carbon\Carbon::parse($end)->format('F j, Y') }}</p>
-        
+        <p><strong>From:</strong> {{ \Carbon\Carbon::parse($start)->format('F j, Y') }}</p>
+
 
         <table>
             <thead>
@@ -125,17 +125,12 @@
             </thead>
             <tbody>
                 @foreach ($remittances as $index => $remittance)
-                @php
-                    // Dummy employee names
-                    $dummyEmployees = [
-                        ['em_fname' => 'Jasper', 'em_lname' => 'Delacruz'],
-                    ];
 
-                    // Get the current employee's dummy name based on the index
-                    $employee = $dummyEmployees[$index % count($dummyEmployees)];
-                @endphp
                     <tr>
-                        <td>{{ $employee['em_fname'] }} {{ $employee['em_lname'] }}</td>
+                        <td>
+                            {{ optional($remittance->employee)->em_fname ?? '' }} {{ optional($remittance->employee)->em_lname ?? '' }}
+                        </td>
+
                         <td>{{ \Carbon\Carbon::parse($remittance->rm_date)->format('m/d/Y') }}</td>
 
                         <td>
@@ -146,7 +141,7 @@
                 @endforeach
             </tbody>
         </table>
-        
+
         <p class="total-amount"><strong>Total Amount Collected:</strong> <span style="font-family: DejaVu Sans;">&#x20B1;</span>{{ $remittances->sum('rm_amount') }}</p>
 
         <div class="prepared-by">

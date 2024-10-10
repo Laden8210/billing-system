@@ -94,7 +94,7 @@ class NavigationController extends Controller
         $start = $request->start;
         $end = $request->end;
         $area = $request->area;
-
+        $employee = $request->employee;
 
 
         if ($reportType == 'Subscriber Report') {
@@ -116,29 +116,25 @@ class NavigationController extends Controller
             $pdf = Pdf::loadView('report.subscriberreport', compact('subscribers', 'start', 'end', 'areaName'));
             return $pdf->stream('subscriber_report.pdf');
         } elseif ($reportType == 'Payment Report') {
-
-            $payments = Payment::where('created_at', '>=', $start)
-                ->where('created_at', '<=', $end)
-                ->get();
+            $payments = Payment::with('employee')->where('p_date', '=', $start)
+            ->where('employee_id', '=', $employee)
+            ->get();
 
             $pdf = Pdf::loadView('report.paymentreport', compact('payments', 'start', 'end'));
             return $pdf->stream('invoice.pdf');
         } elseif ($reportType == 'Remittance Report') {
 
-            $remittances = Remittance::whereBetween('created_at', [$start, $end])->get();
+            $remittances = Remittance::where('rm_date', '=',$start)->get();
 
-            $areaName = SubscriptionArea::find($area)->snarea_name;
 
-            $pdf = Pdf::loadView('report.remittancereport', compact('remittances', 'start', 'end', 'areaName'));
+
+            $pdf = Pdf::loadView('report.remittancereport', compact('remittances', 'start'));
             return $pdf->stream('remittance_report.pdf');
         } elseif ($reportType == 'Billing Report') {
             $billingStatements = BillingStatement::with(['subscription.subscriber', 'subscription.area', 'payments'])
-                ->whereHas('payments', function ($query) use ($start, $end) {
-                    // Filter by the payment creation date
-                    $query->whereBetween('created_at', [$start, $end]);
-                })
+
                 ->whereHas('subscription.area', function ($query) use ($area) {
-                    // Filter by area (assuming the relation exists in 'subscription.area')
+
                     $query->where('subscriptionarea_id', $area);
                 })
                 ->get();
@@ -150,6 +146,12 @@ class NavigationController extends Controller
             $announcement = Announcement::whereBetween('created_at', [$start, $end])->get();
             $pdf = Pdf::loadView('report.announcementreport', compact('announcement', 'start', 'end'));
             return $pdf->download('announcement.pdf');
+        }elseif($reportType == 'Complaints Report'){
+            $complaints = Complaint::whereBetween('cp_date', [$start, $end])
+            ->get();
+
+            $pdf = Pdf::loadView('report.complaintsreport', compact('complaints', 'start', 'end'));
+            return $pdf->stream('complaints.pdf');
         }
     }
 

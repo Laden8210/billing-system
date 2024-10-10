@@ -66,7 +66,7 @@
             font-size: 0.9em;
         }
         .location-name {
-            font-size: 0.6em; 
+            font-size: 0.6em;
             font-weight: normal;
             color: #333;
         }
@@ -77,7 +77,7 @@
         <header>
             <h1>JCLC Internet Servece</h1>
             <h1><span class="location-name">Urban 2, Koronadal City</span></h1>
-            
+
             <hr>
         </header>
 
@@ -94,6 +94,9 @@
                     <th>Subscription Number</th>
                     <th>Area</th>
                     <th>Subscription Plan</th>
+
+                    <th>Due Date</th>
+                    <th>Disconnection Date</th>
                     <th>Status</th>
                     <th>Amount</th>
                 </tr>
@@ -109,12 +112,18 @@
                     <td>{{ $billing->subscription->sn_num }}</td>
                     <td>{{ $billing->subscription->area->snarea_name }}</td>
                     <td>{{ $billing->subscription->plan->snplan_bandwidth }} MBps</td>
-                    <td>{{ $billing->bs_status }}</td>
 
+                    <td>{{ \Carbon\Carbon::parse($billing->bs_duedate)->format('F j, Y') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($billing->bs_disconnectiondate)->format('F j, Y') }}</td>
+                    <td>{{ $billing->bs_status }}</td>
                     @php
                         // Calculate total payment amount for the billing statement
-                        $totalPaymentAmount = $billing->payments->sum('p_amount');
-                        $sum = $totalPaymentAmount + $sum
+                        $totalPaymentAmount = $billing->subscription->plan->snplan_fee ;
+
+                        if ($billing->bs_status == 'paid') {
+                            $sum += $totalPaymentAmount;
+                        }
+
                     @endphp
 
                     <td>         <span style="font-family: DejaVu Sans;">&#x20B1;</span>{{ number_format($totalPaymentAmount, 2) }}</td> <!-- Format the amount to 2 decimal places -->
@@ -128,7 +137,7 @@
 
 
         <p><strong>Prepared By:</strong> Alex Ko</p>
-        <p><strong>Printed Date:</strong> {{ now()->format('m/d/Y') }}</p>
+        <p><strong>Printed Date:</strong> {{ now()->format('F j, Y') }}</p>
 
 
     </div>

@@ -37,13 +37,12 @@
             class="bg-green-500 hover:bg-green-600 text-center p-10 text-xl text-white">Remittance Report</button>
 
         <button href="{{ route('paymentReport') }}" target="_blank"
-            x-on:click="$dispatch('open-modal', {name:'filter-form'})"
-            wire:click="selectReportType('Payment Report')"
+            x-on:click="$dispatch('open-modal', {name:'filter-form'})" wire:click="selectReportType('Payment Report')"
             class="bg-green-500 hover:bg-green-600 text-center p-10 text-xl text-white">Payment History</button>
 
         <button href="{{ route('subscriberReport') }}" target="_blank"
-                x-on:click="$dispatch('open-modal', {name:'filter-form'})"
-        wire:click="selectReportType('Subscriber Report')"
+            x-on:click="$dispatch('open-modal', {name:'filter-form'})"
+            wire:click="selectReportType('Subscriber Report')"
             class="bg-green-500 hover:bg-green-600 text-center p-10 text-xl text-white">Subscriber Report</button>
 
         <button href="{{ route('billingreport') }}" x-on:click="$dispatch('open-modal', {name:'filter-form'})"
@@ -56,6 +55,12 @@
             target="_blank" class="bg-green-500 hover:bg-green-600 text-center p-10 text-xl text-white">Announcement
             Report</button>
 
+
+        <button x-on:click="$dispatch('open-modal', {name:'filter-form'})"
+            wire:click="selectReportType('Complaints Report')" href="{{ route('announcementreport') }}"
+            target="_blank" class="bg-green-500 hover:bg-green-600 text-center p-10 text-xl text-white">Complaints
+            Report</button>
+
     </div>
 
 
@@ -63,23 +68,41 @@
 
         @slot('body')
 
-            <form action="{{route('generate-report')}}" method="POST">
+            <form action="{{ route('generate-report') }}" method="POST">
                 @csrf
                 <h1>Generate Report for:</h1>
                 <div class="grid grid-cols-1 gap-2">
 
-                    <input type="text" value="{{$reportType}}" name="reportType" class="rounded px-2 py-1 bg-slate-200 outline" readonly>
+                    <input type="text" value="{{ $reportType }}" name="reportType"
+                        class="rounded px-2 py-1 bg-slate-200 outline" readonly>
 
                     <div>
                         <label for="">From</label>
                         <input type="date" class="p-2 outline-none border border-slate-300 w-full" name="start">
                     </div>
-                    <div>
-                        <label for="">To</label>
-                        <input type="date" class="p-2 outline-none border border-slate-300 w-full" name="end">
-                    </div>
 
-                    @if ($reportType == 'Billing Report' || $reportType == 'Payment History' || $reportType == 'Subscriber Report' || $reportType == 'Remittance Report' || $reportType == 'Payment Report')
+                    @if ($reportType != 'Payment Report' && $reportType != 'Remittance Report')
+                        <div>
+                            <label for="">End</label>
+                            <input type="date" class="p-2 outline-none border border-slate-300 w-full" name="end">
+                        </div>
+                    @endif
+
+
+                    @if ($reportType === 'Payment Report')
+                        <div>
+                            <label for="">Employee</label>
+                            <select class="p-2 outline-none border border-slate-300 w-full" name="employee">
+                                <option value="">Select</option>
+                                @foreach ($employees as $employee)
+                                    <option value="{{ $employee->employee_id }}">
+                                        {{ $employee->em_fname . ' ' . $employee->em_lname }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    @endif
+
+                    @if ($reportType == 'Billing Report' || $reportType == 'Subscriber Report')
                         <div>
                             <label for="">To</label>
                             <select class="p-2 outline-none border border-slate-300 w-full" name="area">
