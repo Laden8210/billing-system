@@ -99,7 +99,7 @@
 <body>
     <div class="container">
         <header>
-            <img src="{{ public_path('images/a.jpg') }}" alt="Logo">
+            <img src="{{ public_path('images/ayvtQQcgzQyRx3mCMKlBrNpRf0xpubuMnh593edd.jpg') }}" alt="Logo">
             <h1>JCLC Internet Service</h1>
             <h1><span class="location-name">Urban 2, Koronadal City</span></h1>
             <hr>
@@ -127,7 +127,7 @@
                         <td>{{ \Carbon\Carbon::parse($remittance->rm_date)->format('m/d/Y') }}</td>
 
                         <td>
-                            <img src="{{ url($remittance->rm_image) }}" class="proof-image" alt="{{ public_path($remittance->rm_image) }}" />
+                            <img src="{{ public_path($remittance->rm_image) }}" class="proof-image" alt="{{ public_path($remittance->rm_image) }}" />
                         </td>
                         <td><span style="font-family: DejaVu Sans;">&#x20B1;</span>{{ $remittance->rm_amount }}</td>
                     </tr>
