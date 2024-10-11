@@ -99,8 +99,7 @@
 <body>
     <div class="container">
         <header>
-            <img src="{{ public_path('images/ayvtQQcgzQyRx3mCMKlBrNpRf0xpubuMnh593edd.jpg') }}" alt="Logo">
-            <h1>JCLC Internet Service</h1>
+              <h1>JCLC Internet Service</h1>
             <h1><span class="location-name">Urban 2, Koronadal City</span></h1>
             <hr>
         </header>
