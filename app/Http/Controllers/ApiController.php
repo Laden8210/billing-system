@@ -170,7 +170,7 @@ class ApiController extends Controller
         $complaint = Complaint::create([
             'subscriber_id' => $request->subscriber_id,
             'cp_message' => $request->message,
-            'employee_id' => 1,
+            'employee_id' => null,
             'cp_date' => now()
         ]);
 
@@ -337,7 +337,7 @@ class ApiController extends Controller
         $otp = rand(1000, 9999);
 
 
-        $response = Http::post('https://nasa-ph.com/api/send-sms', [
+        Http::post('https://nasa-ph.com/api/send-sms', [
             'phone_number' => $subscriber->ContactNumber,
             'message' => "Your OTP code is: $otp. Please use this code to reset your password.",
         ]);
@@ -364,7 +364,7 @@ class ApiController extends Controller
         $otp = rand(1000, 9999);
 
 
-        $response = Http::post('https://nasa-ph.com/api/send-sms', [
+        Http::post('https://nasa-ph.com/api/send-sms', [
             'phone_number' => $employee->em_contactnum,
             'message' => "Your OTP code is: $otp. Please use this code to reset your password.",
         ]);
