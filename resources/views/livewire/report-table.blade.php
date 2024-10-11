@@ -37,8 +37,8 @@
             class="bg-green-500 hover:bg-green-600 text-center p-10 text-xl text-white">Remittance Report</button>
 
         <button href="{{ route('paymentReport') }}" target="_blank"
-            x-on:click="$dispatch('open-modal', {name:'filter-form'})" wire:click="selectReportType('Payment Report')"
-            class="bg-green-500 hover:bg-green-600 text-center p-10 text-xl text-white">Payment History</button>
+            x-on:click="$dispatch('open-modal', {name:'filter-form'})" wire:click="selectReportType('Collection Report')"
+            class="bg-green-500 hover:bg-green-600 text-center p-10 text-xl text-white">Collection Report</button>
 
         <button href="{{ route('subscriberReport') }}" target="_blank"
             x-on:click="$dispatch('open-modal', {name:'filter-form'})"
@@ -68,7 +68,7 @@
 
         @slot('body')
 
-            <form action="{{ route('generate-report') }}" method="POST">
+            <form action="{{ route('generate-report') }}" method="POST" target="_blank">
                 @csrf
                 <h1>Generate Report for:</h1>
                 <div class="grid grid-cols-1 gap-2">
@@ -81,7 +81,7 @@
                         <input type="date" class="p-2 outline-none border border-slate-300 w-full" name="start">
                     </div>
 
-                    @if ($reportType != 'Payment Report' && $reportType != 'Remittance Report')
+                    @if ($reportType != 'Collection Report' && $reportType != 'Remittance Report')
                         <div>
                             <label for="">End</label>
                             <input type="date" class="p-2 outline-none border border-slate-300 w-full" name="end">
@@ -89,7 +89,7 @@
                     @endif
 
 
-                    @if ($reportType === 'Payment Report')
+                    @if ($reportType === 'Collection Report')
                         <div>
                             <label for="">Employee</label>
                             <select class="p-2 outline-none border border-slate-300 w-full" name="employee">

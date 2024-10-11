@@ -115,7 +115,7 @@ class NavigationController extends Controller
 
             $pdf = Pdf::loadView('report.subscriberreport', compact('subscribers', 'start', 'end', 'areaName'));
             return $pdf->stream('subscriber_report.pdf');
-        } elseif ($reportType == 'Payment Report') {
+        } elseif ($reportType == 'Collection Report') {
             $payments = Payment::with('employee')->where('p_date', '=', $start)
             ->where('employee_id', '=', $employee)
             ->get();
