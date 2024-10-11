@@ -11,7 +11,7 @@ class ImageUploadController extends Controller
     {
         $request->validate([
             'amount' => 'required|numeric',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'required',
             'employee_id' => 'required|numeric',
             'area_id' => 'required|numeric',
         ]);
@@ -24,8 +24,8 @@ class ImageUploadController extends Controller
             // Move the uploaded image to the public/images directory
             $request->file('image')->move(public_path($imagePath), $imageName);
 
-            // Create a new remittance record
-            Remittance::create([
+
+            $rem = Remittance::create([
                 'rm_amount' => $request->amount,
                 'rm_date' => now(),
                 'rm_image' => $imagePath . '/' . $imageName, // Store the path for future reference
@@ -33,7 +33,9 @@ class ImageUploadController extends Controller
                 'subscriptionarea_id' => $request->area_id,
             ]);
 
-            return response()->json(['url' => asset($imagePath . '/' . $imageName)], 200);
+
+
+            return response()->json(['url' => asset($imagePath . '/' . $imageName), 'rem' => $rem], 200);
         }
 
         return response()->json(['error' => 'Image upload failed'], 400);
