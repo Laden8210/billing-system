@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JCLC Billing Report</title>
     <style>
-        body {
+        body {  
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
@@ -29,8 +29,13 @@
             margin-bottom: 10px;
         }
 
+        h3 {
+            margin: 5px 0; /* Adjusted margin for h3 */
+            font-size: 1.2em; /* Optional: Adjust font size */
+        }
+
         p {
-            margin: 5px 0;
+            margin: 2px 0; /* Adjusted margin for p */
         }
 
         hr {
@@ -65,6 +70,7 @@
             margin-top: 20px;
             font-size: 0.9em;
         }
+
         .location-name {
             font-size: 0.6em;
             font-weight: normal;
@@ -75,7 +81,7 @@
 <body>
     <div class="container">
         <header>
-            <h1>JCLC Internet Servece</h1>
+            <h1>JCLC Internet Service</h1>
             <h1><span class="location-name">Urban 2, Koronadal City</span></h1>
 
             <hr>
@@ -83,7 +89,6 @@
 
         <h3>Billing Report</h3>
         <p><strong>From:</strong> {{ \Carbon\Carbon::parse($start)->format('F j, Y') }} - {{ \Carbon\Carbon::parse($end)->format('F j, Y') }}</p>
-
         <p><strong>Area:</strong> {{$areaName}}</p>
 
         <table>
@@ -94,7 +99,6 @@
                     <th>Subscription Number</th>
                     <th>Area</th>
                     <th>Subscription Plan</th>
-
                     <th>Due Date</th>
                     <th>Disconnection Date</th>
                     <th>Status</th>
@@ -103,7 +107,7 @@
             </thead>
             <tbody>
                 @php
-                $sum =0;
+                $sum = 0;
                 @endphp
                 @foreach($billingStatements as $billing)
                 <tr>
@@ -112,34 +116,26 @@
                     <td>{{ $billing->subscription->sn_num }}</td>
                     <td>{{ $billing->subscription->area->snarea_name }}</td>
                     <td>{{ $billing->subscription->plan->snplan_bandwidth }} MBps</td>
-
                     <td>{{ \Carbon\Carbon::parse($billing->bs_duedate)->format('F j, Y') }}</td>
                     <td>{{ \Carbon\Carbon::parse($billing->bs_disconnectiondate)->format('F j, Y') }}</td>
                     <td>{{ $billing->bs_status }}</td>
                     @php
                         // Calculate total payment amount for the billing statement
-                        $totalPaymentAmount = $billing->subscription->plan->snplan_fee ;
+                        $totalPaymentAmount = $billing->subscription->plan->snplan_fee;
 
                         if ($billing->bs_status == 'paid') {
                             $sum += $totalPaymentAmount;
                         }
-
                     @endphp
-
-                    <td>         <span style="font-family: DejaVu Sans;">&#x20B1;</span>{{ number_format($totalPaymentAmount, 2) }}</td> <!-- Format the amount to 2 decimal places -->
+                    <td><span style="font-family: DejaVu Sans;">&#x20B1;</span>{{ number_format($totalPaymentAmount, 2) }}</td> <!-- Format the amount to 2 decimal places -->
                 </tr>
                 @endforeach
-
             </tbody>
         </table>
-        <p class="total-amount"><strong>Total Amount Collected:</strong> <span style="font-family: DejaVu Sans;">&#x20B1;</span> {{ number_format($sum , 2) }}</p>
-
-
+        <p class="total-amount"><strong>Total Amount Collected:</strong> <span style="font-family: DejaVu Sans;">&#x20B1;</span> {{ number_format($sum, 2) }}</p>
 
         <p><strong>Prepared By:</strong> Alex Ko</p>
         <p><strong>Printed Date:</strong> {{ now()->format('F j, Y') }}</p>
-
-
     </div>
 </body>
 </html>

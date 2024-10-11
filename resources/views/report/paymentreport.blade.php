@@ -32,18 +32,18 @@
         }
 
         h3 {
-            margin: 15px 0 10px;
+            margin: 5px 0 5px; /* Reduced margins for h3 */
             font-size: 1.3em;
             color: #555;
         }
 
         p {
-            margin: 5px 0;
+            margin: 2px 0; /* Reduced margin for paragraphs */
             color: #666;
         }
 
         hr {
-            margin: 15px 0;
+            margin: 10px 0; /* Slightly reduced margin for horizontal rule */
         }
 
         table {
@@ -93,7 +93,6 @@
             h1, h3 {
                 font-size: 1.2em;
             }
-
         }
 
         .total-amount {
@@ -119,17 +118,15 @@
 
         <h3>Collection Report</h3>
         @if ($payments && $payments->isNotEmpty())
-        <p>Employee Name: {{ $payments->first()->employee->em_fname . " " . $payments->first()->employee->em_lname }}</p>
-    @endif
+            <p>Employee Name: {{ $payments->first()->employee->em_fname . " " . $payments->first()->employee->em_lname }}</p>
+        @endif
 
-          <p><strong>Date:</strong> {{ \Carbon\Carbon::parse($start)->format('F j, Y') }} </p>
-
+        <p><strong>Date:</strong> {{ \Carbon\Carbon::parse($start)->format('F j, Y') }}</p>
 
         <table>
             <thead>
                 <tr>
                     <th>Subscriber Name</th>
-
                     <th>Subscription Number</th>
                     <th>Subscription Plan</th>
                     <th>Subscription Fee</th>
@@ -143,7 +140,6 @@
                 @foreach ($payments as $payment)
                     <tr>
                         <td>{{ $payment->billingStatement->subscription->subscriber->sr_fname . " " . $payment->billingStatement->subscription->subscriber->sr_lname }}</td>
-
                         <td>{{ $payment->billingStatement->subscription->sn_num }}</td>
                         <td>{{ $payment->billingStatement->subscription->plan->snplan_bandwidth }}</td>
                         <td><span style="font-family: DejaVu Sans;">&#x20B1;</span>{{ number_format($payment->p_amount, 2) }}</td> <!-- Formatted amount -->
@@ -156,7 +152,7 @@
             </tbody>
         </table>
 
-        <p class="total-amount"><strong>Total Amount Collected:</strong> <span style="font-family: DejaVu Sans;">&#x20B1;</span></strong> {{ number_format($payments->sum('p_amount'), 2) }}</p> <!-- Formatted total amount -->
+        <p class="total-amount"><strong>Total Amount Collected:</strong> <span style="font-family: DejaVu Sans;">&#x20B1;</span>{{ number_format($payments->sum('p_amount'), 2) }}</p> <!-- Formatted total amount -->
 
         <p><strong>Prepared by:</strong> Alex Ko</p>
         <p><strong>Print date:</strong> {{ now()->format('F j, Y') }}</p>

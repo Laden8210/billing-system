@@ -17,7 +17,7 @@
             background-color: #fff;
             padding: 20px;
             max-width: 900px;
-            margin: 0 auto;
+            margin: auto;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
@@ -39,8 +39,15 @@
         }
 
         h3 {
-            margin-top: 10px;
+            margin-top: 30px; /* Increased top margin for the "Remittance Report" */
+            margin-bottom: 10px; /* Add some space below the title */
             font-size: 20px;
+        }
+
+        p {
+            margin-top: 5px;
+            margin-bottom: 20px; /* Add extra space below the date */
+            font-size: 16px;
         }
 
         table {
@@ -130,7 +137,7 @@
                         <td>
                             {{ optional($remittance->employee)->em_fname ?? '' }} {{ optional($remittance->employee)->em_lname ?? '' }}
                         </td>
-
+                        
                         <td>{{ \Carbon\Carbon::parse($remittance->rm_date)->format('m/d/Y') }}</td>
 
                         <td>
