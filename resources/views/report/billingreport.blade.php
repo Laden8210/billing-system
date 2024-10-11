@@ -94,7 +94,7 @@
         <table>
             <thead>
                 <tr>
-                    <th>Date</th>
+                    <th> Billing Date</th>
                     <th>Subscriber Name</th>
                     <th>Subscription Number</th>
                     <th>Area</th>
