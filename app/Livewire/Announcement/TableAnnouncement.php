@@ -10,6 +10,8 @@ class TableAnnouncement extends Component
     public $search = '';
     public $announcement;
     public $date;
+
+    public $deleteAnnouncement;
     public function render()
     {
         return view('livewire.announcement.table-announcement', [
@@ -30,8 +32,12 @@ class TableAnnouncement extends Component
      }
 
      public function delete($id){
-        $announcement = Announcement::find($id);
-        $announcement->delete();
-        session()->flash('message', 'Announcement Deleted Successfully.');
+        $this->deleteAnnouncement = Announcement::find($id);
+
      }
+
+        public function confirmDelete(){
+            $this->deleteAnnouncement->delete();
+            session()->flash('message', 'Announcement Deleted Successfully.');
+        }
 }

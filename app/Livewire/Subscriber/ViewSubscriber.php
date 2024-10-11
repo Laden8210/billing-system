@@ -62,8 +62,17 @@ class ViewSubscriber extends Component
             'starting_date' => 'required',
             'area' => 'required',
             'plan' => 'required',
-            'subscription_number' => 'required'
+
         ]);
+
+        // Limit to 5 subscriptions
+
+        if(count($this->subscriber->subscriptions) >= 5){
+            session()->flash('message', 'Subscriber already has 5 subscriptions');
+            return;
+        }
+        $this->subscription_number = 'SN' . implode('-', str_split(str_pad(rand(0, 999999999999), 12, '0', STR_PAD_LEFT), 4));
+
 
         Subscription::create([
             'subscriber_id' => $this->subscriber->subscriber_id,

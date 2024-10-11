@@ -70,18 +70,31 @@ class ApiController extends Controller
         ]);
 
     }
-
     public function subscriptions(Request $request)
     {
-
         if (!$request->subscriber_id) {
             return response()->json([
                 'error' => 'Invalid subscriber id'
-            ], 400);
+            ], 200);
         }
 
+        $currentMonth = now()->format('Y-m'); // Current month
+        $nextMonth = now()->addMonth()->format('Y-m'); // Next month
+
+        // Get subscriptions for the given subscriber
         $subscriptions = Subscription::where('subscriber_id', $request->subscriber_id)
-            ->with(['area', 'plan'])
+            ->with([
+                'area',
+                'plan',
+                'subscriber',
+                'billingStatements' => function ($query) use ($currentMonth, $nextMonth) {
+                    $query->where(function ($query) use ($currentMonth, $nextMonth) {
+                        $query->where('bs_billingdate', 'like', $currentMonth . '%')
+                              ->orWhere('bs_billingdate', 'like', $nextMonth . '%'); // Filter by current and next month
+                    });
+                },
+                'billingStatements.payments' // Eager load payments separately
+            ])
             ->get()
             ->map(function ($subscription) {
                 return [
@@ -94,17 +107,48 @@ class ApiController extends Controller
                     'sn_status' => $subscription->sn_status,
                     'created_at' => $subscription->created_at,
                     'updated_at' => $subscription->updated_at,
-
-                    // Flattening area and plan details
                     'snarea_name' => $subscription->area ? $subscription->area->snarea_name : null,
                     'snplan_bandwidth' => $subscription->plan ? $subscription->plan->snplan_bandwidth : null,
-                    'snplan_fee' => $subscription->plan ? $subscription->plan->snplan_fee : null
+                    'snplan_fee' => $subscription->plan ? $subscription->plan->snplan_fee : null,
+                    'subscriber' => [
+                        'subscriber_id' => (string) $subscription->subscriber->subscriber_id,
+                        'sr_fname' => $subscription->subscriber->sr_fname,
+                        'sr_lname' => $subscription->subscriber->sr_lname,
+                        'sr_minitial' => $subscription->subscriber->sr_minitial,
+                        'sr_suffix' => $subscription->subscriber->sr_suffix,
+                        'sr_contactnum' => $subscription->subscriber->sr_contactnum,
+                        'sr_street' => $subscription->subscriber->sr_street,
+                        'sr_city' => $subscription->subscriber->sr_city,
+                        'sr_province' => $subscription->subscriber->sr_province,
+                        'sr_zipcode' => $subscription->subscriber->sr_zipcode,
+                        'sr_email' => $subscription->subscriber->sr_email,
+                        'sr_status' => $subscription->subscriber->sr_status,
+                        'created_at' => $subscription->subscriber->created_at,
+                        'updated_at' => $subscription->subscriber->updated_at,
+                    ],
+                    'billing_statements' => $subscription->billingStatements->map(function ($billingStatement) {
+                        return [
+                            'bs_duedate' => $billingStatement->bs_duedate,
+                            'billing_date' => $billingStatement->bs_billingdate,
+                            'bs_status' => $billingStatement->bs_status,
+                            'payments' => $billingStatement->payments->map(function ($payment) {
+                                return [
+                                    'payment_id' => (string) $payment->payment_id,
+                                    'p_amount' => $payment->p_amount,
+                                    'p_month' => $payment->p_month,
+                                    'p_date' => $payment->p_date,
+                                ];
+                            }),
+                        ];
+                    }),
                 ];
             });
 
-        // Return the formatted response
         return response()->json($subscriptions);
     }
+
+
+
 
     public function sendComplaint(Request $request)
     {
@@ -126,7 +170,7 @@ class ApiController extends Controller
         $complaint = Complaint::create([
             'subscriber_id' => $request->subscriber_id,
             'cp_message' => $request->message,
-            'employee_id' => 1,
+            'employee_id' => null,
             'cp_date' => now()
         ]);
 
@@ -287,19 +331,46 @@ class ApiController extends Controller
         $subscriber = Subscriber::where('sr_contactnum', $validatedData['contactnumber'])->first();
 
         if (!$subscriber) {
-            return response()->json(['message' => 'Subscriber not found'], 404);
+            return response()->json(['error' => 'Subscriber not found'], 200);
         }
 
         $otp = rand(1000, 9999);
 
 
-        $response = Http::post('https://nasa-ph.com/api/send-sms', [
+        Http::post('https://nasa-ph.com/api/send-sms', [
             'phone_number' => $subscriber->ContactNumber,
             'message' => "Your OTP code is: $otp. Please use this code to reset your password.",
         ]);
 
 
         return response()->json(['otp' => $otp, 'subscriberId' => $subscriber->subscriber_id], 200);
+    }
+
+
+    public function requestOtpEmployee(Request $request)
+    {
+
+
+        $validatedData = $request->validate([
+            'contactnumber' => 'required|string|max:12',
+        ]);
+
+        $employee = Employee::where('em_contactnum', $validatedData['contactnumber'])->first();
+
+        if (!$employee) {
+            return response()->json(['error' => 'Employee not found'], 200);
+        }
+
+        $otp = rand(1000, 9999);
+
+
+        Http::post('https://nasa-ph.com/api/send-sms', [
+            'phone_number' => $employee->em_contactnum,
+            'message' => "Your OTP code is: $otp. Please use this code to reset your password.",
+        ]);
+
+
+        return response()->json(['otp' => $otp, 'employeeId' => $employee->employee_id], 200);
     }
 
     public function changePassword(Request $request){
@@ -320,14 +391,41 @@ class ApiController extends Controller
 
         return response()->json(['message' => 'Password changed successfully'], 200);
     }
+
+
+    public function changePasswordEmployee(Request $request){
+
+        $validatedData = $request->validate([
+            'employeeId' => 'required|integer',
+            'password' => 'required',
+
+        ]);
+
+
+        $employee = Employee::find($validatedData['employeeId']);
+
+        if(!$employee){
+            return response()->json(['error' => 'Employee not found'], 200);
+        }
+
+
+        if (strlen($request->password) < 6) {
+            return response()->json(['error' => 'Password must be at least 6 characters'], 200);
+        }
+
+        $employee->em_password = bcrypt($validatedData['password']);
+        $employee->save();
+
+        return response()->json(['message' => 'Password changed successfully'], 200);
+    }
+
     public function getRemittance(Request $request)
     {
         // Fetch all remittance records
         $remittances = Remittance::all();
 
-        // Loop through each remittance and modify the rm_image field to include the full URL
         foreach ($remittances as $remittance) {
-            // Adjust the image path to reflect the correct storage path
+
             $remittance->rm_image = asset('storage/' . $remittance->rm_image);
         }
 
@@ -348,11 +446,11 @@ class ApiController extends Controller
         $employee = Employee::find($validatedData['employee_id']);
 
         if (!$employee) {
-            return response()->json(['message' => 'Employee not found'], 404);
+            return response()->json(['error' => 'Employee not found'], 200);
         }
 
         if (!Hash::check($validatedData['old_password'], $employee->em_password)) {
-            return response()->json(['message' => 'Invalid old password'], 400);
+            return response()->json(['error' => 'Invalid old password'], 200);
         }
 
         $employee->em_password = bcrypt($validatedData['new_password']);

@@ -98,7 +98,7 @@
 <body>
     <div class="container">
         <header>
-            <h1>JCLC Internet Service</h1>
+              <h1>JCLC Internet Service</h1>
             <h1><span class="location-name">Urban 2, Koronadal City</span></h1>
             <hr>
         </header>
@@ -117,6 +117,7 @@
             </thead>
             <tbody>
                 @foreach ($remittances as $index => $remittance)
+<<<<<<< HEAD
                 <tr>
                     <td>
                         {{ optional($remittance->employee)->em_fname ?? '' }} {{ optional($remittance->employee)->em_lname ?? '' }}
@@ -127,6 +128,20 @@
                     </td>
                     <td><span style="font-family: DejaVu Sans;">&#x20B1;</span>{{ $remittance->rm_amount }}</td>
                 </tr>
+=======
+                    <tr>
+                        <td>
+                            {{ optional($remittance->employee)->em_fname ?? '' }} {{ optional($remittance->employee)->em_lname ?? '' }}
+                        </td>
+
+                        <td>{{ \Carbon\Carbon::parse($remittance->rm_date)->format('m/d/Y') }}</td>
+
+                        <td>
+                            <img src="{{ public_path($remittance->rm_image) }}" class="proof-image" alt="" />
+                        </td>
+                        <td><span style="font-family: DejaVu Sans;">&#x20B1;</span>{{ $remittance->rm_amount }}</td>
+                    </tr>
+>>>>>>> d40ea229fc2f1e6d9f7b986b48c2516e2a19844c
                 @endforeach
             </tbody>
         </table>

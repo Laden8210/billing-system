@@ -34,11 +34,14 @@ Route::post('recordPayment', [ApiController::class, 'recordPayment']);
 Route::post('upload', [ImageUploadController::class, 'uploadImage']);
 
 Route::post('requestOtp', [ApiController::class, 'requestOtp']);
-
+Route::post('requestOtpEmployee', [ApiController::class, 'requestOtpEmployee']);
 
 Route::post('changePassword', [ApiController::class, 'changePassword']);
+Route::post('changePasswordEmployee', [ApiController::class, 'changePasswordEmployee']);
 
 Route::post('getRemittance', [ApiController::class, 'getRemittance']);
+
+
 Route::post('changeEmployeePassword', [ApiController::class, 'changeEmployeePassword']);
 Route::post('changeSubscriberPassword', [ApiController::class, 'changeSubscriberPassword']);
 Route::post('countCollectables', [ApiController::class, 'countCollectables']);

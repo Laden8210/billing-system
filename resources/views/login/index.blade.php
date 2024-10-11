@@ -18,6 +18,13 @@
                 @csrf
                 <h1 class="text-2xl font-bold text-center mb-5">Welcome</h1>
                 <p class="text-slate-700 text-center mb-5">Enter your details to sign in to your action</p>
+
+                @if (session('error'))
+                    <div class="text-red-900 text-sm mt-2 bg-red-200 px-2 py-2 rounded">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
                 <div class="grid grid-flow-row gap-5 p-2">
                     <div>
                         <label for="">Contact Number</label>
@@ -39,7 +46,8 @@
                         <button class="w-full py-2 bg-blue-900 hover:bg-blue-800 text-white rounded">Login</button>
                     </div>
                     <div class="text-center">
-                        <a href="{{route('forgotPassword')}}" class="text-blue-900 hover:text-blue-800 text-center">Forgot Password?</a>
+                        <a href="{{ route('forgotPassword') }}"
+                            class="text-blue-900 hover:text-blue-800 text-center">Forgot Password?</a>
                     </div>
                 </div>
             </form>
