@@ -11,7 +11,7 @@ class ImageUploadController extends Controller
     {
         $request->validate([
             'amount' => 'required|numeric',
-            'image' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'employee_id' => 'required|numeric',
             'area_id' => 'required|numeric',
         ]);
