@@ -5,7 +5,7 @@ namespace App\Livewire\Announcement;
 use App\Models\Announcement;
 use Livewire\Component;
 use App\Models\SubscriptionArea;
-
+use Illuminate\Support\Facades\Auth;
 class CreateAnnouncement extends Component
 {
 
@@ -36,7 +36,7 @@ class CreateAnnouncement extends Component
             'an_subject' => $this->an_subject,
             'an_message' => $this->an_message,
             'an_date' => NOW(),
-            'employee_id' => 1,
+            'employee_id' => Auth::user()->employee_id,
 
         ]);
 

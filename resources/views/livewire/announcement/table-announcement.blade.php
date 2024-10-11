@@ -46,6 +46,7 @@
 
                         <td class="border border-slate-300 py-3">
                             <button class="px-2 py-1 bg-red-600 rounded hover:bg-red-700 text-white font-semibold "
+                            x-data  x-on:click="$dispatch('open-modal', {name:'delete-announcement'})"
                             wire:click="delete({{$announcement->announcement_id }})">Delete</button>
                         </td>
 
@@ -68,6 +69,20 @@
             {{ session('message') }}
         </div>
 
+
+    @endif
+
+
+    @if ($announcement)
+    <x-modal-form name="delete-announcement" title="Delete Announcement">
+        @slot('body')
+
+            <p class="">Are you sure you want to delete this announcement?</p>
+
+
+        <div class="flex justify-end"><button wire:click="confirmDelete" class="text-white bg-red-700 hover:bg-red-900 rounded py-2 px-2">Delete</button></div>
+        @endslot
+    </x-modal-form>
 
     @endif
 

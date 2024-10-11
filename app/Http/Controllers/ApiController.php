@@ -70,18 +70,31 @@ class ApiController extends Controller
         ]);
 
     }
-
     public function subscriptions(Request $request)
     {
-
         if (!$request->subscriber_id) {
             return response()->json([
                 'error' => 'Invalid subscriber id'
-            ], 400);
+            ], 200);
         }
 
+        $currentMonth = now()->format('Y-m'); // Current month
+        $nextMonth = now()->addMonth()->format('Y-m'); // Next month
+
+        // Get subscriptions for the given subscriber
         $subscriptions = Subscription::where('subscriber_id', $request->subscriber_id)
-            ->with(['area', 'plan'])
+            ->with([
+                'area',
+                'plan',
+                'subscriber',
+                'billingStatements' => function ($query) use ($currentMonth, $nextMonth) {
+                    $query->where(function ($query) use ($currentMonth, $nextMonth) {
+                        $query->where('bs_billingdate', 'like', $currentMonth . '%')
+                              ->orWhere('bs_billingdate', 'like', $nextMonth . '%'); // Filter by current and next month
+                    });
+                },
+                'billingStatements.payments' // Eager load payments separately
+            ])
             ->get()
             ->map(function ($subscription) {
                 return [
@@ -94,17 +107,48 @@ class ApiController extends Controller
                     'sn_status' => $subscription->sn_status,
                     'created_at' => $subscription->created_at,
                     'updated_at' => $subscription->updated_at,
-
-                    // Flattening area and plan details
                     'snarea_name' => $subscription->area ? $subscription->area->snarea_name : null,
                     'snplan_bandwidth' => $subscription->plan ? $subscription->plan->snplan_bandwidth : null,
-                    'snplan_fee' => $subscription->plan ? $subscription->plan->snplan_fee : null
+                    'snplan_fee' => $subscription->plan ? $subscription->plan->snplan_fee : null,
+                    'subscriber' => [
+                        'subscriber_id' => (string) $subscription->subscriber->subscriber_id,
+                        'sr_fname' => $subscription->subscriber->sr_fname,
+                        'sr_lname' => $subscription->subscriber->sr_lname,
+                        'sr_minitial' => $subscription->subscriber->sr_minitial,
+                        'sr_suffix' => $subscription->subscriber->sr_suffix,
+                        'sr_contactnum' => $subscription->subscriber->sr_contactnum,
+                        'sr_street' => $subscription->subscriber->sr_street,
+                        'sr_city' => $subscription->subscriber->sr_city,
+                        'sr_province' => $subscription->subscriber->sr_province,
+                        'sr_zipcode' => $subscription->subscriber->sr_zipcode,
+                        'sr_email' => $subscription->subscriber->sr_email,
+                        'sr_status' => $subscription->subscriber->sr_status,
+                        'created_at' => $subscription->subscriber->created_at,
+                        'updated_at' => $subscription->subscriber->updated_at,
+                    ],
+                    'billing_statements' => $subscription->billingStatements->map(function ($billingStatement) {
+                        return [
+                            'bs_duedate' => $billingStatement->bs_duedate,
+                            'billing_date' => $billingStatement->bs_billingdate,
+                            'bs_status' => $billingStatement->bs_status,
+                            'payments' => $billingStatement->payments->map(function ($payment) {
+                                return [
+                                    'payment_id' => (string) $payment->payment_id,
+                                    'p_amount' => $payment->p_amount,
+                                    'p_month' => $payment->p_month,
+                                    'p_date' => $payment->p_date,
+                                ];
+                            }),
+                        ];
+                    }),
                 ];
             });
 
-        // Return the formatted response
         return response()->json($subscriptions);
     }
+
+
+
 
     public function sendComplaint(Request $request)
     {
@@ -287,7 +331,7 @@ class ApiController extends Controller
         $subscriber = Subscriber::where('sr_contactnum', $validatedData['contactnumber'])->first();
 
         if (!$subscriber) {
-            return response()->json(['message' => 'Subscriber not found'], 404);
+            return response()->json(['error' => 'Subscriber not found'], 200);
         }
 
         $otp = rand(1000, 9999);
@@ -372,7 +416,7 @@ class ApiController extends Controller
         $employee->em_password = bcrypt($validatedData['password']);
         $employee->save();
 
-        return response()->json(['error' => 'Password changed successfully'], 200);
+        return response()->json(['message' => 'Password changed successfully'], 200);
     }
 
     public function getRemittance(Request $request)
