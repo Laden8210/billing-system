@@ -22,31 +22,24 @@
         }
 
         header {
-            text-align: center; /* Centering the header */
-            margin-bottom: 5px; /* Slight reduction */
+            text-align: center;
+            margin-bottom: 5px;
         }
 
         h1 {
             font-size: 24px;
-            margin-bottom: 2px; /* Further reduced to bring closer */
-        }
-
-        .location-name {
-            font-size: 0.8em; /* Slightly larger font for better visibility */
-            font-weight: normal;
-            color: #333;
-            margin-top: 0; /* No extra margin at the top */
+            margin-bottom: 2px;
         }
 
         h3 {
-            margin-top: 30px; /* Increased top margin for the "Remittance Report" */
-            margin-bottom: 10px; /* Add some space below the title */
+            margin-top: 20px; /* Reduced margin for the "Remittance Report" */
+            margin-bottom: 5px; /* Smaller space below the title */
             font-size: 20px;
         }
 
         p {
             margin-top: 5px;
-            margin-bottom: 20px; /* Add extra space below the date */
+            margin-bottom: 10px; /* Smaller margin below the date */
             font-size: 16px;
         }
 
@@ -88,7 +81,6 @@
             font-weight: bold;
         }
 
-        /* Styles for images in the table */
         .proof-image {
             width: 100px;
             height: auto;
@@ -97,14 +89,8 @@
 
         .total-amount {
             font-size: 12px;
-            text-align: right; /* Align the total amount to the right */
+            text-align: right;
             margin-top: 10px;
-        }
-
-        .location-name {
-            font-size: 0.7em;
-            font-weight: normal;
-            color: #333;
         }
     </style>
 </head>
@@ -120,7 +106,6 @@
         <h3>Remittance Report</h3>
         <p><strong>From:</strong> {{ \Carbon\Carbon::parse($start)->format('F j, Y') }}</p>
 
-
         <table>
             <thead>
                 <tr>
@@ -132,19 +117,16 @@
             </thead>
             <tbody>
                 @foreach ($remittances as $index => $remittance)
-
-                    <tr>
-                        <td>
-                            {{ optional($remittance->employee)->em_fname ?? '' }} {{ optional($remittance->employee)->em_lname ?? '' }}
-                        </td>
-                        
-                        <td>{{ \Carbon\Carbon::parse($remittance->rm_date)->format('m/d/Y') }}</td>
-
-                        <td>
-                            <img src="{{ asset('storage/' . $remittance->rm_image) }}" class="proof-image" alt="Proof Image" />
-                        </td>
-                        <td><span style="font-family: DejaVu Sans;">&#x20B1;</span>{{ $remittance->rm_amount }}</td>
-                    </tr>
+                <tr>
+                    <td>
+                        {{ optional($remittance->employee)->em_fname ?? '' }} {{ optional($remittance->employee)->em_lname ?? '' }}
+                    </td>
+                    <td>{{ \Carbon\Carbon::parse($remittance->rm_date)->format('m/d/Y') }}</td>
+                    <td>
+                        <img src="{{ asset('storage/' . $remittance->rm_image) }}" class="proof-image" alt="Proof Image" />
+                    </td>
+                    <td><span style="font-family: DejaVu Sans;">&#x20B1;</span>{{ $remittance->rm_amount }}</td>
+                </tr>
                 @endforeach
             </tbody>
         </table>
