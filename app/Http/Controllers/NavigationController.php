@@ -127,9 +127,10 @@ class NavigationController extends Controller
             $remittances = Remittance::where('rm_date', '=',$start)->get();
 
 
+            return view('report.remittancereport', compact('remittances', 'start'));
 
-            $pdf = Pdf::loadView('report.remittancereport', compact('remittances', 'start'));
-            return $pdf->stream('remittance_report.pdf');
+            // $pdf = Pdf::loadView('report.remittancereport', compact('remittances', 'start'));
+            // return $pdf->stream('remittance_report.pdf');
         } elseif ($reportType == 'Billing Report') {
             $billingStatements = BillingStatement::with(['subscription.subscriber', 'subscription.area', 'payments'])
 
