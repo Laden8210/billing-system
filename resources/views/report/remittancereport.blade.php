@@ -129,18 +129,7 @@
                     <td><span style="font-family: DejaVu Sans;">&#x20B1;</span>{{ $remittance->rm_amount }}</td>
                 </tr>
 =======
-                    <tr>
-                        <td>
-                            {{ optional($remittance->employee)->em_fname ?? '' }} {{ optional($remittance->employee)->em_lname ?? '' }}
-                        </td>
 
-                        <td>{{ \Carbon\Carbon::parse($remittance->rm_date)->format('F j, Y') }}</td>
-
-                        <td>
-                            <img src="{{ public_path($remittance->rm_image) }}" class="proof-image" alt="" />
-                        </td>
-                        <td><span style="font-family: DejaVu Sans;">&#x20B1;</span>{{ $remittance->rm_amount }}</td>
-                    </tr>
 >>>>>>> d40ea229fc2f1e6d9f7b986b48c2516e2a19844c
                 @endforeach
             </tbody>
