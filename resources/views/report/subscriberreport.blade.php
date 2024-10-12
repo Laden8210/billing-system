@@ -74,7 +74,7 @@
             font-weight: bold;
         }
         .location-name {
-            font-size: 0.7em; 
+            font-size: 0.7em;
             font-weight: normal;
             color: #333;
         }
@@ -89,7 +89,7 @@
             <header>
                 <h1>JCLC Internet Servece</h1>
                 <h1><span class="location-name">Urban 2, Koronadal City</span></h1>
-               
+
                 <hr>
             </header>
 
@@ -102,7 +102,7 @@
         <table>
             <thead>
                 <tr>
-                    <th>SUBSCRIBERID</th>
+                    <th>Subscriber ID</th>
                     <th>Subscriber Name</th>
                     <th>Contact Number</th>
                     <th>Address</th>

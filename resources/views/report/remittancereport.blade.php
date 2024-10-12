@@ -123,7 +123,7 @@
                             {{ optional($remittance->employee)->em_fname ?? '' }} {{ optional($remittance->employee)->em_lname ?? '' }}
                         </td>
 
-                        <td>{{ \Carbon\Carbon::parse($remittance->rm_date)->format('m/d/Y') }}</td>
+                        <td>{{ \Carbon\Carbon::parse($remittance->rm_date)->format('F j, Y') }}</td>
 
                         <td>
                             <img src="{{ public_path($remittance->rm_image) }}" class="proof-image" alt="" />
@@ -138,7 +138,7 @@
 
         <div class="prepared-by">
             <p><strong>Prepared by:</strong> Alex Ko</p>
-            <p><strong>Printed date:</strong> {{ now()->format('m/d/Y') }}</p>
+            <p><strong>Printed date:</strong> {{ now()->format('F j, Y') }}</p>
         </div>
     </div>
 </body>
