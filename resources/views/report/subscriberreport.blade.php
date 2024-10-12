@@ -24,16 +24,22 @@
         h1 {
             font-size: 24px;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 20px; /* Adjust this if needed */
         }
 
         .report-header {
             text-align: left;
-            margin-bottom: 30px;
+            margin-bottom: 20px; /* Reduced from 30px to 20px */
         }
 
-        h2 {
-            margin-top: 0;
+        h3 {
+            margin: 10px 0; /* Reduced top and bottom margins for h3 */
+            font-size: 18px; /* Optionally adjust font size */
+        }
+
+        p {
+            margin: 2px 0; /* Reduced margin for paragraphs */
+            font-size: 14px; /* Optionally adjust font size */
         }
 
         table {
@@ -73,6 +79,7 @@
         .prepared-by p strong {
             font-weight: bold;
         }
+
         .location-name {
             font-size: 0.7em;
             font-weight: normal;
@@ -84,19 +91,19 @@
 <body>
     <div class="report-container">
         <div class="report-header">
-
-
             <header>
-                <h1>JCLC Internet Servece</h1>
+                <h1>JCLC Internet Service</h1>
                 <h1><span class="location-name">Urban 2, Koronadal City</span></h1>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2257e63d7d71ec6f14e9410d206bff1b1268bc85
                 <hr>
             </header>
 
             <h3>Subscriber Report</h3>
             <p><strong>From:</strong> {{ \Carbon\Carbon::parse($start)->format('F j, Y') }} - {{ \Carbon\Carbon::parse($end)->format('F j, Y') }}</p>
             <p><strong>Area:</strong> {{$areaName}}</p>
-
         </div>
 
         <table>
@@ -113,30 +120,12 @@
             <tbody>
                 @foreach ($subscribers as $subscriber)
                     <tr>
-
-                        <td>
-                            {{ $subscriber->subscriber_id }}
-                        </td>
-
-                        <td>
-                            {{ $subscriber->sr_fname . ' ' . $subscriber->sr_lname }}
-                        </td>
-
-                        <td>
-                            {{ $subscriber->sr_contactnum }}
-                        </td>
-
-                        <td>
-                            {{ $subscriber->sr_street . ' ' . $subscriber->sr_barangay . ' ' . $subscriber->sr_city }}
-                        </td>
-
-                        <td>
-                            {{ $subscriber->subscriptions->count() }}
-                        </td>
-
-                        <td>
-                            {{ $subscriber->sr_status }}
-                        </td>
+                        <td>{{ $subscriber->subscriber_id }}</td>
+                        <td>{{ $subscriber->sr_fname . ' ' . $subscriber->sr_lname }}</td>
+                        <td>{{ $subscriber->sr_contactnum }}</td>
+                        <td>{{ $subscriber->sr_street . ' ' . $subscriber->sr_barangay . ' ' . $subscriber->sr_city }}</td>
+                        <td>{{ $subscriber->subscriptions->count() }}</td>
+                        <td>{{ $subscriber->sr_status }}</td>
                     </tr>
                 @endforeach
             </tbody>
@@ -149,7 +138,6 @@
         <div class="prepared-by">
             <p><strong>Prepared By:</strong> Alex Ko</p>
             <p><strong>Date:</strong> {{ now()->format('m/d/Y') }}</p>
-
         </div>
     </div>
 </body>

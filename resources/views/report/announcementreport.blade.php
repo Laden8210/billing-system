@@ -27,12 +27,12 @@
         }
 
         h1 {
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             font-size: 1.5em; /* Adjusted to a regular heading size */
         }
 
         p {
-            margin: 5px 0;
+            margin: 10px 0;
         }
 
         hr {

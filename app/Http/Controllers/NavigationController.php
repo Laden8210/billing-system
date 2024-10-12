@@ -186,7 +186,7 @@ class NavigationController extends Controller
     {
         $announcement = Announcement::all();
         $pdf = Pdf::loadView('report.announcementreport', compact('announcement'));
-        return $pdf->download('announcement.pdf');
+        return $pdf->stream('announcement.pdf');
     }
 
     public function billingreport()

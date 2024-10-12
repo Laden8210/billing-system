@@ -17,30 +17,30 @@
             background-color: #fff;
             padding: 20px;
             max-width: 900px;
-            margin: 0 auto;
+            margin: auto;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
         header {
-            text-align: center; /* Centering the header */
-            margin-bottom: 5px; /* Slight reduction */
+            text-align: center;
+            margin-bottom: 5px;
         }
 
         h1 {
             font-size: 24px;
-            margin-bottom: 2px; /* Further reduced to bring closer */
-        }
-
-        .location-name {
-            font-size: 0.8em; /* Slightly larger font for better visibility */
-            font-weight: normal;
-            color: #333;
-            margin-top: 0; /* No extra margin at the top */
+            margin-bottom: 2px;
         }
 
         h3 {
-            margin-top: 10px;
+            margin-top: 20px; /* Reduced margin for the "Remittance Report" */
+            margin-bottom: 5px; /* Smaller space below the title */
             font-size: 20px;
+        }
+
+        p {
+            margin-top: 5px;
+            margin-bottom: 10px; /* Smaller margin below the date */
+            font-size: 16px;
         }
 
         table {
@@ -81,7 +81,6 @@
             font-weight: bold;
         }
 
-        /* Styles for images in the table */
         .proof-image {
             width: 100px;
             height: auto;
@@ -90,7 +89,7 @@
 
         .total-amount {
             font-size: 12px;
-            text-align: right; /* Align the total amount to the right */
+            text-align: right;
             margin-top: 10px;
         }
     </style>
@@ -118,6 +117,18 @@
             </thead>
             <tbody>
                 @foreach ($remittances as $index => $remittance)
+<<<<<<< HEAD
+                <tr>
+                    <td>
+                        {{ optional($remittance->employee)->em_fname ?? '' }} {{ optional($remittance->employee)->em_lname ?? '' }}
+                    </td>
+                    <td>{{ \Carbon\Carbon::parse($remittance->rm_date)->format('m/d/Y') }}</td>
+                    <td>
+                        <img src="{{ asset('storage/' . $remittance->rm_image) }}" class="proof-image" alt="Proof Image" />
+                    </td>
+                    <td><span style="font-family: DejaVu Sans;">&#x20B1;</span>{{ $remittance->rm_amount }}</td>
+                </tr>
+=======
                     <tr>
                         <td>
                             {{ optional($remittance->employee)->em_fname ?? '' }} {{ optional($remittance->employee)->em_lname ?? '' }}
@@ -130,6 +141,7 @@
                         </td>
                         <td><span style="font-family: DejaVu Sans;">&#x20B1;</span>{{ $remittance->rm_amount }}</td>
                     </tr>
+>>>>>>> d40ea229fc2f1e6d9f7b986b48c2516e2a19844c
                 @endforeach
             </tbody>
         </table>

@@ -31,8 +31,13 @@
             font-size: 1.5em; /* Adjusted to a regular heading size */
         }
 
+        h3 {
+            margin: 3px 0; /* Reduced margin for h3 */
+            font-size: 1.2em; /* Slightly larger font for clarity */
+        }
+
         p {
-            margin: 5px 0;
+            margin: 2px 0; /* Reduced margin for p */
         }
 
         hr {
@@ -87,7 +92,6 @@
         <h3>Complaint Report</h3>
         <p><strong>From:</strong> {{ \Carbon\Carbon::parse($start)->format('F j, Y') }} - {{ \Carbon\Carbon::parse($end)->format('F j, Y') }}</p>
 
-
         <table>
             <thead>
                 <tr>
@@ -101,14 +105,13 @@
                 @foreach($complaints as $complaint)
                     <tr>
                         <td>{{ \Carbon\Carbon::parse($complaint->an_date)->format('m/d/Y') }}</td>
-                        <td>  {{$complaint->subscriber->sr_fname}} {{$complaint->subscriber->sr_lname}}</td>
-                        <td>      {{$complaint->cp_message}}</td>
-                        <td>{{$complaint->cp_reply ?? 'No Reply '}}</td>
+                        <td> {{$complaint->subscriber->sr_fname}} {{$complaint->subscriber->sr_lname}}</td>
+                        <td> {{$complaint->cp_message}}</td>
+                        <td>{{$complaint->cp_reply ?? 'No Reply'}}</td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
-
 
         <p><strong>Prepared By:</strong> Alex Ko</p>
         <p><strong>Printed Date:</strong> {{ now()->format('m/d/Y') }}</p>
@@ -117,3 +120,4 @@
     </div>
 </body>
 </html>
+    
