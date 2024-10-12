@@ -32,14 +32,17 @@
         }
 
         h3 {
-            margin-top: 20px; /* Reduced margin for the "Remittance Report" */
-            margin-bottom: 5px; /* Smaller space below the title */
+            margin-top: 20px;
+            /* Reduced margin for the "Remittance Report" */
+            margin-bottom: 5px;
+            /* Smaller space below the title */
             font-size: 20px;
         }
 
         p {
             margin-top: 5px;
-            margin-bottom: 10px; /* Smaller margin below the date */
+            margin-bottom: 10px;
+            /* Smaller margin below the date */
             font-size: 16px;
         }
 
@@ -98,7 +101,7 @@
 <body>
     <div class="container">
         <header>
-              <h1>JCLC Internet Service</h1>
+            <h1>JCLC Internet Service</h1>
             <h1><span class="location-name">Urban 2, Koronadal City</span></h1>
             <hr>
         </header>
@@ -117,25 +120,24 @@
             </thead>
             <tbody>
                 @foreach ($remittances as $index => $remittance)
-<<<<<<< HEAD
-                <tr>
-                    <td>
-                        {{ optional($remittance->employee)->em_fname ?? '' }} {{ optional($remittance->employee)->em_lname ?? '' }}
-                    </td>
-                    <td>{{ \Carbon\Carbon::parse($remittance->rm_date)->format('m/d/Y') }}</td>
-                    <td>
-                        <img src="{{ asset('storage/' . $remittance->rm_image) }}" class="proof-image" alt="Proof Image" />
-                    </td>
-                    <td><span style="font-family: DejaVu Sans;">&#x20B1;</span>{{ $remittance->rm_amount }}</td>
-                </tr>
-=======
-
->>>>>>> d40ea229fc2f1e6d9f7b986b48c2516e2a19844c
+                    <tr>
+                        <td>
+                            {{ optional($remittance->employee)->em_fname ?? '' }}
+                            {{ optional($remittance->employee)->em_lname ?? '' }}
+                        </td>
+                        <td>{{ \Carbon\Carbon::parse($remittance->rm_date)->format('m/d/Y') }}</td>
+                        <td>
+                            <img src="{{ asset('storage/' . $remittance->rm_image) }}" class="proof-image"
+                                alt="Proof Image" />
+                        </td>
+                        <td><span style="font-family: DejaVu Sans;">&#x20B1;</span>{{ $remittance->rm_amount }}</td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>
 
-        <p class="total-amount"><strong>Total Amount Collected:</strong> <span style="font-family: DejaVu Sans;">&#x20B1;</span>{{ $remittances->sum('rm_amount') }}</p>
+        <p class="total-amount"><strong>Total Amount Collected:</strong> <span
+                style="font-family: DejaVu Sans;">&#x20B1;</span>{{ $remittances->sum('rm_amount') }}</p>
 
         <div class="prepared-by">
             <p><strong>Prepared by:</strong> Alex Ko</p>
