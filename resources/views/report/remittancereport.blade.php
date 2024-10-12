@@ -127,8 +127,8 @@
                         </td>
                         <td>{{ \Carbon\Carbon::parse($remittance->rm_date)->format('m/d/Y') }}</td>
                         <td>
-                            <img src="{{ asset('storage/' . $remittance->rm_image) }}" class="proof-image"
-                                alt="{{asset('storage/' . $remittance->rm_image)}}" />
+                            <img src="{{ asset('' . $remittance->rm_image) }}" class="proof-image"
+                                alt="{{asset('' . $remittance->rm_image)}}" />
                         </td>
                         <td><span style="font-family: DejaVu Sans;">&#x20B1;</span>{{ $remittance->rm_amount }}</td>
                     </tr>
