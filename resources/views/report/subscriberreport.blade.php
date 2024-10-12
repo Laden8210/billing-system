@@ -94,10 +94,7 @@
             <header>
                 <h1>JCLC Internet Service</h1>
                 <h1><span class="location-name">Urban 2, Koronadal City</span></h1>
-<<<<<<< HEAD
 
-=======
->>>>>>> 2257e63d7d71ec6f14e9410d206bff1b1268bc85
                 <hr>
             </header>
 

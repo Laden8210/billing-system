@@ -119,7 +119,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($remittances as $index => $remittance)
+                @foreach ($remittances as $remittance)
                     <tr>
                         <td>
                             {{ optional($remittance->employee)->em_fname ?? '' }}
