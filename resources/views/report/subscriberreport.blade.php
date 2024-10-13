@@ -110,8 +110,8 @@
                     <th>Subscriber Name</th>
                     <th>Contact Number</th>
                     <th>Address</th>
-                    <th>Number of Subscription</th>
-                    <th>STATUS</th>
+                    <th>Number of Subscriptions</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
