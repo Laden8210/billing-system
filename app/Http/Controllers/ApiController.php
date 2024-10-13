@@ -337,6 +337,7 @@ class ApiController extends Controller
         $otp = rand(1000, 9999);
 
 
+
         Http::post('https://nasa-ph.com/api/send-sms', [
             'phone_number' => $subscriber->sr_contactnum,
             'message' => "Your OTP code is: $otp. Please use this code to reset your password.",
