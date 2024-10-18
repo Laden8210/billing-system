@@ -27,6 +27,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/complaints', [NavigationController::class, 'complaints'])->name('complaints');
 
     Route::get('/subscriber/{id}', [NavigationController::class, 'subscriberById'])->name('subscriberById');
+
+    Route::get('/remittance/', [NavigationController::class, 'remittance'])->name('remittance');
 });
 Route::get('/user', [NavigationController::class, 'userAccount'])->name('user');
 

@@ -70,7 +70,7 @@
         }
 
         .location-name {
-            font-size: 0.7em; 
+            font-size: 0.7em;
             font-weight: normal;
             color: #333;
         }
@@ -84,7 +84,7 @@
             <hr>
         </header>
 
-        <h3>Collection Report</h3>
+        <h3>Announcement Report</h3>
         <p><strong>From:</strong> {{ \Carbon\Carbon::parse($start)->format('F j, Y') }} - {{ \Carbon\Carbon::parse($end)->format('F j, Y') }}</p>
 
 
@@ -106,7 +106,7 @@
                 @endforeach
             </tbody>
         </table>
-        
+
 
         <p><strong>Prepared By:</strong> Alex Ko</p>
         <p><strong>Printed Date:</strong> {{ now()->format('m/d/Y') }}</p>

@@ -131,7 +131,7 @@
                 @endforeach
             </tbody>
         </table>
-        <p class="total-amount"><strong>Total Amount Collected:</strong> <span style="font-family: DejaVu Sans;">&#x20B1;</span> {{ number_format($sum, 2) }}</p>
+        <p class="total-amount"><strong>Total Amount to be Collected:</strong> <span style="font-family: DejaVu Sans;">&#x20B1;</span> {{ number_format($sum, 2) }}</p>
 
         <p><strong>Prepared By:</strong> Alex Ko</p>
         <p><strong>Printed Date:</strong> {{ now()->format('F j, Y') }}</p>

@@ -39,12 +39,11 @@ class TableSubscriber extends Component
             'last_name' => 'required',
             'middle_name' => 'required',
             'suffix' => 'required',
-            'contact_number' => 'required',
+            'contact_number' => 'required|numeric|unique:subscribers,sr_contactnum',
             'street' => 'required',
             'city' => 'required',
             'province' => 'required',
         ]);
-
 
         $password = $this->last_name . substr($this->contact_number, -4);
 

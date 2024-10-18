@@ -14,6 +14,7 @@
         <x-menu-item title="Service" icon="fa-solid fa-truck-fast" url="{{ route('service') }}" />
         <x-menu-item title="Billing" icon="fa-solid fa-file-invoice-dollar" url="{{ route('billing') }}" />
         <x-menu-item title="Payment" icon="fa-solid fa-money-bill" url="{{ route('payment') }}" />
+    <x-menu-item title="Remittance" icon="fa-solid fa-money-bill" url="{{ route('remittance') }}" />
         <x-menu-item title="Report" icon="fa-solid fa-table-list" url="{{ route('report') }}" />
         <x-menu-item title="Announcement" icon="fa-solid fa-bullhorn" url="{{ route('announcement') }}" />
         <x-menu-item title="Complaints" icon="fa-solid fa-comments" url="{{ route('complaints') }}" />

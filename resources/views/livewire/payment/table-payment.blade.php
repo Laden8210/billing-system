@@ -32,14 +32,15 @@
         <table class="w-full table-auto border-collapse border border-slate-400">
             <thead>
                 <tr class="bg-slate-200">
-                    <th class="border border-slate-300 px-2 py-4">FULLNAME</th>
+                    <th class="border border-slate-300 px-2 py-4">Fullname</th>
 
-                    <th class="border border-slate-300 px-2 py-4">SUBSCRIPTION Number</th>
+                    <th class="border border-slate-300 px-2 py-4">Subscription Number</th>
                     <th class="border border-slate-300 px-2 py-4">Area</th>
+                    <th class="border border-slate-300 px-2 py-4">Due Date</th>
 
-                    <th class="border border-slate-300 px-2 py-4">STATUS</th>
+                    <th class="border border-slate-300 px-2 py-4">Status</th>
 
-                    <th class="border border-slate-300 px-2 py-4">ACTION</th>
+                    <th class="border border-slate-300 px-2 py-4">Action</th>
                 </tr>
 
             </thead>
@@ -58,6 +59,9 @@
 
                         <td class="border border-slate-300">
                             {{ $bill->subscription->area->snarea_name }}
+                        </td>
+                        <td class="border border-slate-300">
+                            {{ $bill->bs_duedate }}
                         </td>
 
                         <td class="border border-slate-300">
@@ -119,22 +123,11 @@
                                     <p class="font-bold">Subscription Fee:
                                         {{ $selectedBilling->subscription->plan->snplan_fee }}</p>
 
-                                    <div class="mt-2 w-full">
-                                        <label for="month" class="font-bold">Month</label>
-                                        <input type="number"
-                                            class="w-full outline-none border rounded border-slate-500 px-2 py-3"
-                                            wire:model="totalMonth">
 
-                                        @error('totalMonth')
-                                            <p class="text-red-500 text-xs italic mt-1"><i
-                                                    class="fas fa-exclamation-circle"></i></i>{{ $message }}
-                                            </p>
-                                        @enderror
-                                    </div>
 
                                     <div class="mt-2 w-full">
                                         <label for="month" class="font-bold">Payment</label>
-                                        <input type="number"
+                                        <input type="number" readonly
                                             class="w-full outline-none border rounded border-slate-500 px-2 py-3"
                                             wire:model="amount">
                                             @error('amount')

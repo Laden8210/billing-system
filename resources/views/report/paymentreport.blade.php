@@ -121,6 +121,8 @@
             <p>Employee Name: {{ $payments->first()->employee->em_fname . " " . $payments->first()->employee->em_lname }}</p>
         @endif
 
+        <p><strong>Area:</strong>{{$areaName}}</p>
+
         <p><strong>Date:</strong> {{ \Carbon\Carbon::parse($start)->format('F j, Y') }}</p>
 
         <table>

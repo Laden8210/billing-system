@@ -116,7 +116,7 @@
                         </div>
                     @endif
 
-                    @if ($reportType == 'Billing Report' || $reportType == 'Subscriber Report')
+                    @if ($reportType == 'Billing Report' || $reportType == 'Subscriber Report' || $reportType == 'Collection Report')
                         <div>
                             <label for="">To</label>
                             <select class="p-2 outline-none border border-slate-300 w-full" name="area">

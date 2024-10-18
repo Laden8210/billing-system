@@ -86,6 +86,11 @@ class NavigationController extends Controller
         return view('complaints.index');
     }
 
+    public function remittance()
+    {
+        return view('remittance.index');
+    }
+
 
     public function generateReport(Request $request)
     {
@@ -117,10 +122,21 @@ class NavigationController extends Controller
             return $pdf->stream('subscriber_report.pdf');
         } elseif ($reportType == 'Collection Report') {
             $payments = Payment::with('employee')->where('p_date', '=', $start)
+
+
                 ->where('employee_id', '=', $employee)
                 ->get();
 
-            $pdf = Pdf::loadView('report.paymentreport', compact('payments', 'start', 'end'));
+
+            $subscriptionArea = SubscriptionArea::find($area);
+
+            if ($subscriptionArea === null) {
+                return redirect()->back()->with('error', 'No data found');
+            }
+
+            // Fetch the area name
+            $areaName = $subscriptionArea->snarea_name;
+            $pdf = Pdf::loadView('report.paymentreport', compact('payments', 'start', 'end', 'areaName'));
             return $pdf->stream('invoice.pdf');
         } elseif ($reportType == 'Remittance Report') {
 

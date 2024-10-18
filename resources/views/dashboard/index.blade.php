@@ -44,6 +44,16 @@
                 </div>
 
             </div>
+
+            <div class=" shadow rounded p-5">
+                <h3 class="font-bold">Total Remittance</h3>
+                <div class="flex justify-between my-5 text-5xl">
+                    <h1 class="font-bold">₱{{ number_format($remittance, 2) }}</h1>
+
+                    <i class="fa fa-edit"></i>
+                </div>
+
+            </div>
         </div>
 
 
