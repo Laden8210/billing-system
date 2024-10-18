@@ -10,7 +10,7 @@
       <div class="w-full flex  justify-center"
     wire:poll.debounce.1000ms>
 
-         <table class="table-auto border-collapse border border-slate-400">
+         <table class="w-full table-auto border-collapse border border-slate-400">
              <thead>
                  <tr class="bg-slate-200">
 

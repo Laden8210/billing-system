@@ -79,7 +79,7 @@ class ApiController extends Controller
         }
 
         $currentMonth = now()->format('Y-m'); // Current month
-        $nextMonth = now()->addMonth()->format('Y-m'); // Next month
+        $nextMonth = now()->addMonth(6)->format('Y-m'); // Next month
 
         // Get subscriptions for the given subscriber
         $subscriptions = Subscription::where('subscriber_id', $request->subscriber_id)
@@ -87,12 +87,7 @@ class ApiController extends Controller
                 'area',
                 'plan',
                 'subscriber',
-                'billingStatements' => function ($query) use ($currentMonth, $nextMonth) {
-                    $query->where(function ($query) use ($currentMonth, $nextMonth) {
-                        $query->where('bs_billingdate', 'like', $currentMonth . '%')
-                              ->orWhere('bs_billingdate', 'like', $nextMonth . '%'); // Filter by current and next month
-                    });
-                },
+                'billingStatements',
                 'billingStatements.payments' // Eager load payments separately
             ])
             ->get()
@@ -188,9 +183,11 @@ class ApiController extends Controller
         return response()->json($complaint);
     }
 
-    public function notification(Request $request){
-        return response()->json(Announcement::all());
+    public function notification(Request $request)
+    {
+        return response()->json(Announcement::orderBy('an_date', 'desc')->get());
     }
+
 
     public function getArea(){
         return response()->json(SubscriptionArea::all());
