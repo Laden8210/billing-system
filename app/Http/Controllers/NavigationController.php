@@ -117,37 +117,79 @@ class NavigationController extends Controller
             return $pdf->stream('subscriber_report.pdf');
         } elseif ($reportType == 'Collection Report') {
             $payments = Payment::with('employee')->where('p_date', '=', $start)
-            ->where('employee_id', '=', $employee)
-            ->get();
+                ->where('employee_id', '=', $employee)
+                ->get();
 
             $pdf = Pdf::loadView('report.paymentreport', compact('payments', 'start', 'end'));
             return $pdf->stream('invoice.pdf');
         } elseif ($reportType == 'Remittance Report') {
 
-            $remittances = Remittance::where('rm_date', '=',$start)->get();
+            $remittances = Remittance::where('rm_date', '=', $start)->get();
 
 
             $pdf = Pdf::loadView('report.remittancereport', compact('remittances', 'start'));
             return $pdf->stream('remittance_report.pdf');
         } elseif ($reportType == 'Billing Report') {
+
+            $subscriptionArea = SubscriptionArea::find($area);
+
+            if ($subscriptionArea === null) {
+                return redirect()->back()->with('error', 'No data found');
+            }
+
+            // Fetch the area name
+            $areaName = $subscriptionArea->snarea_name;
+
+            // Fetch the billing statements related to the area
             $billingStatements = BillingStatement::with(['subscription.subscriber', 'subscription.area', 'payments'])
-
                 ->whereHas('subscription.area', function ($query) use ($area) {
-
                     $query->where('subscriptionarea_id', $area);
                 })
                 ->get();
 
-            $areaName = SubscriptionArea::find($area)->snarea_name;
+            // Check if billing statements are found
+            if ($billingStatements->isEmpty()) {
+                return redirect()->back()->with('error', 'No billing statements found for the selected area.');
+            }
+
+            // Generate PDF
             $pdf = Pdf::loadView('report.billingreport', compact('billingStatements', 'start', 'end', 'areaName'));
+
+            // Stream the generated PDF
+            return $pdf->stream('billingreport.pdf');
+            $subscriptionArea = SubscriptionArea::find($area);
+
+            if ($subscriptionArea === null) {
+                return redirect()->back()->with('error', 'No data found');
+            }
+
+            // Fetch the area name
+            $areaName = $subscriptionArea->snarea_name;
+
+            // Fetch the billing statements related to the area
+            $billingStatements = BillingStatement::with(['subscription.subscriber', 'subscription.area', 'payments'])
+                ->whereHas('subscription.area', function ($query) use ($area) {
+                    $query->where('subscriptionarea_id', $area);
+                })
+                ->get();
+
+            // Check if billing statements are found
+            if ($billingStatements->isEmpty()) {
+                return redirect()->back()->with('error', 'No billing statements found for the selected area.');
+            }
+
+            // Generate PDF
+            $pdf = Pdf::loadView('report.billingreport', compact('billingStatements', 'start', 'end', 'areaName'));
+
+            // Stream the generated PDF
             return $pdf->stream('billingreport.pdf');
         } elseif ($reportType == 'Announcement Report') {
             $announcement = Announcement::whereBetween('created_at', [$start, $end])->get();
             $pdf = Pdf::loadView('report.announcementreport', compact('announcement', 'start', 'end'));
             return $pdf->download('announcement.pdf');
-        }elseif($reportType == 'Complaints Report'){
+        } elseif ($reportType == 'Complaints Report') {
             $complaints = Complaint::whereBetween('cp_date', [$start, $end])
-            ->get();
+                ->get();
 
             $pdf = Pdf::loadView('report.complaintsreport', compact('complaints', 'start', 'end'));
             return $pdf->stream('complaints.pdf');

@@ -340,7 +340,7 @@
                         @endif
 
                         @if (session()->has('error'))
-                            <div class="w-full py-2 bg-red-200 rounded">
+                            <div class="w-full py-2 px-2 bg-red-200 rounded">
                                 <span class="text-red-400">{{ session('error') }}</span>
                             </div>
                         @endif

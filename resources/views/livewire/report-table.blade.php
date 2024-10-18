@@ -28,9 +28,23 @@
 
         </div>
     </div>
+    @if (session()->has('message'))
+    <div class="bg-green-500 text-white p-2 rounded">
+        {{ session('message') }}
+    </div>
 
+@endif
+
+@if (session()->has('error'))
+    <div class="bg-red-500 text-white p-2 rounded">
+        {{ session('error') }}
+    </div>
+
+@endif
 
     <div class="grid grid-rows-3 grid-flow-col gap-5 p-2">
+
+
 
         <button href="{{ route('remittanceReport') }}" x-on:click="$dispatch('open-modal', {name:'filter-form'})"
             wire:click="selectReportType('Remittance Report')"
