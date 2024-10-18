@@ -32,11 +32,8 @@
         <table class="w-full table-auto border-collapse border border-slate-400">
             <thead>
                 <tr class="bg-slate-200">
-                    <th class="border border-slate-300 px-2 py-4">BILL ID.</th>
-                    <th class="border border-slate-300 px-2 py-4">FNAME</th>
-                    <th class="border border-slate-300 px-2 py-4">LNAME</th>
-                    <th class="border border-slate-300 px-2 py-4">Minitial</th>
-                    <th class="border border-slate-300 px-2 py-4">Suffix</th>
+                    <th class="border border-slate-300 px-2 py-4">FULLNAME</th>
+
                     <th class="border border-slate-300 px-2 py-4">SUBSCRIPTION Number</th>
                     <th class="border border-slate-300 px-2 py-4">Area</th>
 
@@ -49,19 +46,12 @@
             <tbody>
                 @foreach ($billings as $bill)
                     <tr class="text-center">
-                        <td class="border border-slate-300">{{ $bill->billstatement_id }}</td>
-                        <td class="border border-slate-300">{{ $bill->subscription->subscriber->sr_fname }}</td>
+
 
                         <td class="border border-slate-300">
-                            {{ $bill->subscription->subscriber->sr_lname }}
+                            {{ $bill->subscription->subscriber->sr_fname .' '.  $bill->subscription->subscriber->sr_lname   }}
                         </td>
 
-                        <td class="border border-slate-300">
-                            {{ $bill->subscription->subscriber->sr_minitial ?? 'N/A' }}
-
-                        <td class="border border-slate-300">
-                            {{ $bill->subscription->subscriber->sr_suffix ?? 'N/A' }}
-                        </td>
                         <td class="border border-slate-300">
                             {{ $bill->subscription->sn_num }}
                         </td>

@@ -43,12 +43,10 @@
         <table class="w-full table-auto border-collapse border border-slate-400">
             <thead>
                 <tr class="bg-slate-200">
-                    <th class="border border-slate-300 px-2 py-4">SUBSCRIBER ID</th>
-                    <th class="border border-slate-300 px-2 py-4">FNAME</th>
 
-                    <th class="border border-slate-300 px-2 py-4">LNAME</th>
-                    <th class="border border-slate-300 px-2 py-4">MINITIAL</th>
-                    <th class="border border-slate-300 px-2 py-4">SUFFIX</th>
+                    <th class="border border-slate-300 px-2 py-4">FULLNAME</th>
+
+
                     <th class="border border-slate-300 px-2 py-4">CONTACT</th>
                     <th class="border border-slate-300 px-2 py-4">STATUS</th>
                     <th class="border border-slate-300 px-2 py-4">VIEW</th>
@@ -61,11 +59,9 @@
 
                 @foreach ($subscribers as $sub)
                     <tr class="text-center">
-                        <td class="border border-slate-300">{{$sub->subscriber_id}}</td>
-                        <td class="border border-slate-300">{{$sub->sr_fname}}</td>
-                        <td class="border border-slate-300">{{$sub->sr_lname}}</td>
-                        <td class="border border-slate-300">{{$sub->sr_minitial}}</td>
-                        <td class="border border-slate-300">{{$sub->sr_suffix}}</td>
+
+                        <td class="border border-slate-300">{{$sub->sr_fname . ' ' . $sub->sr_lname . ' '. $sub->sr_minitial . ' '. $sub->sr_suffix}}</td>
+
                         <td class="border border-slate-300">{{$sub->sr_contactnum}}</td>
                         <td class="border border-slate-300">{{$sub->sr_status}}</td>
                         <td class="border border-slate-300">

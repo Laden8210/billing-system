@@ -229,6 +229,31 @@ class NavigationController extends Controller
         ]);
 
         $phoneEmail = $request->phoneEmail;
+
+        // OTP session keys
+        $otpAttemptsKey = 'otp_attempts_' . $phoneEmail;
+        $otpLastRequestKey = 'otp_last_request_' . $phoneEmail;
+
+        // Get current OTP attempt count and last request time from session
+        $otpAttempts = session($otpAttemptsKey, 0);
+        $lastRequestTime = session($otpLastRequestKey, now());
+
+        // Check if the OTP attempts exceed 3 within the 1-minute timeframe
+        if ($otpAttempts >= 3) {
+            $timeDifference = now()->diffInSeconds($lastRequestTime);
+
+            if ($timeDifference < 60) {
+                // Calculate remaining time in the 60-second window
+                $remainingTime = ceil(60 - $timeDifference);
+                return redirect()->back()->with('error', "Too many OTP requests. Please wait for $remainingTime seconds before trying again.");
+            } else {
+                // Reset attempt count after 1 minute has passed
+                $otpAttempts = 0;
+                session([$otpAttemptsKey => $otpAttempts]);
+            }
+        }
+
+        // Generate OTP
         $otp = rand(1000, 9999);
 
         // Fetch the employee record based on the contact number or email
@@ -245,9 +270,12 @@ class NavigationController extends Controller
         ]);
 
         if ($response->successful()) {
+            // Update OTP attempts and last request time in session
             session([
+                $otpAttemptsKey => $otpAttempts + 1,
+                $otpLastRequestKey => now(),
                 'otp' => $otp,
-                'employeeId' => $employee->employee_id, // Access the employee_id
+                'employeeId' => $employee->employee_id,
             ]);
 
             return redirect()->route('reset-password')->with('success', 'OTP sent successfully.');
@@ -255,6 +283,7 @@ class NavigationController extends Controller
             return redirect()->back()->with('error', 'Failed to send OTP. Please try again.');
         }
     }
+
 
     public function resetPassword(Request $request)
     {
@@ -265,8 +294,13 @@ class NavigationController extends Controller
     {
         $request->validate([
             'otp' => 'required',
-            'npassword' => 'required',
-            'cpassword' => 'required',
+            'npassword' => [
+                'required',
+                'string',
+                'min:8',
+                'regex:/[!@#$%^&*(),.?":{}|<>]/',
+            ],
+            'cpassword' => 'required|same:npassword',
         ]);
 
         $employeeId = session('employeeId');

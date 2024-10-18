@@ -30,6 +30,12 @@
                             {{ $errors->first('contact_number') }}
                         </div>
                     @endif
+
+                    @if (session('error'))
+                        <div class="text-red-900 text-sm mt-2 bg-red-200 px-2 py-2 rounded text-center">
+                            {{ session('error') }}
+                        </div>
+                    @endif
                     <div>
                         <button class="w-full py-2 bg-blue-900 hover:bg-blue-800 text-white rounded">Send Code</button>
                     </div>

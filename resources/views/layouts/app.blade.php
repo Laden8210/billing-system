@@ -9,7 +9,7 @@
 </head>
 <body class="">
 
-    <div class="flex h-screen relative">
+    <div class="flex h-screen gap-10">
 
         <div class="w-64 sticky">
             <x-sidebar/>

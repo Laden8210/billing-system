@@ -61,35 +61,40 @@
                 </div>
             </div>
 
+
             <div class="col-span-2 rounded shadow mx-10 p-2">
                 <h2>New Subscriber Subscription</h2>
-                <h1 class="text-5xl font-bold">10</h1>
+                <h1 class="text-5xl font-bold">{{ $newSubscriptionCount }}</h1>
                 <table class="w-full table-auto border-collapse border border-slate-400 rounded my-2">
                     <thead>
                         <tr class="bg-slate-200">
                             <th class="border border-slate-300 px-2 py-4">FULLNAME</th>
                             <th class="border border-slate-300 px-2 py-4">AREA</th>
-                            <th class="border border-slate-300 px-2 py-4">DATE</th>
                             <th class="border border-slate-300 px-2 py-4">SUBSCRIPTION PLAN</th>
-
+                            <th class="border border-slate-300 px-2 py-4">DATE</th>
                         </tr>
-
                     </thead>
                     <tbody>
-                        @for ($i = 0; $i < 5; $i++)
+                        @foreach ($subscribers as $subscriber)
                             <tr class="text-center">
-
-                                <td class="border border-slate-300 p-2">Jasper Dela Cruz</td>
-                                <td class="border border-slate-300 p-2">Tupi</td>
-                                <td class="border border-slate-300 p-2">{{ \Carbon\Carbon::now()->toDateString() }}</td>
-                                <td class="border border-slate-300 p-2">50 Mbps Fibr</td>
+                                <td class="border border-slate-300 p-2">
+                                    {{ $subscriber->sr_fname . ' ' . $subscriber->sr_lname }}</td>
+                                <td class="border border-slate-300 p-2">
+                                    {{ $subscriber->sr_street . ' ' . $subscriber->sr_city . ' ' . $subscriber->sr_province }}
+                                </td>
+                                <td class="border border-slate-300 p-2">
+                                    {{ $subscriber->subscriptions->first()->snplan_bandwidth ?? 'N/A' }}</td>
+                                <!-- Assuming snplan_name exists -->
+                                <td class="border border-slate-300 p-2">{{ $subscriber->created_at->format('Y-m-d') }}
+                                </td> <!-- Assuming created_at is available -->
                             </tr>
-                        @endfor
-
-
+                        @endforeach
                     </tbody>
                 </table>
             </div>
+
+
+
         </div>
     </div>
 

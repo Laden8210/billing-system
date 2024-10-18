@@ -68,6 +68,8 @@
                 </div>
             @endif
 
+
+
             @if (session('success'))
                 <div class="text-green-900 text-sm mt-2 bg-green-200 px-2 py-2 rounded text-center">
                     {{ session('success') }}<a href="{{route('login')}}">Login Now</a>

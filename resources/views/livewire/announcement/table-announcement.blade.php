@@ -1,4 +1,4 @@
-<div class="p-2">
+<div class="w-full p-2">
 
     <h1 class="font-bold my-2">Announcement</h1>
     <div class="grid grid-cols-5 items-baseline gap-2">

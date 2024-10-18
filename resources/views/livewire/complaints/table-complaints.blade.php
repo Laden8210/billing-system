@@ -1,23 +1,23 @@
- <div class="p-2">
+ <div class="p-10 w-full">
 
      <h1 class="font-bold my-2">Complaints</h1>
 
-     <div>
+     <div class="mb-10">
         <input type="text" placeholder="Search" wire:model.live.debounce.300ms = "search"
-        class="border border-slate-400 p-2 active:outline-none w-1/2 mx-2 h-10 self-end">
+        class="border border-slate-400 p-2 active:outline-none w-1/2  h-10 self-end">
     </div>
 
-     <div class="w-full flex p-2 justify-center" wire:poll.debounce.1000ms>
+      <div class="w-full flex  justify-center"
+    wire:poll.debounce.1000ms>
 
-
-         <table class="w-full table-auto border-collapse border border-slate-400">
+         <table class="table-auto border-collapse border border-slate-400">
              <thead>
                  <tr class="bg-slate-200">
 
                      <th class="border border-slate-300 px-1 py-4">COMPLAINTS ID</th>
 
                      <th class="border border-slate-300 px-2 py-4">FROM (SUBSCRIBER NAME)</th>
-                     <th class="border border-slate-300 px-2 py-4">DESCRIPTION</th>
+                     <th class="border border-slate-300 px-2 py-4 w-32 max-w-40">DESCRIPTION</th>
                      <th class="border border-slate-300 px-2 py-4">DATE</th>
                      <th class="border border-slate-300 px-2 py-4">REPLY</th>
                      <th class="border border-slate-300 px-2 py-4">ACTION</th>
@@ -33,7 +33,7 @@
                         <td class="border border-slate-300">
                             {{$complain->subscriber->sr_fname}} {{$complain->subscriber->sr_lname}}
                         </td>
-                        <td  class="border border-slate-300">
+                        <td  class="border border-slate-300 ">
                             {{$complain->cp_message}}
                         </td>
                         <td  class="border border-slate-300">
