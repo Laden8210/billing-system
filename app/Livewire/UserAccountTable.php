@@ -90,10 +90,10 @@ public function updateUser()
 {
     // Validate the form inputs
     $this->validate([
-        'contact_number' => 'required|unique:employees,em_contactnum,' . $this->user_id . ',employee_id', // Allow the current user's contact number
+        'contact_number' => 'required|unique:employees,em_contactnum,' . $this->user_id . ',employee_id', // This allows the current user's contact number
         'firstname' => 'required',
         'lastname' => 'required',
-        'password' => 'required',
+        'password' => 'nullable|min:8', // Optional password update
         'role' => 'required',
     ]);
 
