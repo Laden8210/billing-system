@@ -15,7 +15,7 @@ use App\Models\Announcement;
 
 use Illuminate\Support\Facades\Http;
 use App\Models\SubscriptionArea;
-
+use Carbon\Carbon;
 class NavigationController extends Controller
 {
     public function index()
@@ -96,10 +96,11 @@ class NavigationController extends Controller
     {
 
         $reportType = $request->reportType;
-        $start = $request->start;
-        $end = $request->end;
+
         $area = $request->area;
         $employee = $request->employee;
+        $start = Carbon::parse($request->start); // Convert start to Carbon instance
+        $end = Carbon::parse($request->end);
 
 
         if ($reportType == 'Subscriber Report') {
@@ -140,10 +141,24 @@ class NavigationController extends Controller
             return $pdf->stream('invoice.pdf');
         } elseif ($reportType == 'Remittance Report') {
 
-            $remittances = Remittance::where('rm_date', '=', $start)->get();
+            $remittances = Remittance::whereBetween('rm_date', [$start, $end])->get();
+            $diffInDays = $start->diffInDays($end);
+            $diffInWeeks = $start->diffInWeeks($end);
+            $diffInMonths = $start->diffInMonths($end);
 
+            // Determine the frequency based on the date range
+            $frequency = '';
+            if ($diffInDays === 0) {
+                $frequency = 'Daily';
+            } elseif ($diffInWeeks === 0 && $diffInDays > 0) {
+                $frequency = 'Weekly';
+            } elseif ($diffInMonths === 0 && $diffInWeeks > 0) {
+                $frequency = 'Weekly';
+            } else {
+                $frequency = 'Monthly';
+            }
 
-            $pdf = Pdf::loadView('report.remittancereport', compact('remittances', 'start'));
+            $pdf = Pdf::loadView('report.remittancereport', compact('remittances', 'start', 'end', 'frequency'));
             return $pdf->stream('remittance_report.pdf');
         } elseif ($reportType == 'Billing Report') {
 

@@ -22,7 +22,7 @@ class TablePayment extends Component
         return view(
             'livewire.payment.table-payment',
             [
-                'billings' => BillingStatement::search($this->search)->get(),
+                'billings' => BillingStatement::search($this->search)->orderBy('bs_status', 'desc')->get(),
                 'area' => SubscriptionArea::all()
             ]
         );

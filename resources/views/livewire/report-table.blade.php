@@ -95,7 +95,7 @@
                         <input type="date" class="p-2 outline-none border border-slate-300 w-full" name="start">
                     </div>
 
-                    @if ($reportType != 'Collection Report' && $reportType != 'Remittance Report')
+                    @if ($reportType != 'Collection Report' )
                         <div>
                             <label for="">End</label>
                             <input type="date" class="p-2 outline-none border border-slate-300 w-full" name="end">
@@ -116,7 +116,7 @@
                         </div>
                     @endif
 
-                    @if ($reportType == 'Billing Report' || $reportType == 'Subscriber Report' || $reportType == 'Collection Report')
+                    @if ($reportType == 'Billing Report' || $reportType == 'Subscriber Report' || $reportType == 'Collection Report' )
                         <div>
                             <label for="">To</label>
                             <select class="p-2 outline-none border border-slate-300 w-full" name="area">

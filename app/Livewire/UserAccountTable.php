@@ -34,18 +34,16 @@ class UserAccountTable extends Component
         ]);
     }
 
-    public function createUser(){
-
+    public function createUser()
+    {
         $this->validate([
-            'contact_number' => 'required',
+            'contact_number' => 'required|unique:employees,em_contactnum', // Check for unique contact number in the employees table
             'firstname' => 'required',
             'lastname' => 'required',
             'password' => 'required',
             'confirm_password' => 'required|same:password',
             'role' => 'required',
-
         ]);
-
 
         $employee = new Employee();
         $employee->em_contactnum = $this->contact_number;
@@ -58,7 +56,7 @@ class UserAccountTable extends Component
         $employee->em_status = 'Active';
         $employee->save();
 
-
+        // Clear the form inputs
         $this->contact_number = '';
         $this->firstname = '';
         $this->lastname = '';
@@ -67,7 +65,6 @@ class UserAccountTable extends Component
         $this->password = '';
         $this->confirm_password = '';
         $this->role = '';
-
 
         session()->flash('message', 'User created successfully');
     }
@@ -89,10 +86,18 @@ class UserAccountTable extends Component
         $this->role = $employee->em_role;
 
     }
+    public function updateUser()
+    {
+        // Validate the form inputs
+        $this->validate([
+            'contact_number' => 'required|unique:employees,em_contactnum,' . $this->user_id, // Allow the current user's contact number
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'password' => 'required',
+            'role' => 'required',
+        ]);
 
-    public function updateUser(){
-
-
+        // Find the employee record by user ID and update the details
         $employee = Employee::find($this->user_id);
         $employee->em_contactnum = $this->contact_number;
         $employee->em_fname = $this->firstname;
@@ -100,8 +105,11 @@ class UserAccountTable extends Component
         $employee->em_minitial = $this->middlleinitial;
         $employee->em_suffix = $this->sufix;
         $employee->em_role = $this->role;
+        $employee->em_password = bcrypt($this->password);
         $employee->save();
 
+        // Flash a success message
         session()->flash('message', 'User updated successfully');
     }
+
 }

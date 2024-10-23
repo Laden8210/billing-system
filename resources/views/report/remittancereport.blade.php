@@ -107,7 +107,8 @@
         </header>
 
         <h3>Remittance Report</h3>
-        <p><strong>From:</strong> {{ \Carbon\Carbon::parse($start)->format('F j, Y') }}</p>
+        <p><strong>From:</strong> {{ \Carbon\Carbon::parse($start)->format('F j, Y') }} - <strong>To:</strong> {{ \Carbon\Carbon::parse($end)->format('F j, Y') }}</p>
+        <p><strong>Frequency:</strong> {{ $frequency }}</p>
 
         <table>
             <thead>

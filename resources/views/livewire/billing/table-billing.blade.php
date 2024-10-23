@@ -49,8 +49,8 @@
                     <tr class="text-center">
 
 
-                        <td class="border border-slate-300">
-                            {{ $bill->subscription->subscriber->sr_fname .' '.  $bill->subscription->subscriber->sr_lname   }}
+                        <td class="border border-slate-300 px-2 py-2">
+                            {{ $bill->subscription->subscriber->sr_fname . ' ' . $bill->subscription->subscriber->sr_lname }}
                         </td>
 
 
@@ -72,12 +72,19 @@
 
 
                         <td class="border border-slate-300 px-2">
-                            <button
-                                class="bg-cyan-400 hover:bg-cyan-600 px-3 py-1 rounded-full text-slate-50 font-bold my-2"
-                                x-data x-on:click="$dispatch('open-modal', {name:'view-billing-statement'})"
-                                wire:click="selectBilling({{ $bill->billstatement_id }})">
-                                View
-                            </button>
+
+                            @if ($bill->bs_status == 'unpaid')
+
+                            @endif
+                            @if ($bill->bs_status == 'paid')
+                                <button
+                                    class="bg-cyan-400 hover:bg-cyan-600 px-3 py-1 rounded-full text-slate-50 font-bold my-2"
+                                    x-data x-on:click="$dispatch('open-modal', {name:'view-billing-statement'})"
+                                    wire:click="selectBilling({{ $bill->billstatement_id }})">
+                                    View
+                                </button>
+                            @endif
+
 
                         </td>
 
@@ -95,23 +102,49 @@
                         <div class="flex justify-between">
                             <div class="w-full">
 
-                                <p class="font-bold">Billing Date: {{ $selectedBilling->bs_billingdate }}</p>
-                                <p class="font-bold">Bill ID: {{ $selectedBilling->billstatement_id }}</p>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <p class="font-bold text-left">Subscriber Name:</p>
+                                    <p class="text-right">{{ $selectedBilling->subscription->subscriber->sr_fname }}
+                                        {{ $selectedBilling->subscription->subscriber->sr_lname }}</p>
 
-                                <p class="font-bold">Subscriber Name:
-                                    {{ $selectedBilling->subscription->subscriber->sr_fname }}
-                                    {{ $selectedBilling->subscription->subscriber->sr_lname }}</p>
-                                <p class="font-bold">Area: {{ $selectedBilling->subscription->area->snarea_name }}</p>
+                                    <p class="font-bold text-left">Subscription Number:</p>
+                                    <p class="text-right">{{ $selectedBilling->subscription->sn_num }}</p>
 
-                                <p class="font-bold">Subscription Number: {{ $selectedBilling->subscription->sn_num }}</p>
-                                <p class="font-bold">Due Date: {{ $selectedBilling->bs_duedate }}</p>
-                                <p class="font-bold">Subscription Plan:
-                                    {{ $selectedBilling->subscription->plan->snplan_bandwidth }}MBps Fibr</p>
-                                <p class="font-bold">Subscription Fee:
-                                    {{ $selectedBilling->subscription->plan->snplan_fee }}</p>
+                                    <p class="font-bold text-left">Billing Date:</p>
+                                    <p class="text-right">{{ $selectedBilling->bs_billingdate }}</p>
 
-                                <p class="font-bold">Status:
-                                    {{ $selectedBilling->bs_status == 'unpaid' ? 'Unpaid' : 'Paid' }}</p>
+                                    <p class="font-bold text-left">Due Date:</p>
+                                    <p class="text-right">{{ $selectedBilling->bs_duedate }}</p>
+
+                                    <p class="font-bold text-left">Previous Balance:</p>
+                                    <p class="text-right">--</p> <!-- Assuming no data for this -->
+
+                                    <p class="font-bold text-left">Balance Due:</p>
+                                    <p class="text-right">
+                                        {{ $selectedBilling->subscription->plan->snplan_fee - $selectedBilling->subscription->plan->snplan_fee * 0.12 }}
+                                    </p>
+
+                                    <p class="font-bold text-left">Vat:</p>
+                                    <p class="text-right">{{ $selectedBilling->subscription->plan->snplan_fee * 0.12 }}</p>
+
+                                    <p class="font-bold text-left">Total Amount:</p>
+                                    <p class="text-right">{{ $selectedBilling->subscription->plan->snplan_fee }}</p>
+
+                                    <p class="font-bold text-left">Payment Received:</p>
+                                    <p class="text-right">{{ $selectedBilling->subscription->plan->snplan_fee }}</p>
+
+                                    <p class="col-span-2 text-center">
+                                        @if ($bill->bs_status == 'unpaid')
+                                            <span class="px-3 py-1 text-white rounded-full bg-red-500">Unpaid</span>
+                                        @endif
+                                        @if ($bill->bs_status == 'paid')
+                                            <span class="px-3 py-1 text-white rounded-full bg-green-500">Paid</span>
+                                        @endif
+
+                                    </p>
+                                </div>
+
+
                             </div>
                         </div>
                     </div>

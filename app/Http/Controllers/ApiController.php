@@ -39,6 +39,12 @@ class ApiController extends Controller
             ]);
         }
 
+        if($subscriber->sr_status == 'Inactive'){
+            return response()->json([
+                'error' => 'Account is inactive'
+            ]);
+        }
+
         return response()->json($subscriber);
     }
 
@@ -199,7 +205,9 @@ class ApiController extends Controller
             'subscription.subscriber',
             'subscription.area',
             'subscription.plan'
-        ])->get();
+        ])
+        ->orderBy('bs_status', 'desc')
+        ->get();
 
         // Return the billing data as a JSON response
         return response()->json($billing);
