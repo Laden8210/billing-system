@@ -86,30 +86,30 @@ class UserAccountTable extends Component
         $this->role = $employee->em_role;
 
     }
-    public function updateUser()
-    {
-        // Validate the form inputs
-        $this->validate([
-            'contact_number' => 'required|unique:employees,em_contactnum,' . $this->user_id, // Allow the current user's contact number
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'password' => 'required',
-            'role' => 'required',
-        ]);
+public function updateUser()
+{
+    // Validate the form inputs
+    $this->validate([
+        'contact_number' => 'required|unique:employees,em_contactnum,' . $this->user_id . ',employee_id', // Allow the current user's contact number
+        'firstname' => 'required',
+        'lastname' => 'required',
+        'password' => 'required',
+        'role' => 'required',
+    ]);
 
-        // Find the employee record by user ID and update the details
-        $employee = Employee::find($this->user_id);
-        $employee->em_contactnum = $this->contact_number;
-        $employee->em_fname = $this->firstname;
-        $employee->em_lname = $this->lastname;
-        $employee->em_minitial = $this->middlleinitial;
-        $employee->em_suffix = $this->sufix;
-        $employee->em_role = $this->role;
-        $employee->em_password = bcrypt($this->password);
-        $employee->save();
+    // Find the employee record by user ID and update the details
+    $employee = Employee::find($this->user_id);
+    $employee->em_contactnum = $this->contact_number;
+    $employee->em_fname = $this->firstname;
+    $employee->em_lname = $this->lastname;
+    $employee->em_minitial = $this->middlleinitial;
+    $employee->em_suffix = $this->sufix;
+    $employee->em_role = $this->role;
+    $employee->em_password = bcrypt($this->password);
+    $employee->save();
 
-        // Flash a success message
-        session()->flash('message', 'User updated successfully');
-    }
+    // Flash a success message
+    session()->flash('message', 'User updated successfully');
+}
 
 }
