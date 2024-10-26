@@ -113,11 +113,10 @@
             </tbody>
         </table>
 
-        <p><strong>Prepared By:</strong> Alex Ko</p>
+        <p><strong>Prepared By:</strong> {{ Auth::user()->em_fname . ' ' . Auth::user()->em_lname }}</p>
         <p><strong>Printed Date:</strong> {{ now()->format('m/d/Y') }}</p>
 
         <footer></footer>
     </div>
 </body>
 </html>
-    

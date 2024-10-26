@@ -5,7 +5,7 @@
         <div class=" w-3/4">
             <label class="font-bold">Bandwidth (Mbps)</label>
 
-            <input type="text" wire:model="bandwidth" class="p-2 w-full  outline-none border border-slate-300" placeholder="Search Service">
+            <input type="text" wire:model="bandwidth" class="p-2 w-full  outline-none border border-slate-300" placeholder="Enter Bandwidth">
 
         </div>
 
@@ -16,7 +16,7 @@
                 <label class="font-bold">Service Fee</label>
 
                 <input type="text" wire:model="price" class="p-2 w-full outline-none border border-slate-300"
-                    placeholder="Search Service">
+                    placeholder="Service Fee">
 
             </div>
 

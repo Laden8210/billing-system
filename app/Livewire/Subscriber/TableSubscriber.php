@@ -35,23 +35,40 @@ class TableSubscriber extends Component
     public function save()
     {
         $this->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'middle_name' => 'required',
-            'suffix' => 'required',
-            'contact_number' => 'required|numeric|unique:subscribers,sr_contactnum',
+            'first_name' => [
+                'required',
+                'regex:/^[a-zA-Z]+$/'
+            ],
+            'last_name' => [
+                'required',
+                'regex:/^[a-zA-Z]+$/'
+            ],
+            'middle_name' => [
+                'required',
+                'regex:/^[a-zA-Z]+$/'
+            ],
+            'suffix' => [
+                'nullable',
+                'regex:/^[a-zA-Z]+$/'
+            ],
+
+            'contact_number' => [
+                'required',
+                'numeric',
+                'regex:/^(09)\d{9}$/',
+                'unique:subscribers,sr_contactnum'
+            ],
             'street' => 'required',
             'city' => 'required',
             'province' => 'required',
         ]);
-
         $password = $this->last_name . substr($this->contact_number, -4);
 
         Subscriber::create([
             'sr_fname' => $this->first_name,
             'sr_lname' => $this->last_name,
             'sr_minitial' => $this->middle_name,
-            'sr_suffix' => $this->suffix,
+            'sr_suffix' => $this->suffix ?? '',
             'sr_contactnum' => $this->contact_number,
             'sr_street' => $this->street,
             'sr_city' => $this->city,

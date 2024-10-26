@@ -141,7 +141,7 @@
                 style="font-family: DejaVu Sans;">&#x20B1;</span>{{ $remittances->sum('rm_amount') }}</p>
 
         <div class="prepared-by">
-            <p><strong>Prepared by:</strong> Alex Ko</p>
+            <p><strong>Prepared By:</strong> {{ Auth::user()->em_fname . ' ' . Auth::user()->em_lname }}</p>
             <p><strong>Printed date:</strong> {{ now()->format('F j, Y') }}</p>
         </div>
     </div>

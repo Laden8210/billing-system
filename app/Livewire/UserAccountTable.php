@@ -19,7 +19,7 @@ class UserAccountTable extends Component
 
     public $user_id;
 
-    public $search ="";
+    public $search = "";
 
     public $status;
 
@@ -27,24 +27,33 @@ class UserAccountTable extends Component
     {
         return view('livewire.user-account-table', [
             'employees' => Employee::search($this->search)
-            ->when($this->status, function($query){
-                return $query->where('em_status', $this->status);
-            })
-            ->get(),
+                ->when($this->status, function ($query) {
+                    return $query->where('em_status', $this->status);
+                })
+                ->get(),
         ]);
     }
 
     public function createUser()
     {
         $this->validate([
-            'contact_number' => 'required|unique:employees,em_contactnum', // Check for unique contact number in the employees table
+            'contact_number' => [
+                'required',
+                'unique:employees,em_contactnum',
+                'regex:/^(09)\d{9}$/'
+            ],
             'firstname' => 'required',
             'lastname' => 'required',
-            'password' => 'required',
+            'password' => [
+                'required',
+                'min:8',
+                'regex:/[A-Z]/',
+                'regex:/[a-z]/',
+                'regex:/[0-9]/',
+            ],
             'confirm_password' => 'required|same:password',
             'role' => 'required',
         ]);
-
         $employee = new Employee();
         $employee->em_contactnum = $this->contact_number;
         $employee->em_fname = $this->firstname;
@@ -69,13 +78,15 @@ class UserAccountTable extends Component
         session()->flash('message', 'User created successfully');
     }
 
-    public function changeStatus($id){
+    public function changeStatus($id)
+    {
         $employee = Employee::find($id);
         $employee->em_status = $employee->em_status == 'Active' ? 'Inactive' : 'Active';
         $employee->save();
     }
 
-    public function viewUser($id){
+    public function viewUser($id)
+    {
         $employee = Employee::find($id);
         $this->user_id = $id;
         $this->contact_number = $employee->em_contactnum;
@@ -84,32 +95,46 @@ class UserAccountTable extends Component
         $this->middlleinitial = $employee->em_minitial;
         $this->sufix = $employee->em_suffix;
         $this->role = $employee->em_role;
-
     }
-public function updateUser()
-{
-    // Validate the form inputs
-    $this->validate([
-        'contact_number' => 'required', // This allows the current user's contact number
-        'firstname' => 'required',
-        'lastname' => 'required',
-        'password' => 'nullable|min:8', // Optional password update
-        'role' => 'required',
-    ]);
+    public function updateUser()
+    {
+        // Validate the form inputs
+        $this->validate([
+            'contact_number' => [
+                'required',
+                'regex:/^(09)\d{9}$/',
+                'unique:employees,em_contactnum,' . $this->user_id . ',employee_id' // Exclude current user's contact number
+            ],
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'password' => [
+                'nullable',
+                'min:8',
+                'regex:/[A-Z]/',       // Must contain at least one uppercase letter
+                'regex:/[a-z]/',       // Must contain at least one lowercase letter
+                'regex:/[0-9]/',       // Must contain at least one number
+                'regex:/[@$!%*?&]/'    // Must contain at least one special character
+            ],
+            'role' => 'required',
+        ]);
 
-    // Find the employee record by user ID and update the details
-    $employee = Employee::find($this->user_id);
-    $employee->em_contactnum = $this->contact_number;
-    $employee->em_fname = $this->firstname;
-    $employee->em_lname = $this->lastname;
-    $employee->em_minitial = $this->middlleinitial;
-    $employee->em_suffix = $this->sufix;
-    $employee->em_role = $this->role;
-    $employee->em_password = bcrypt($this->password);
-    $employee->save();
+        $employee = Employee::find($this->user_id);
+        $employee->em_contactnum = $this->contact_number;
+        $employee->em_fname = $this->firstname;
+        $employee->em_lname = $this->lastname;
+        $employee->em_minitial = $this->middlleinitial;
+        $employee->em_suffix = $this->sufix;
+        $employee->em_role = $this->role;
 
-    // Flash a success message
-    session()->flash('message', 'User updated successfully');
-}
+        // Only update the password if it is not empty
+        if (!empty($this->password)) {
+            $employee->em_password = bcrypt($this->password);
+        }
+
+        $employee->save();
+
+        session()->flash('message', 'User updated successfully');
+    }
+
 
 }

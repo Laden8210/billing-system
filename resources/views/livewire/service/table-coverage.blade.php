@@ -1,4 +1,4 @@
-<div class="p-2">
+<div class="">
 
     <h1 class="font-bold">Area Coverage</h1>
 
@@ -6,7 +6,7 @@
         placeholder="Search Coverage">
 
 
-    <div class="w-full flex p-2 justify-center"
+    <div class="w-full flex pt-2 justify-center"
     wire:poll.debounce.1000ms>
 
         <table class="w-full table-auto border-collapse border border-slate-400">

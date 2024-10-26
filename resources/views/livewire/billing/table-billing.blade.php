@@ -38,6 +38,10 @@
                     <th class="border border-slate-300 px-2 py-4">SUBSCRIPTION Number</th>
                     <th class="border border-slate-300 px-2 py-4">Area</th>
 
+                    <th class="border border-slate-300 px-2 py-4">Billing Date</th>
+                    <th class="border border-slate-300 px-2 py-4">Due Date</th>
+                    <th class="border border-slate-300">Payment Amount</th>
+
                     <th class="border border-slate-300 px-2 py-4">STATUS</th>
 
                     <th class="border border-slate-300 px-2 py-4">ACTION</th>
@@ -63,6 +67,18 @@
                         </td>
 
                         <td class="border border-slate-300">
+                            {{ $bill->bs_billingdate }}
+                        </td>
+
+                        <td class="border border-slate-300">
+                            {{ $bill->bs_duedate }}
+                        </td>
+
+                        <td class="border border-slate-300">
+                            ₱{{ $bill->subscription->plan->snplan_fee }}
+                        </td>
+
+                        <td class="border border-slate-300">
                             @if ($bill->bs_status == 'unpaid')
                                 <span class="px-3 py-1 text-white rounded-full bg-red-500">Unpaid</span>
                             @endif
@@ -83,6 +99,8 @@
                                     wire:click="selectBilling({{ $bill->billstatement_id }})">
                                     View
                                 </button>
+                            @else
+                                No Action
                             @endif
 
 

@@ -155,8 +155,7 @@
         </table>
 
         <p class="total-amount"><strong>Total Amount Collected:</strong> <span style="font-family: DejaVu Sans;">&#x20B1;</span>{{ number_format($payments->sum('p_amount'), 2) }}</p> <!-- Formatted total amount -->
-
-        <p><strong>Prepared by:</strong> Alex Ko</p>
+        <p><strong>Prepared By:</strong> {{ Auth::user()->em_fname . ' ' . Auth::user()->em_lname }}</p>
         <p><strong>Print date:</strong> {{ now()->format('F j, Y') }}</p>
     </div>
 </body>

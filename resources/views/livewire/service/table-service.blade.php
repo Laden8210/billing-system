@@ -6,7 +6,7 @@
         wire:model.live.debounce.300ms = "search">
 
 
-    <div class="w-full flex p-2 justify-center"
+    <div class="w-full flex pt-2 justify-center"
     wire:poll.debounce.1000ms>
 
         <table class="w-full table-auto border-collapse border border-slate-400">
@@ -26,7 +26,7 @@
                         <td class="border border-slate-300">{{ $service->subscriptionplan_id }}</td>
                         <td class="border border-slate-300">{{ $service->snplan_bandwidth }}</td>
 
-                        <td class="border border-slate-300">{{ $service->snplan_fee }}</td>
+                        <td class="border border-slate-300">₱{{ $service->snplan_fee }}</td>
 
                         <td class="border border-slate-300 px-2">
                             <button class=" bg-cyan-600 p-2 rounded text-slate-50 font-bold text-xs my-2"
