@@ -6,6 +6,7 @@ use Livewire\Component;
 
 use App\Models\Subscriber;
 use Illuminate\Support\Facades\Http;
+use App\Models\SubscriptionArea;
 
 class TableSubscriber extends Component
 {
@@ -28,7 +29,8 @@ class TableSubscriber extends Component
                 'subscribers' => Subscriber::search($this->search)
                 ->when($this->status, function($query){
                     return $query->where('sr_status', $this->status);
-                })->get()
+                })->get(),
+                'areas' => SubscriptionArea::all()
             ]
         );
     }

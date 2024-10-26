@@ -72,9 +72,7 @@
             <table class="w-full table-auto border-collapse border border-slate-400">
                 <thead>
                     <tr>
-                        <th class="border border-slate-300 px-2 py-4">
-                            Subscription Id
-                        </th>
+
                         <th class="border border-slate-300 px-2 py-4">
                             Subscription Number
                         </th>
@@ -96,9 +94,7 @@
                 <tbody>
                     @foreach($subscriptions as $subscription)
                         <tr>
-                            <td class="border border-slate-300 px-2 py-4">
-                                {{ $subscription->subscription_id }}
-                            </td>
+
                             <td class="border border-slate-300 px-2 py-4">
                                 {{ $subscription->sn_num }}
                             </td>

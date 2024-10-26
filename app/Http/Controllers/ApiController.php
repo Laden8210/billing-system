@@ -66,6 +66,18 @@ class ApiController extends Controller
             ]);
         }
 
+        if($employee->em_status == 'Inactive'){
+            return response()->json([
+                'error' => 'Account is inactive'
+            ]);
+        }
+
+
+        if($employee->em_role != 'Collector'){
+            return response()->json([
+                'error' => 'Unauthorized access'
+            ]);
+        }
 
         if(Hash::check($request->password, $employee->em_password)){
             return response()->json($employee);

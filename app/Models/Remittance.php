@@ -30,4 +30,19 @@ class Remittance extends Model
         return $this->hasOne(RemittanceProof::class, 'remittance_id');
     }
 
+
+    public function scopeSearch($query, $search)
+    {
+        return $query->where('rm_amount', 'LIKE', '%' . $search . '%')
+            ->orWhere('rm_date', 'LIKE', '%' . $search . '%')
+
+            ->orWhereHas('employee', function ($query) use ($search) {
+                $query->orWhere('em_fname', 'LIKE', '%' . $search . '%')
+                    ->orWhere('em_lname', 'LIKE', '%' . $search . '%');
+            })
+            ->orWhereHas('subscriptionArea', function ($query) use ($search) {
+                $query->where('snarea_name', 'LIKE', '%' . $search . '%');
+            });
+
+    }
 }

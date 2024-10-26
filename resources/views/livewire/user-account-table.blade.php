@@ -223,7 +223,7 @@
         <table class="w-full table-auto border-collapse border border-slate-400">
             <thead>
                 <tr class="bg-slate-200">
-                    <th class="border border-slate-300 px-2 py-4">USER ID.</th>
+
                     <th class="border border-slate-300 px-2 py-4">CONTACT NO.</th>
                     <th class="border border-slate-300 px-2 py-4">NAME</th>
                     <th class="border border-slate-300 px-2 py-4">ROLE</th>
@@ -236,7 +236,7 @@
             <tbody>
                 @foreach ($employees as $employee)
                     <tr class="text-center">
-                        <td class="border border-slate-300">{{ $employee->employee_id }}</td>
+
                         <td class="border border-slate-300">{{ $employee->em_contactnum }}</td>
                         <td class="border border-slate-300">{{ $employee->em_fname . ' ' . $employee->em_lname }}</td>
 

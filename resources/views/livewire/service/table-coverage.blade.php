@@ -12,7 +12,7 @@
         <table class="w-full table-auto border-collapse border border-slate-400">
             <thead>
                 <tr class="bg-slate-200">
-                    <th class="border border-slate-300 px-2 py-4">SERVICE ID.</th>
+
                     <th class="border border-slate-300 px-2 py-4">Area Name</th>
 
 
@@ -23,7 +23,7 @@
             <tbody>
                 @foreach ($coverages as $coverage)
                     <tr class="text-center">
-                        <td class="border border-slate-300">{{ $coverage->subscriptionarea_id }}</td>
+
                         <td class="border border-slate-300">{{ $coverage->snarea_name }}</td>
 
                         <td class="border border-slate-300 px-2">

@@ -14,7 +14,6 @@
              <thead>
                  <tr class="bg-slate-200">
 
-                     <th class="border border-slate-300 px-1 py-4">COMPLAINTS ID</th>
 
                      <th class="border border-slate-300 px-2 py-4">FROM (SUBSCRIBER NAME)</th>
                      <th class="border border-slate-300 px-2 py-4 w-32 max-w-40">DESCRIPTION</th>
@@ -27,9 +26,7 @@
 
                 @foreach ($complaints as $complain)
                     <tr class="text-center">
-                        <td class="border border-slate-300">
-                            {{ $complain->complaint_id }}
-                        </td>
+
                         <td class="border border-slate-300">
                             {{$complain->subscriber->sr_fname}} {{$complain->subscriber->sr_lname}}
                         </td>
