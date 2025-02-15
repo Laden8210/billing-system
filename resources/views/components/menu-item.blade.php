@@ -3,14 +3,11 @@
     $currentLastSegment = strtolower(last(request()->segments()));
 @endphp
 
-<li class="mb-2 p-3 text-gray-500 hover:bg-cyan-100 rounded text-sm
-    {{ strtolower($title) === $currentLastSegment ? 'border-l-4 border-cyan-400 bg-cyan-100 font-bold' : '' }}">
-    <a href="{{ $url }}" class="flex items-center">
 
-        <div class="flex justify-between items-center">
-            <i class="{{ $icon }} pl-1 pr-3"></i>
-            {{ $title  }}
 
-        </div>
+<li class="nav-item">
+    <a class="nav-link " href="{{ $url }}" >
+        <i class="{{ $icon }} pl-1 pr-3"></i>
+        <span> {{ $title }}</span>
     </a>
 </li>

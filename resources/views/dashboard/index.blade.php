@@ -4,90 +4,157 @@
 
 @section('content')
 
-    <div class="p-2">
-        <div class="flex justify-between p-2">
+    <section class="section dashboard">
+        <div class="row">
 
-            <div>
-                <h2 class="font-bold text-xl">Overview</h2>
+
+            <div class="col-xxl-4 col-md-6">
+                <div class="card info-card revenue-card">
+
+                    <div class="filter">
+                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                            <li class="dropdown-header text-start">
+                                <h6>Filter</h6>
+                            </li>
+
+                            <li><a class="dropdown-item" href="#">Today</a></li>
+                            <li><a class="dropdown-item" href="#">This Month</a></li>
+                            <li><a class="dropdown-item" href="#">This Year</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="card-body">
+                        <h5 class="card-title">Revenue <span>| This Month</span></h5>
+
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                <i class="bi bi-currency-dollar"></i>
+                            </div>
+                            <div class="ps-3">
+                                <h6>Php. {{ $revenue }}</h6>
+                                <span class="text-success small pt-1 fw-bold">8%</span> <span
+                                    class="text-muted small pt-2 ps-1">increase</span>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
 
+
+            <div class="col-xxl-4 col-md-6">
+                <div class="card info-card revenue-card">
+
+                    <div class="filter">
+                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                            <li class="dropdown-header text-start">
+                                <h6>Filter</h6>
+                            </li>
+
+                            <li><a class="dropdown-item" href="#">Today</a></li>
+                            <li><a class="dropdown-item" href="#">This Month</a></li>
+                            <li><a class="dropdown-item" href="#">This Year</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="card-body">
+                        <h5 class="card-title">Outstanding Bill <span></span></h5>
+
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                <i class="bi bi-currency-dollar"></i>
+                            </div>
+                            <div class="ps-3">
+                                <h6>{{ $outstandingBill }}</h6>
+                                <span class="text-success small pt-1 fw-bold">8%</span> <span
+                                    class="text-muted small pt-2 ps-1">increase</span>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-xxl-4 col-md-6">
+                <div class="card info-card revenue-card">
+
+                    <div class="filter">
+                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                            <li class="dropdown-header text-start">
+                                <h6>Filter</h6>
+                            </li>
+
+                            <li><a class="dropdown-item" href="#">Today</a></li>
+                            <li><a class="dropdown-item" href="#">This Month</a></li>
+                            <li><a class="dropdown-item" href="#">This Year</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="card-body">
+                        <h5 class="card-title">Total Remittance <span></span></h5>
+
+                        <div class="d-flex align-items-center">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                <i class="bi bi-currency-dollar"></i>
+                            </div>
+                            <div class="ps-3">
+                                <h6>₱{{ number_format($remittance, 2) }}</h6>
+                                <span class="text-success small pt-1 fw-bold">8%</span> <span
+                                    class="text-muted small pt-2 ps-1">increase</span>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="card recent-sales overflow-auto">
+
+
+
+                    <div class="card-body">
+                        <h5 class="card-title">New Subscriber Subscription <span></span></h5>
+
+                        <table class="table table-borderless datatable">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Full Name</th>
+                                    <th scope="col">Area</th>
+                                    <th scope="col">SUBSCRIPTION PLAN</th>
+                                    <th scope="col">DATE</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($subscribers as $subscriber)
+                                    <tr>
+
+                                        <td> {{ $subscriber->sr_fname . ' ' . $subscriber->sr_lname }}</td>
+                                        <td> {{ $subscriber->sr_street . ' ' . $subscriber->sr_city . ' ' . $subscriber->sr_province }}
+                                        </td>
+                                        <td> {{ $subscriber->subscriptions->first()->snplan_bandwidth ?? 'N/A' }}
+                                        </td>
+                                        <td>{{ $subscriber->created_at->format('Y-m-d') }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+            </div>
 
         </div>
 
-        <div class="grid grid-cols-3 w-full my-2 gap-5 items-center">
-            <div class="shadow rounded p-5 ">
-                <h3 class="font-bold">Revenue</h3>
-                <div class="flex justify-between my-5 text-5xl">
-                    <h1 class="font-bold">Php. {{ $revenue }}</h1>
-
-                </div>
-
-            </div>
-
-            <div class="shadow rounded p-5">
-                <h3 class="font-bold">Outstanding Bill</h3>
-                <div class="flex justify-between my-5 text-5xl">
-                    <h1 class=" font-bold">{{ $outstandingBill }}</h1>
-
-                </div>
-
-            </div>
-
-            <div class=" shadow rounded p-5">
-                <h3 class="font-bold">Subscriber</h3>
-                <div class="flex justify-between my-5 text-5xl">
-                    <h1 class=" font-bold">{{ $subscriberCount }}</h1>
-
-                </div>
-
-            </div>
-
-            <div class=" shadow rounded p-5">
-                <h3 class="font-bold">Total Remittance</h3>
-                <div class="flex justify-between my-5 text-5xl">
-                    <h1 class="font-bold">₱{{ number_format($remittance, 2) }}</h1>
-
-                </div>
-
-            </div>
-        </div>
-
-
-        <div class="col-span-3 rounded shadow mt-2 p-2">
-            <h2>New Subscriber Subscription</h2>
-            <h1 class="text-5xl font-bold">{{ $newSubscriptionCount }}</h1>
-            <table class="w-full table-auto border-collapse border border-slate-400 rounded my-2">
-                <thead>
-                    <tr class="bg-slate-200">
-                        <th class="border border-slate-300 px-2 py-4">FULLNAME</th>
-                        <th class="border border-slate-300 px-2 py-4">AREA</th>
-                        <th class="border border-slate-300 px-2 py-4">SUBSCRIPTION PLAN</th>
-                        <th class="border border-slate-300 px-2 py-4">DATE</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($subscribers as $subscriber)
-                        <tr class="text-center">
-                            <td class="border border-slate-300 p-2">
-                                {{ $subscriber->sr_fname . ' ' . $subscriber->sr_lname }}</td>
-                            <td class="border border-slate-300 p-2">
-                                {{ $subscriber->sr_street . ' ' . $subscriber->sr_city . ' ' . $subscriber->sr_province }}
-                            </td>
-                            <td class="border border-slate-300 p-2">
-                                {{ $subscriber->subscriptions->first()->snplan_bandwidth ?? 'N/A' }}</td>
-                            <!-- Assuming snplan_name exists -->
-                            <td class="border border-slate-300 p-2">{{ $subscriber->created_at->format('Y-m-d') }}
-                            </td> <!-- Assuming created_at is available -->
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-
-
-
-    </div>
-    </div>
+    </section>
 
 
 @endsection

@@ -1,31 +1,76 @@
-<nav class="w-60 h-full p-2 items-center shadow align-middle fixed ">
+<aside id="sidebar" class="sidebar">
+    <ul class="sidebar-nav" id="sidebar-nav">
 
-    <h1 class="text-center font-bold text-xl my-2">Welcome {{ Auth::user()->em_fname }}</p>
-    </h1>
+        <!-- Dashboard -->
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('dashboard') }}">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
 
-    <ul class="items-center pt-7">
+        <!-- User -->
+        <li class="nav-item">
+            <a class="nav-link active" href="{{ route('user') }}">
+                <i class="fa-solid fa-user-pen"></i>
+                <span>User</span>
+            </a>
+        </li>
 
-
-        <x-menu-item title="Dashboard" icon="fas fa-home" url="{{ route('dashboard') }}" />
-        <x-menu-item title="User" active="true" icon="fa-solid fa-user-pen" url="{{ route('user') }}" />
-
-
-
-        <x-menu-item title="Subscriber" icon="fa-solid fa-user-pen" url="{{ route('subscriber') }}" />
-        <x-menu-item title="Service" icon="fa-solid fa-truck-fast" url="{{ route('service') }}" />
-        <x-menu-item title="Billing" icon="fa-solid fa-file-invoice-dollar" url="{{ route('billing') }}" />
-        <x-menu-item title="Payment" icon="fa-solid fa-money-bill" url="{{ route('payment') }}" />
-        <x-menu-item title="Remittance" icon="fa-solid fa-money-bill" url="{{ route('remittance') }}" />
-        <x-menu-item title="Report" icon="fa-solid fa-table-list" url="{{ route('report') }}" />
-        <x-menu-item title="Announcement" icon="fa-solid fa-bullhorn" url="{{ route('announcement') }}" />
-        <x-menu-item title="Complaints" icon="fa-solid fa-comments" url="{{ route('complaints') }}" />
-        <x-menu-item title="Logout" icon="fa-solid fa-right-from-bracket" url="{{ route('logout') }}" />
+        <!-- Other Menu Items -->
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('subscriber') }}">
+                <i class="fa-solid fa-user-pen"></i>
+                <span>Subscriber</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('service') }}">
+                <i class="fa-solid fa-truck-fast"></i>
+                <span>Service</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('billing') }}">
+                <i class="fa-solid fa-file-invoice-dollar"></i>
+                <span>Billing</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('payment') }}">
+                <i class="fa-solid fa-money-bill"></i>
+                <span>Payment</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('remittance') }}">
+                <i class="fa-solid fa-money-bill"></i>
+                <span>Remittance</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('report') }}">
+                <i class="fa-solid fa-table-list"></i>
+                <span>Report</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('announcement') }}">
+                <i class="fa-solid fa-bullhorn"></i>
+                <span>Announcement</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('complaints') }}">
+                <i class="fa-solid fa-comments"></i>
+                <span>Complaints</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('logout') }}">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+        </li>
     </ul>
-
-    <p class="text-center self-end bottom-2 absolute left-1/4 text-xs">Date:
-        {{ \Carbon\Carbon::now()->toDateString() }}
-    </p>
-
-
-
-</nav>
+</aside>
