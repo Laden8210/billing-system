@@ -301,6 +301,7 @@ class NavigationController extends Controller
             'phoneEmail' => 'required',
         ]);
 
+
         $phoneEmail = $request->phoneEmail;
 
         // OTP session keys

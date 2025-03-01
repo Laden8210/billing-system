@@ -7,16 +7,18 @@
 
 
     <h2 class="font-bold text-xl m-1">Account </h2>
-    <div class="w-full  flex justify-between">
+    <div class="w-100 d-flex justify-content-between">
 
-        <div class="flex justify-start  w-1/2">
-            <input type="text" placeholder="Search" wire:model.live.debounce.300ms = "search"
-                class="border border-slate-400 p-2 active:outline-none w-1/2 mx-2 h-10 self-end">
+        <div class="d-flex justify-content-start align-items-center w-50">
 
-            <div class="w-1/3 px-2 self-end">
-                <label for="" class="p-2">Account Status</label>
-                <select name="" id="" class="border border-slate-400 p-2 w-full mx-2 "
-                    wire:model.live="status">
+
+            <div class="mb-2">
+                <input type="text" placeholder="Search" wire:model.live.debounce.300ms="search" class="form-control">
+            </div>
+
+            <div class="ms-2">
+
+                <select class="form-select" wire:model.live="status">
                     <option value="">All</option>
                     <option value="Active">Active</option>
                     <option value="Inactive">Inactive</option>
@@ -24,7 +26,8 @@
             </div>
         </div>
 
-        <button class="w-20 bg-cyan-600 p-2 rounded text-slate-50 font-bold my-2 self-end h-10 mx-2" x-data
+
+        <button class="btn btn-primary" x-data
             x-on:click="$dispatch('open-modal', {name:'create-user-modal'})">
             <i class="fa fa-add"></i>
             Add

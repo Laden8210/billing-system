@@ -12,7 +12,8 @@
     <link href="{{ asset('vendor/remixicon/remixicon.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/simple-datatables/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    <link href="assets/css/style.css" rel="stylesheet"> <!-- Google Fonts -->
+    <script src="https://kit.fontawesome.com/8d62d56333.js" crossorigin="anonymous"></script>
+    @vite(['resources/css/style.css', 'resources/js/theme.js'])
     <link href="https://fonts.gstatic.com" rel="preconnect">
     <link
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
@@ -20,11 +21,11 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <title>@yield('title', 'Site Title')</title>
-    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+
     @livewireStyles
 </head>
 
-<body class="">
+<body>
 
     <!-- ======= Header ======= -->
     <header id="header" class="header fixed-top d-flex align-items-center">
@@ -45,7 +46,7 @@
             </ul>
         </nav><!-- End Icons Navigation -->
 
-    </header><!-- End Header -->
+    </header>
     <x-sidebar />
 
     <main id="main" class="main">
@@ -53,12 +54,12 @@
         <div class="pagetitle">
             <h1>@yield('title', 'Site Title')</h1>
             <nav>
-              <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-                <li class="breadcrumb-item active">@yield('title', 'Site Title')</li>
-              </ol>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
+                    <li class="breadcrumb-item active">@yield('title', 'Site Title')</li>
+                </ol>
             </nav>
-          </div>
+        </div>
         @yield('content')
 
     </main>
